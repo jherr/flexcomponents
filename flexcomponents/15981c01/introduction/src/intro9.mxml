@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute">
+  <mx:Label x="10" y="10" text="First"/>
+  <mx:Label x="10" y="36" text="Last"/>
+  <mx:Label x="10" y="62" text="Email"/>
+  <mx:TextInput x="57" y="8"/>
+  <mx:TextInput x="57" y="34"/>
+  <mx:TextInput x="57" y="60"/>
+  <mx:Button x="57" y="90" label="Add"/>
+</mx:Application>

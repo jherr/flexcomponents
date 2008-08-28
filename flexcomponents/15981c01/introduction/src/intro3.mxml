@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">
+<mx:Script>
+<![CDATA[
+public function onChangeClick( event:Event ) : void {
+  txtLabel.text='Goodbye';
+}
+]]>
+</mx:Script>
+<mx:Label text="Hello" id="txtLabel" fontSize="30" />
+<mx:Button label="Change" click="onChangeClick(event)" />
+</mx:Application>

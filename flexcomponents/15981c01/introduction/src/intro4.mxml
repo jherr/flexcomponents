@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="onChangeText(event)">
+<mx:Script>
+<![CDATA[
+public function onChangeText( event:Event ) : void {
+  if ( txtLabel.text == '' || txtLabel.text == 'Goodbye' )
+    txtLabel.text='Hello';
+  else
+    txtLabel.text='Goodbye';
+}
+]]>
+</mx:Script>
+<mx:Label id="txtLabel" fontSize="30" />
+<mx:Button label="Change" click="onChangeText(event)" />
+</mx:Application>

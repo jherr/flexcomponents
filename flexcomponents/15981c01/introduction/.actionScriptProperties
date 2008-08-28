@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<actionScriptProperties mainApplicationPath="intro1.mxml" version="3">
+   <compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
+      <compilerSourcePath/>
+      <libraryPath defaultLinkType="1">
+         <libraryPathEntry kind="4" path=""/>
+         <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      </libraryPath>
+      <sourceAttachmentPath/>
+   </compiler>
+   <applications>
+      <application path="intro9.mxml"/>
+      <application path="intro3.mxml"/>
+      <application path="intro7.mxml"/>
+      <application path="intro2.mxml"/>
+      <application path="intro8.mxml"/>
+      <application path="intro4.mxml"/>
+      <application path="intro6.mxml"/>
+      <application path="intro11.mxml"/>
+      <application path="intro1.mxml"/>
+      <application path="intro5.mxml"/>
+      <application path="intro10.mxml"/>
+      <application path="intro12.mxml"/>
+   </applications>
+   <modules/>
+   <buildCSSFiles/>
+</actionScriptProperties>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">
+  <mx:Form>
+    <mx:FormItem label="First">
+      <mx:TextInput />
+    </mx:FormItem>
+    <mx:FormItem label="Last">
+      <mx:TextInput />
+    </mx:FormItem>
+    <mx:FormItem label="Email">
+      <mx:TextInput />
+    </mx:FormItem>
+    <mx:FormItem>
+      <mx:Button label="Add" />
+    </mx:FormItem>
+  </mx:Form>
+</mx:Application>

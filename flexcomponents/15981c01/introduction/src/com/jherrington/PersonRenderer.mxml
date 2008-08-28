@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%">
+<mx:rollOverEffect>
+  <mx:Glow duration="800" />
+</mx:rollOverEffect>
+<mx:filters>
+  <mx:DropShadowFilter color="#999999" />
+</mx:filters>
+  <mx:Label text="{data.first}" fontSize="20" fontWeight="bold" />
+  <mx:Label text="{data.last}" fontSize="20" fontWeight="bold" />
+</mx:HBox>

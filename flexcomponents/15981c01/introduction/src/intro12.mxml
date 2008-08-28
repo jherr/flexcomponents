@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">
+<mx:Script>
+<![CDATA[
+import mx.collections.ArrayCollection;
+import com.jherrington.Address;
+
+[Bindable]
+private var addresses:ArrayCollection = new ArrayCollection( [
+  new Address( 'Jack', 'Herrington', 'jack@donotreply.com' ),
+  new Address( 'Lori', 'Herrington', 'lori@donotreply.com' ),
+  new Address( 'Oso', 'Herrington', 'oso@donotreply.com' )
+] );
+]]>
+</mx:Script>
+<mx:List dataProvider="{addresses}" width="100%" itemRenderer="com.jherrington.PersonRenderer">
+</mx:List>
+</mx:Application>

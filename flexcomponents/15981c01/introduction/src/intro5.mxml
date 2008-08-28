@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">
+<mx:Script>
+<![CDATA[
+import mx.collections.ArrayCollection;
+
+[Bindable]
+private var addresses:ArrayCollection = new ArrayCollection( [
+  { first: 'Jack', last: 'Herrington', email: 'jack@donotreply.com' },
+  { first: 'Lori', last: 'Herrington', email: 'lori@donotreply.com' },
+  { first: 'Oso', last: 'Herrington', email: 'oso@donotreply.com' }
+] );
+]]>
+</mx:Script>
+<mx:DataGrid dataProvider="{addresses}" />
+</mx:Application>
