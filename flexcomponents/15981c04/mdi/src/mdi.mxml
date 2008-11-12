@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  xmlns:flexlib="http://code.google.com/p/flexlib/"
+  creationComplete="baseballRO.getTeamList.send()">
+
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import mx.charts.series.AreaSeries;
+import mx.charts.LinearAxis;
+import mx.charts.CategoryAxis;
+import mx.charts.AreaChart;
+import flexlib.mdi.containers.MDIWindow;
+
+private var requestedTeam:String = null;
+
+private function onDoubleClick() : void {
+  requestedTeam = teamList.selectedItem.name;
+  baseballRO.getYearsByTeam.send( teamList.selectedItem.teamid );
+}
+
+private function onReportResult( event:ResultEvent ) : void {
+  var win:MDIWindow = new MDIWindow();
+  win.setStyle('top',100);
+  win.setStyle('left',100);
+  win.width = 400;
+  win.height = 300;
+  win.title = requestedTeam;
+  win.setStyle( 'backgroundAlpha', 0.8 );
+  
+  var data:Array = [];
+  for each ( var row:Object in event.result )
+  	data.push( row );
+
+  var vertAxis:LinearAxis = new LinearAxis();
+  vertAxis.title = 'Count';
+  var horzAxis:CategoryAxis = new CategoryAxis();
+  horzAxis.title = 'Year';
+  horzAxis.categoryField = 'yearid';
+  
+  var series1:AreaSeries = new AreaSeries();
+  series1.xField = 'yearid';
+  series1.yField = 'h';
+  series1.dataProvider = data;
+  var series2:AreaSeries = new AreaSeries();
+  series2.xField = 'yearid';
+  series2.yField = '2b';
+  series2.dataProvider = data;
+  var series3:AreaSeries = new AreaSeries();
+  series3.xField = 'yearid';
+  series3.yField = '3b';
+  series3.dataProvider = data;
+  var series4:AreaSeries = new AreaSeries();
+  series4.xField = 'yearid';
+  series4.yField = 'hr';
+  series4.dataProvider = data;
+
+  var ac:AreaChart = new AreaChart();
+  ac.percentHeight = 100;
+  ac.percentWidth = 100;
+  ac.type = 'stacked';
+  ac.verticalAxis = vertAxis;
+  ac.horizontalAxis = horzAxis;
+  ac.dataProvider = data;
+  ac.series = [ series1, series2, series3, series4 ];
+  win.addChild( ac );
+
+  mdiCanvas.windowManager.add( win );
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="baseballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="baseball.BaseballService" destination="baseball.BaseballService"
+  showBusyCursor="true">
+<mx:method name="getTeamList" />
+<mx:method name="getYearsByTeam" result="onReportResult( event )">
+<mx:arguments>
+        <mx:teamid />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<flexlib:MDICanvas id="mdiCanvas" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+  width="100%" height="100%" backgroundColor="#FFFFFF" backgroundAlpha="0">
+<flexlib:MDIWindow 
+  title="Teams" x="20" y="20" width="400" height="200">
+<mx:DataGrid width="100%" height="100%" dataProvider="{baseballRO.getTeamList.lastResult}"
+  doubleClickEnabled="true" doubleClick="onDoubleClick()" id="teamList">
+<mx:columns>
+  <mx:DataGridColumn dataField="name" headerText="Team" />
+</mx:columns>
+</mx:DataGrid>
+</flexlib:MDIWindow>
+</flexlib:MDICanvas>
+
+</mx:Application>

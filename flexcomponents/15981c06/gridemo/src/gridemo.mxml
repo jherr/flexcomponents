@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+  xmlns:degrafa="com.degrafa.*" xmlns:paint="com.degrafa.paint.*"
+  xmlns:geometry="com.degrafa.geometry.*" layout="absolute"
+  creationComplete="onStartup( event )" backgroundColor="black" backgroundAlpha="1"
+  backgroundGradientColors="[#000000,#000000]" backgroundGradientAlphas="[1,1]">
+<mx:Script>
+<![CDATA[
+import com.afcomponents.events.GridEvent;
+import mx.rpc.events.ResultEvent;
+import mx.core.UIComponent;
+import com.afcomponents.grid.Grid;
+
+private var myGrid:Grid;
+
+public function onInitialize( event:GridEvent ) : void {
+  picData.send();
+}
+
+public function onPicData( event:ResultEvent ) : void {
+  for each ( var img:XML in picData.lastResult..image ) {
+    var imgObj:Object = {};
+    imgObj.path = "http://localhost/pics/family/"+img.@name.toString();
+    imgObj.type = "image";
+    myGrid.addItem( imgObj );
+  }
+}
+
+public function onStartup( event:Event ) : void {
+  var uic:UIComponent = new UIComponent();
+  myGrid = new Grid();
+  myGrid.move( 30, 40 );
+  myGrid.width = width;
+  myGrid.addEventListener(GridEvent.INITIALIZE, onInitialize);
+  myGrid.contentStyle = {width:100, height:78, maintainAspectRatio:true, scaleContent:true, autoSize: false};
+  myGrid.scrollAnimation = {enabled: true,duration: 500, easing: "easeIn",scrollDirection: "horizontal"};
+  myGrid.scrollLoop = true;
+  myGrid.gridStyle = {rowCount: 2, rowCountAuto:false, colCount:5, colCountAuto:false, rowSpacing:10, colSpacing:10};
+  uic.addChild( myGrid );
+  addChild( uic );
+}  
+]]>
+</mx:Script>
+<mx:HBox top="10" left="10">
+  <mx:Button label="&lt;&lt;" click="myGrid.displayPreviousPage();" />
+  <mx:Button label="&gt;&gt;" click="myGrid.displayNextPage();" />
+</mx:HBox>
+
+<degrafa:Surface x="0" y="190">
+<degrafa:fills>
+<paint:LinearGradientFill id="blueGradient" angle="270">
+<paint:GradientStop alpha=".3" color="#62ABCD"/>
+<paint:GradientStop alpha=".8" color="#FFFFFF"/>
+</paint:LinearGradientFill>
+</degrafa:fills>
+<degrafa:GeometryGroup>
+  <geometry:RegularRectangle fill="{blueGradient}" width="1500" height="350" />
+</degrafa:GeometryGroup> 
+</degrafa:Surface>
+<mx:HTTPService url="http://localhost/pics/family/wide.xml" id="picData" resultFormat="e4x"
+  result="onPicData(event)" />
+</mx:Application>

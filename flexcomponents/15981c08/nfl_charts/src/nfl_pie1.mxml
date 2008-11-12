@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="searchPlayers()"
+  xmlns:degrafa="http://www.degrafa.com/2007">
+
+<mx:Style>
+Application {
+  background-gradient-colors: #66FF66, #eeffee;
+  font-weight: bold;
+  font-size: 14;
+}
+</mx:Style>
+
+<mx:Script>
+<![CDATA[
+import mx.charts.series.items.BubbleSeriesItem;
+import mx.graphics.SolidColor;
+import mx.charts.series.items.PlotSeriesItem;
+import mx.graphics.IFill;
+import mx.charts.ChartItem;
+import mx.charts.HitData;
+
+private function searchPlayers() : void {
+  footballRO.findPlayer.send( srchText.text );
+}
+
+private function onFindPlayer() : void {
+  var players:Array = footballRO.findPlayer.lastResult;
+  for each( var player:Object in players ) {
+    player.name = player.first + " " + player.last;
+  }
+  playerList.dataProvider = players;
+}
+
+private function onPlayerDblClick() : void {
+  footballRO.getGamesByOpponent.send( playerList.selectedItem.id );
+}
+
+private function onGamesByOpponent() : void {
+  var opponents:Array = footballRO.getGamesByOpponent.lastResult;
+  pieChart.dataProvider = opponents;
+}
+
+private function makeOpponentTip( hd:HitData ) :String {
+  return "<b>"+hd.item.opp+"</b> over "+hd.item.games+" games";
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="footballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="football.FootballService" destination="football.FootballService"
+  showBusyCursor="true">
+<mx:method name="findPlayer" result="onFindPlayer()">
+<mx:arguments>
+  <mx:Name />
+</mx:arguments>
+</mx:method>
+<mx:method name="getGamesByOpponent" result="onGamesByOpponent()">
+<mx:arguments>
+  <mx:Player />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<mx:VBox paddingBottom="15" paddingLeft="15" paddingRight="15" paddingTop="15" backgroundColor="#cccccc"
+  borderColor="#eeeeee" cornerRadius="15" borderThickness="3" borderStyle="solid"
+  width="90%" height="90%" top="30" left="30">
+<mx:filters>
+  <mx:DropShadowFilter distance="10" alpha="0.7" />
+</mx:filters>
+
+<mx:PieChart width="100%" height="100%" id="pieChart" showDataTips="true" dataTipFunction="makeOpponentTip">
+<mx:series>
+  <mx:PieSeries field="comp" explodeRadius="0.1" />
+</mx:series>
+</mx:PieChart>
+
+</mx:VBox>
+
+<mx:Panel title="Search" width="200" height="150" paddingBottom="5" paddingLeft="5"
+  paddingRight="5" paddingTop="5" layout="vertical" left="400" top="10" borderAlpha="0.8">
+  <mx:TextInput width="100%" id="srchText" text="Aikman" keyUp="searchPlayers()" />
+  <mx:List id="playerList" width="100%" height="100%" labelField="name"
+  	doubleClickEnabled="true" doubleClick="onPlayerDblClick()" dragEnabled="true" />
+</mx:Panel>
+
+</mx:Application>

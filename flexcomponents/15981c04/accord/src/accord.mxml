@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal"
+  width="100%" height="100%"
+  creationComplete="picData.send()" xmlns:flexlib="flexlib.containers.*">
+<mx:Style>
+Application { font-family: MyArial; font-size: 14pt; }
+Button { font-family: MyArial; }
+AccordionHeader { font-size: 18pt; font-weight: bold; }
+@font-face { src:url("assets/arialb.ttf"); font-family: MyArial; font-weight:bold; }
+@font-face { src:url("assets/arial.ttf"); font-family: MyArial; }
+</mx:Style>
+<mx:Script>
+<![CDATA[
+import mx.core.UIComponent;
+import mx.containers.HBox;
+import mx.controls.Image;
+import mx.rpc.events.ResultEvent;
+
+private function addImagesTo( cntnr:UIComponent ) : void {
+  var count:int = 0;
+  for each( var pic:XML in picData.lastResult..image ) {
+  	if ( count > 3 ) break;
+  	
+  	var cnv:HBox = new HBox();
+  	cnv.label = pic.@name.toString();
+  	cnv.setStyle( 'paddingTop', 5 );
+  	cnv.setStyle( 'paddingLeft', 5 );
+  	var img:Image = new Image();
+  	img.data = 'http://localhost/pics/'+pic.@name.toString();
+  	img.height = 280;
+  	cnv.addChild( img );
+
+  	cntnr.addChild( cnv );
+  	count++;
+  }
+}
+private function onPicResult( event:ResultEvent ) : void {
+  addImagesTo( vert );
+  addImagesTo( horz );
+}
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/wide.xml" id="picData" resultFormat="e4x"
+  result="onPicResult( event )" />
+<mx:Accordion height="100%" width="30%" id="vert" />
+<flexlib:HAccordion height="300" width="70%" id="horz" headerLocation="left" />
+</mx:Application>

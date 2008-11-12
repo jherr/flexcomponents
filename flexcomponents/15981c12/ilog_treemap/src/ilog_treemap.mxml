@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	creationComplete="onStartup()" xmlns:ilog="http://www.ilog.com/2007/ilog/flex">
+
+<mx:RemoteObject id="usdataRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="usdata.USDataService" destination="usdata.USDataService"
+  showBusyCursor="true">
+<mx:method name="getAll" result="onGetAllResult()">
+<mx:arguments>
+  <mx:Table />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<mx:Script>
+<![CDATA[
+private var _reqTable:String = '';
+private var _usData:Object = {};
+
+private function onGetAllResult() : void {
+  _usData[ _reqTable ] = usdataRO.getAll.lastResult;
+  _reqTable = null;
+  if ( _usData[ 'it' ] == null ) _reqTable = 'it';
+  if ( _usData[ 'realestate' ] == null ) _reqTable = 'realestate';
+  if ( _usData[ 'construction' ] == null ) _reqTable = 'construction';
+  if ( _reqTable != null ) usdataRO.getAll.send( _reqTable );
+  else updateMap();
+}
+
+private function onStartup() : void {
+  _reqTable = 'it';
+  usdataRO.getAll.send( _reqTable );
+}
+private function buildChildren( table:String ) : Array {
+  var elems:Array = [];
+  for each( var obj:Object in _usData[table] ) {
+  	if ( obj.state == 'United States' ) continue;
+  	elems.push( { name: obj.state, size: obj.companies } );
+  }
+  return elems;
+}
+private function updateMap() : void {
+  var items:Array = [];
+  items.push( { name: "Information Technology", children: buildChildren('it') } );
+  items.push( { name: "Construction", children: buildChildren('construction') } );
+  items.push( { name: "Real Estate", children: buildChildren('realestate') } );
+  tm.dataProvider = items;
+}
+]]>
+</mx:Script>
+<ilog:TreeMap id="tm" width="100%" height="100%" colorField="size" labelField="name" labelThreshold="1" areaField="size"
+  colorScheme="div-red-green" backgroundColor="0xFFFFFF"              
+  textBackgroundColor="0xFFFFFF" borderThreshold="1"
+  borderThickness="1" maxTopMargin="20" neutral="0" animationDuration="500">
+</ilog:TreeMap>
+</mx:Application>

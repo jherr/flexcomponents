@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="onStartup();"
+  layout="absolute">
+<mx:Script>
+<![CDATA[
+import com.yahoo.maps.webservices.local.LocalSearchResults;
+import com.yahoo.maps.api.markers.SearchMarker;
+import com.yahoo.maps.webservices.local.LocalSearchItem;
+import com.yahoo.maps.webservices.local.events.LocalSearchEvent;
+import com.yahoo.maps.webservices.local.LocalSearch;
+import com.yahoo.maps.api.core.location.Address;
+import com.yahoo.maps.webservices.geocoder.events.GeocoderEvent;
+import com.yahoo.maps.webservices.geocoder.Geocoder;
+import com.yahoo.maps.api.core.location.LatLon;
+import mx.core.UIComponent;
+import com.yahoo.maps.api.*;	
+
+private var map:YahooMap = new YahooMap();
+
+private function onStartup() : void {
+  var uic:UIComponent = new UIComponent();
+  uic.width = width;
+  uic.height = height;
+  uic.setStyle('top',0);
+  uic.setStyle('left',0);
+  addChildAt( uic, 0 );
+  
+  map.init('ep1M2CXV34Hv6dKZ83zWoSA72kV2TzBwS00Hh5b8W_cu.ZftX4snMjq19lXEMVX_',width,height);
+  map.addEventListener( YahooMapEvent.MAP_INITIALIZE, onMapInit );
+  map.addPanControl();
+  map.addTypeWidget();
+  uic.addChild( map );
+  
+  searchPanel.setStyle( 'top', height - searchPanel.height - 20 );
+}
+private function onMapInit( event:YahooMapEvent ) : void {
+  map.centerLatLon = new LatLon(41,-105);
+  map.zoomLevel = 3;
+  
+  var gc:Geocoder = new Geocoder();
+  gc.addEventListener(GeocoderEvent.GEOCODER_SUCCESS,onGeocodeSuccess);
+  gc.geocode( new Address( "1600 pennsylvania ave., washington dc" ) );
+}
+private function onGeocodeSuccess( event:GeocoderEvent ) : void {
+  map.centerLatLon = event.data.firstResult.latlon;
+  runSearch();
+}
+private function onKeyDown( event:KeyboardEvent ) : void {
+  if ( event.keyCode == Keyboard.ENTER ) runSearch();
+}
+private function runSearch( ) : void {
+  var ls:LocalSearch = new LocalSearch();
+  ls.addEventListener(LocalSearchEvent.SEARCH_SUCCESS, onSearchSuccess );
+  ls.searchLocal( search.text, 3, map.centerLatLon );
+}
+private function onSearchSuccess( event:LocalSearchEvent ) : void {
+  map.markerManager.removeAllMarkers();
+  var lsr:LocalSearchResults = event.data as LocalSearchResults;
+  for each( var lsi:LocalSearchItem in lsr.results )
+  	map.markerManager.addMarker( new SearchMarker( lsi ) );
+}
+]]>
+</mx:Script>
+<mx:Panel id="searchPanel" title="Location" top="500" left="20" borderAlpha="0.95">
+  <mx:TextInput id="search" text="starbucks" keyDown="onKeyDown( event )" width="300" />
+</mx:Panel>
+</mx:Application>

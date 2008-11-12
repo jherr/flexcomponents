@@ -1,0 +1,25 @@
+<data>
+		<parent name="A">
+			<child name="A1" x="4200000000"  />
+			<child name="A2" x="2100000000"  />
+			<child name="A3" x="10500000000"  />
+			<child name="A4" x="1200000000"  />
+		</parent>
+		<parent name="B">
+			<child name="B1" x="4550000000"  />
+			<child name="B2" x="12800000000"  />
+			<child name="B3" x="8700000000"  />
+			<child name="B4" x="1900000000"  />
+		</parent>
+		<parent name="C">
+			<child name="C1" x="3200000000"  />
+			<child name="C2" x="7500000000"  />
+			<child name="C3" x="3900000000"  />
+		</parent>
+		<parent name="D">
+			<child name="D1" x="2400000000"  />
+			<child name="D2" x="9600000000"  />
+			<child name="D3" x="1400000000"  />
+		</parent>
+
+</data>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  xmlns:ec="com.adobe.flex.extras.controls.*"
+  creationComplete="baseballRO.getTeamList.send()">
+
+<mx:Script>
+<![CDATA[
+private function onTeamsList() : void {
+  nameField.dataProvider = baseballRO.getTeamList.lastResult;
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="baseballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="baseball.BaseballService" destination="baseball.BaseballService"
+  showBusyCursor="true">
+<mx:method name="getTeamList" result="onTeamsList()" />
+</mx:RemoteObject>
+
+<ec:AutoComplete id="nameField" labelField="name" lookAhead="true" />
+
+</mx:Application>

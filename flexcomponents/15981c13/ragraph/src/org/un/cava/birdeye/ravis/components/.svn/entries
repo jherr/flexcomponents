@@ -1,0 +1,34 @@
+8
+
+dir
+186
+http://birdeye.googlecode.com/svn/trunk/ravis/libRaVis/org/un/cava/birdeye/ravis/components
+http://birdeye.googlecode.com/svn
+
+
+
+2008-06-20T15:40:06.486096Z
+182
+spoxta
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+0a0cd488-4f43-0410-b420-6b07f9963996
+
+renderers
+dir
+
+ui
+dir
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="init()" horizontalScrollPolicy="off">
+	<mx:Script>
+		<![CDATA[
+			
+			public var scrollSpeed:Number = 2;
+			private var scrollInterval:Number = setInterval(scroll,20);
+			
+			[Bindable]
+			public var text:String;
+		
+			private function scroll():void{
+				lblTicker.x -= scrollSpeed;
+				if(lblTicker.x < -lblTicker.width)
+					lblTicker.x = this.width;
+					
+				//trace('[this.width]'+this.width+'[lblTicker.width]'+lblTicker.width+'[labelX]'+this.x);
+			}
+			private function init():void{
+				
+			}
+		]]>
+	</mx:Script>
+	<mx:Label id="lblTicker" text="{this.text}" width="100%"/>
+</mx:HBox>

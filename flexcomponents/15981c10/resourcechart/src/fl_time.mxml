@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application 
+   xmlns:mx="http://www.adobe.com/2006/mxml" 
+   xmlns:flexlib="http://code.google.com/p/flexlib/" 
+   creationComplete="onStartup();">
+  
+<mx:Script>
+<![CDATA[
+import flexlib.scheduling.samples.ScheduleData;
+import flexlib.scheduling.util.DateUtil;
+import mx.collections.ArrayCollection;
+import mx.events.ScrollEvent;
+import mx.events.ScrollEventDirection;         
+
+[Bindable]
+private var startDate : Date;
+[Bindable]
+private var endDate : Date;
+[Bindable]
+private var zoom : Number;
+   
+private function onStartup() : void
+{
+   startDate = DateUtil.clearTime( new Date() );
+   endDate = new Date( startDate.getTime() + DateUtil.DAY_IN_MILLISECONDS );
+   scheduleViewer.dataProvider = new ScheduleData().createRandomColoredScheduleEntries( 20 );
+}
+
+private function onScrollTimeline( position : Number ) : void
+{
+   scheduleViewer.xPosition = position;
+}
+
+private function onScrollScheduleViewer( event : ScrollEvent ) : void
+{
+   if( event.direction == ScrollEventDirection.HORIZONTAL )
+      timeline.xPosition = event.position;
+}
+]]>
+</mx:Script>
+
+<mx:Panel title="Timeline" width="100%" height="100%"
+  paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+<mx:HBox paddingBottom="10">
+<mx:Label text="Zoom:"/>
+<mx:HSlider id="zoomSlider" minimum="0" maximum="1000" value="100"  
+  liveDragging="true" change="zoom=zoomSlider.value;" />
+</mx:HBox>  
+   
+<flexlib:Timeline width="100%" startDate="{startDate}" endDate="{endDate}" id="timeline"
+  zoom="{zoom}" scroll="onScrollTimeline( event.position );" />
+          
+<flexlib:ScheduleViewer id="scheduleViewer" width="100%" height="100%" 
+  startDate="{startDate}" endDate="{endDate}" zoom="{zoom}" 
+  entryRenderer="flexlib.scheduling.scheduleClasses.renderers.ColoredGradientScheduleEntryRenderer"       
+  horizontalScrollPolicy="off" 
+  pixelScroll="onScrollScheduleViewer( event );" />
+
+</mx:Panel>   
+          
+</mx:Application>

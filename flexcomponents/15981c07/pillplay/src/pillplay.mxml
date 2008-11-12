@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  xmlns="http://www.degrafa.com/2007" xmlns:reflector="com.rictus.reflector.*"
+  xmlns:filters="flash.filters.*" backgroundGradientColors="[ #000000, #222222 ]"
+  color="#FFFFFF" creationComplete="onStartup()">
+
+<mx:Script>
+<![CDATA[
+import com.afcomponents.mp3player.MP3Player;
+import com.afcomponents.mp3player.events.MP3PlayerEvent;
+
+public var player:MP3Player = new MP3Player();
+
+[Bindable]
+public var capacityWidth:Number = 570;
+
+private function onStartup() : void {
+  player.load("http://localhost/music/01 A Reminiscent Drive - Ambrosia.mp3");
+  player.addEventListener(MP3PlayerEvent.BUFFERING_STATE_ENDED, onPlayerBuffered);
+  player.addEventListener(MP3PlayerEvent.PLAYHEAD_UPDATE,onPlayheadUpdate);
+}
+
+private function initChange( event:Event ) : void {
+  if ( theReflection ) theReflection.invalidateDisplayList();
+}
+
+private function onPlayheadUpdate( event:MP3PlayerEvent ) : void {
+  firstRect.width = ( player.playheadTime / player.totalTime ) * capacityWidth;
+}
+
+private function onPlayerBuffered( event:Event ) : void { player.play(); }
+
+private function onPlay( ) : void {
+  player.pause();
+}
+]]>
+</mx:Script>
+  
+<GeometryComposition graphicsTarget="{[capacitySurface]}"
+  propertyChange="initChange(event);">
+  
+<fills>
+<LinearGradientFill id="colorOne" angle="0">
+  <GradientStop color="#62ABCD" alpha="0.6"/>
+  <GradientStop color="#62ABCD" alpha="1"/>
+</LinearGradientFill>
+<LinearGradientFill id="highlight" angle="90">
+  <GradientStop color="#FFF" alpha=".3"/>
+  <GradientStop color="#FFF" alpha=".05"/>
+</LinearGradientFill>
+<LinearGradientFill id="shadow" angle="90" blendMode="multiply">
+  <GradientStop color="#000" alpha=".01"/>
+  <GradientStop color="#000" alpha=".5"/>
+</LinearGradientFill>
+<LinearGradientFill id="inset" angle="90">
+  <GradientStop color="#CCC" alpha=".2" ratio="0" ratioUnit="pixels"/>
+  <GradientStop color="#FFF" alpha=".3" ratio="16" ratioUnit="pixels"/>
+</LinearGradientFill>
+</fills>
+    
+<strokes>
+  <SolidStroke id="whiteStroke" color="#FFF" weight="1" alpha=".15"/>
+  <SolidStroke id="darkStroke" color="#000" weight="1" alpha=".2"/>
+</strokes>
+    
+<RegularRectangle id="insetRect" width="{capacityWidth}"
+  height="{capacitySurface.height}" fill="{inset}"/>
+<RegularRectangle id="firstRect" width="100"
+  height="{capacitySurface.height}" fill="{colorOne}"/>
+<RegularRectangle id="shadowRect" width="{capacityWidth}"
+  height="{capacitySurface.height}" fill="{shadow}"/>
+<RoundedRectangleComplex id="highlightRect" bottomLeftRadius="10"
+  bottomRightRadius="10" width="{capacityWidth}" height="{capacitySurface.height/2}"
+  fill="{highlight}"/>
+
+</GeometryComposition>
+
+<mx:Image source="@Embed('band.png')" />
+<mx:Canvas top="294" left="0" width="591" height="70"
+  backgroundColor="#222222">
+
+<mx:Canvas id="pill" click="onPlay()" top="10" left="10">
+<Surface id="capacitySurface" verticalCenter="0" horizontalCenter="0"
+  width="{capacityWidth}" height="40" mask="{roundMask}">
+<GeometryGroup id="roundMask">
+<RoundedRectangle width="{capacityWidth}" height="{capacitySurface.height}"
+  cornerRadius="20" fill="{colorOne}"/>
+</GeometryGroup>
+<filters>
+<filters:GlowFilter color="#000000" alpha=".1" blurX="4" blurY="4"
+  inner="true" quality="6"/>
+</filters>
+</Surface>
+<mx:Label top="4" left="20" fontWeight="bold" fontSize="20" text="Ambrosia" />
+</mx:Canvas>
+<reflector:Reflector id="theReflection" target="{pill}" alpha=".8"
+  falloff=".5" blurAmount=".1"/>
+
+</mx:Canvas>
+
+</mx:Application>

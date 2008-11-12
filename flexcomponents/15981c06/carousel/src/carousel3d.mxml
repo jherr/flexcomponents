@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="picsData.send()" backgroundColor="white" backgroundAlpha="1"
+  backgroundGradientColors="[#000000,#000066]" backgroundGradientAlphas="[1,1]">
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import fl.data.DataProvider;
+import mx.core.UIComponent;
+import com.afcomponents.carousel3d.*;
+
+private var car:Carousel = new Carousel();
+
+public function onImageData( event:ResultEvent ) : void {
+  var uic:UIComponent = new UIComponent();
+  addChild( uic );
+     
+  var dp:DataProvider = new DataProvider();
+  for each ( var pic:XML in event.result..image ) {
+    var imgObj:Object = {};
+    imgObj.path = "http://localhost/pics/flowers/"+pic.@name.toString();
+    imgObj.type = "image";
+    dp.addItem( imgObj );
+  }
+  car.content = dp;
+
+  car.animationStyle = {easing:"easeOut", enabled:true, duration:1500, type:"Strong"};
+  car.displayStyle = {autoSize:false, maintainAspectRatio:true, scaleContent:true};
+  car.carouselStyle = {direction:'auto', distance:2000, radius:2000, type:'outside'};
+  car.width = width;
+  car.height = width * 0.2;
+  car.move( 0, width * 0.1 );
+  car.camera3D.zoom = 8;
+  uic.addChild( car );
+}  
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/flowers/images.xml" id="picsData" resultFormat="e4x"
+  result="onImageData(event)" />
+</mx:Application>

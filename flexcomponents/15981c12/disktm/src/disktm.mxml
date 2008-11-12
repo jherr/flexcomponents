@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	creationComplete="onStartup()" xmlns:ilog="http://www.ilog.com/2007/ilog/flex">
+<mx:Script>
+<![CDATA[
+private function scanDirectory( dir:File, level:int ) : Array {
+  if ( dir == null )
+    return [];
+  if ( level > 2 )
+    return [];
+  var out:Array = [];
+  for each( var f:File in dir.getDirectoryListing() ) {
+    if ( f.name.match( /^[.]/ ) )
+      continue;
+    if ( f.isDirectory )
+    {
+      out.push( { name: f.name, children: scanDirectory( f, level + 1 ), size: 0 } );
+    }
+    else
+    {
+      try
+      {
+        out.push( { name: f.name, children: [], size:f.size } );
+      }
+      catch( e:Error )
+      {
+      }
+    }
+  }
+  return out;
+}
+private function onStartup() : void {
+  var docs:File = File.documentsDirectory;
+  var data:Array = scanDirectory( docs, 0 );
+  tm.dataProvider = data;
+}  
+]]>
+</mx:Script>
+<ilog:TreeMap id="tm" width="100%" height="100%" colorField="size" labelField="name" labelThreshold="1" areaField="size"
+  colorScheme="div-red-green" backgroundColor="0xFFFFFF"              
+  textBackgroundColor="0xFFFFFF" borderThreshold="1"
+  borderThickness="1" maxTopMargin="20" neutral="0" animationDuration="500">
+</ilog:TreeMap>
+</mx:WindowedApplication>

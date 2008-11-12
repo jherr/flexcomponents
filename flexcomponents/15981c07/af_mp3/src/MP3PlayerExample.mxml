@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+  creationComplete="onCreation()" layout="absolute"
+  width="585" height="393" horizontalScrollPolicy="off"
+  verticalScrollPolicy="off">
+<mx:Style>
+.boundingBox {
+  padding-bottom: 10; padding-left: 10;
+  padding-right: 10; padding-top: 10;
+  corner-radius: 15; border-style: solid;
+  border-color: #cccccc; border-thickness: 1;
+  background-color: #eeeeee;
+  background-alpha: 0.5;
+}
+</mx:Style>
+<mx:Script>
+<![CDATA[
+import com.afcomponents.mp3player.MP3Player;
+import com.afcomponents.mp3player.events.MP3PlayerEvent;
+
+public var player:MP3Player = new MP3Player();
+
+private function onCreation():void
+{
+  player.volume = 0.7;
+  volumeSlider.value = 0.7;
+
+  player.load("http://localhost/music/01 A Reminiscent Drive - Ambrosia.mp3");
+  
+  mp3Progress.source = player;
+
+  player.addEventListener(MP3PlayerEvent.BUFFERING_STATE_ENDED, onPlayerBuffered);
+  player.addEventListener(MP3PlayerEvent.PLAYHEAD_UPDATE, onPlayerUpdate);
+}
+
+private function onPlayerBuffered( event:Event ) : void { player.play(); }
+
+private function onPlayerUpdate( event:Event ) : void {
+  var dspTime:String  = "";
+  var time:Number = Math.round( player.playheadTime );
+  if(Math.floor(time/60) < 10)
+    dspTime = "0" + String(Math.floor(time/60)) + ":"
+  else
+    dspTime = String(Math.floor(time/60)) + ":"
+  
+  var seconds:Number = time;
+  if(Math.floor(time/60) > 0)
+    seconds = time - (Math.floor(time/60) * 60);
+
+  if(seconds < 10)
+    dspTime += "0" + String(seconds);
+  else
+    dspTime += String(seconds);
+  lblTime.text = dspTime;
+}
+
+private function onPlay(event:MouseEvent) : void {
+  if(player.state != "playing") player.play();
+}
+
+private function onMute( event:MouseEvent ) : void {
+  if( player.mute ) {
+    player.mute = false;
+    btnMute.label = "Mute";
+  } else {
+    player.mute = true;
+    btnMute.label = "Unmute";
+  }
+}
+]]>
+</mx:Script>
+<mx:Image source="@Embed('band.png')" />
+<mx:VBox styleName="boundingBox" top="267" left="10" horizontalAlign="center">
+<mx:ProgressBar id="mp3Progress" width="242" labelPlacement="center" barColor="#FF4342"/>
+<mx:HBox verticalAlign="middle">
+<mx:Button label="Play" click="onPlay(event)"/>
+<mx:Button label="Pause" click="player.pause()"/>
+<mx:Button label="Stop" click="player.seek(0);player.stop();"/>
+<mx:Label text="00:00" textAlign="right" id="lblTime"/>
+</mx:HBox>
+<mx:HBox>
+<mx:HSlider width="80" id="volumeSlider" minimum="0" maximum="1"
+  snapInterval="0.1" liveDragging="true" change="player.volume=volumeSlider.value"/>
+<mx:Button label="Mute" id="btnMute" click="onMute(event)"/>
+</mx:HBox>
+</mx:VBox>
+</mx:Application>

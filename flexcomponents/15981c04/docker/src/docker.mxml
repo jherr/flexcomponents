@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+  xmlns:containers="com.teotiGraphix.containers.*" xmlns:dockPanes="components.dockPanes.*"
+  xmlns:dockLists="components.dockLists.*" xmlns:baseExample="components.baseExample.*"
+  creationComplete="onStartup();" paddingTop="0" paddingLeft="0" paddingRight="0" paddingBottom="0"
+  verticalGap="0" layout="vertical">
+
+<mx:Move duration="250" id="DockerMove"/>
+<mx:Fade duration="250" id="DockPaneFade"/>
+	
+<mx:Script>
+<![CDATA[
+import com.teotiGraphix.managers.events.ResizeManagerEvent;
+import mx.core.UIComponent;
+import com.teotiGraphix.containers.events.DockEvent;
+
+private function onStartup() : void
+{
+  vPaneDockArea.addEventListener( ResizeManagerEvent.RESIZE_MANAGER_END,
+    resizeManagerEndHandler);
+  vToolDockArea.addEventListener( ResizeManagerEvent.RESIZE_MANAGER_END,
+    resizeManagerEndHandler);
+  hBottomToolBar.addEventListener( ResizeManagerEvent.RESIZE_MANAGER_END,
+    resizeManagerEndHandler);
+}
+private function resizeManagerEndHandler( event:ResizeManagerEvent ) : void {
+  vPaneDockArea.percentHeight = 100;
+  vToolDockArea.percentHeight = 100;
+  hBottomToolBar.percentWidth = 100;
+}
+private function panelDockHandler( event:DockEvent ) : void {
+  UIComponent(event.dockInitiator).percentWidth = 100;
+}
+]]>
+</mx:Script>
+
+<mx:Style>
+.verticalToggleDockStyles {
+}
+.horizontalToggleDockStyles {
+}
+DockAreaFX {
+  cornerRadius:0;
+  backgroundAlpha:1;
+  borderStyle:"none";
+  boundingBoxColor:#FFFFFF;
+  boundsCheckEnabled:false;
+  overlayButtonOffset:"center";
+  resizeType:"realtime";
+  overlayButtonThickness:7;
+  overlayFillColor:#242424;
+  resizeBarGap:0;
+
+}
+DockPaneFX {
+  addedEffect:"DockPaneFade";
+  resizeClientOverlayAlpha:0;
+  overlayButtonOffset:"inside";
+  overlayButtonThickness:5;
+  
+} 
+.verticalResizeBarStyles {
+  borderSkin:Embed(source='/assets/vertical_bar_skin.png');
+}
+.horizontalResizeBarStyles {
+  borderSkin:Embed(source='/assets/horizontal_bar_skin.png');
+} 
+</mx:Style>
+
+<containers:ResizeDockAreaFX layout="flow" showResizeBar="true" resizeEnabled="false"
+  resizeBarThickness="7" resizeBarPlacement="bottom"
+  horizontalResizeBarStyleName="horizontalResizeBarStyles" width="100%" minHeight="50">
+  
+<baseExample:HToolBar floatTitleBarPlacement="bottom" title="Tool One">
+<mx:Button label="Open" />
+<mx:Label text="Size" />
+<mx:NumericStepper value="12"/>
+<mx:ComboBox selectedIndex="0">
+  <mx:dataProvider>
+    <mx:Array>
+      <mx:String>Times New Roman</mx:String>
+      <mx:String>Arial</mx:String>
+    </mx:Array>
+  </mx:dataProvider>
+</mx:ComboBox>
+</baseExample:HToolBar>
+  
+</containers:ResizeDockAreaFX>
+
+<mx:HBox width="100%" height="100%">
+  
+<containers:ResizeDockAreaFX id="vPaneDockArea"
+  dock="panelDockHandler(event)" showResizeBar="true"
+  resizeBarThickness="7" resizeBarPlacement="right"
+  verticalResizeBarStyleName="verticalResizeBarStyles"
+  height="100%" minHeight="0" minWidth="200" maxWidth="420">
+
+<dockPanes:DockPanelPane id="paneTwo" title="Panel Two">
+  <mx:DateChooser/>
+</dockPanes:DockPanelPane>
+  
+</containers:ResizeDockAreaFX>
+
+<mx:HBox width="100%" height="100%" />
+<containers:ResizeDockAreaFX id="vToolDockArea" horizontalAlign="right"
+  showResizeBar="true" resizeEnabled="false" resizeBarThickness="7"
+  resizeBarPlacement="left" verticalResizeBarStyleName="verticalResizeBarStyles"  
+  height="100%" minWidth="7" maxWidth="200" />
+
+</mx:HBox>
+
+<containers:ResizeDockAreaFX layout="horizontal" id="hBottomToolBar"
+  showResizeBar="true" resizeBarThickness="7" resizeBarPlacement="top"  
+  horizontalResizeBarStyleName="horizontalResizeBarStyles" width="100%" />
+
+</mx:Application>

@@ -1,0 +1,269 @@
+ApplicationControlBar {
+   highlightAlphas: 0, 1;
+   fillAlphas: 1, 1;
+   fillColors: #dedede, #ffffff;
+   fontSize: 13;
+   paddingLeft: 0;
+   paddingRight: 0;
+   paddingBottom: 0;
+}
+
+@font-face {
+	src:url("lucidaGrande.swf"); 
+	font-family: "Lucida Grande";
+}
+
+Application {
+	fontFamily: "Lucida Grande";
+	color: #000000;
+	fontSize: 12;
+	backgroundColor: #1F4488;
+	themeColor: #3370ce;
+}
+
+MenuBar { 
+   backgroundAlpha: .9;
+   backgroundColor: #ffffff;
+   borderColor: #ffffff;
+   rollOverColor: #3370ce;
+   selectionColor: #3370ce;
+   color: #000000;
+   textRollOverColor: #ffffff;
+   textSelectedColor: #ffffff;
+   disabledColor: #8e8e8e;
+   borderThickness: 0;
+   borderStyle: none;
+   dropShadow: true;
+}
+
+Panel { 
+   cornerRadius: 8;
+   headerHeight: 22;
+   shadowDistance: 3;
+   borderThickness: 1;
+   borderAlpha: 1;
+   borderStyle: solid;
+   borderColor: #c0c0c0;
+   highlightAlpas: 0.3,0;
+   headerColors: #f9f9f9, #cacaca;
+   titleStyleName: "panelTitle";
+   panelBorderStyle: default;
+   paddingTop: 5;
+   paddingBottom: 5;
+   paddingRight: 5;
+   paddingLeft: 5;
+   }
+   
+.panelTitle {
+	color: #000000;
+	textAlign: center;
+	fontWeight: normal;
+}
+
+TextInput {
+	fontSize: 11;
+	backgroundColor: #FFFFFF;
+}
+
+
+Button { 
+   cornerRadius: 12;
+    highlightAlphas: 1, 0.32;
+  fillAlphas: 1, 1, 1, 1;
+   fillColors: #cccccc, #ffffff, #cccccc, #ffffff;
+   borderColor: #999999;
+   dropShadow: true;
+   shadowDistance: 1;
+   fontSize: 11;
+   fontWeight: normal;
+}
+
+.blueButton { 
+   cornerRadius: 12;
+   highlightAlphas: 0.79, 0.2;
+   fillColors: #195eb9, #adf8ff, #195eb9, #adf8ff;
+   fillAlphas: 1, 1, 1, 1;
+   borderColor: #999999;
+   dropShadow: true;
+   shadowDistance: 1;
+   fontSize: 11;
+   fontWeight: normal;
+}
+
+Accordion { 
+   headerHeight: 17;
+   borderStyle: solid;
+   backgroundAlpha: 1;
+   focusAlpha: 0;
+   highlightAlphas: 0.79, 0.2;
+   fillAlphas: 1, 1, 1, 1;
+   fillColors: #e0e0e0, #ffffff, #e0e0e0, #ffffff;
+   selectedFillColors: #195eb9, #adf8ff;
+   borderColor: #8e8e8e;
+   color: #000000;
+   textRollOverColor: #000000;
+   textSelectedColor: #000000;
+   fontSize: 10;
+   fontWeight: normal;
+}
+
+
+NumericStepper { 
+   cornerRadius: 7;
+   highlightAlphas: 0.6, 1;
+   fillAlphas: 1, 1, 1, 1;
+   fillColors: #cccccc, #ffffff, #cccccc, #ffffff;
+   borderColor: #999999;
+   fontSize: 11;
+   fontWeight: normal;
+}
+
+CheckBox {
+   borderColor: #999999;
+   highlightAlphas: 1, 0.23;
+   fillAlphas: 1, 1, 1, 1;
+   fillColors: #aaaaaa, #ffffff, #cccccc, #ffffff;
+   fontSize: 11;
+   fontWeight: normal;
+   textRollOverColor: #000000;
+   color: #000000;
+   textSelectedColor: #000000;
+}
+
+RadioButton {
+   borderColor: #999999;
+   highlightAlphas: 1, 0.23;
+   fillAlphas: 1, 1, 1, 1;
+   fillColors: #aaaaaa, #ffffff, #cccccc, #ffffff;
+   fontSize: 11;
+   fontWeight: normal;
+   textRollOverColor: #000000;
+   color: #000000;
+   textSelectedColor: #000000;
+}
+
+
+
+ComboBox {
+   backgroundAlpha: .85;
+   color: #000000;
+   borderColor: #999999;
+   cornerRadius: 17;
+   highlightAlphas: 1, 0.32;
+   fillAlphas: 1, 1, 1, 1;
+   fillColors: #cccccc, #ffffff, #cccccc, #ffffff;
+   selectionColor: #ffffff;
+   textSelectedColor: #000000;
+   rollOverColor: #3370ce;
+   textRollOverColor: #ffffff;
+   themeColor: #3370ce;
+   fontWeight: normal;
+   fontSize: 11;
+}
+
+HSlider {
+   labelOffset: 33;
+   tickLength: 6;
+   tickOffset: 13;
+   tickColor: #5c5c5c;
+   trackHighlight: false;
+   borderColor: #ffffff;
+   trackColors: #666666, #cccccc;
+   themeColor: #3370ce;
+   fillAlphas: 1, 1, 1, 1;
+   fillColors: #195eb9, #adf8ff, #ffffff, #eeeeee;
+}
+
+VScrollBar {
+
+}
+
+
+TabNavigator {
+	paddingRight: 10;
+	paddingTop: 10;
+	paddingBottom: 10;
+	paddingLeft: 10;
+	fontSize: 11;
+	 tabHeight: 20;
+   tabWidth: 100;
+   cornerRadius: 0;
+   horizontalGap: 0;
+   paddingLeft: 0;
+   borderStyle: solid;
+   borderColor: #757575;
+   selectedTabTextStyleName: "selectedTab";
+}
+
+.selectedTab {
+   fontSize: 11;
+   fontWeight: normal;
+   color: #000000;
+}
+
+Tab {
+   cornerRadius: 6;
+   highlightAlphas: 1, 0.32;
+   fillAlphas: 1, 1;
+   fillColors: #cccccc, #ffffff;
+   backgroundColor: #ffffff;
+   borderColor: #666666;
+   color: #000000;
+   textRollOverColor: #000000;
+   themeColor: #3370ce;
+   fontSize: 11;
+   fontWeight: normal;
+}
+
+
+List {
+	 borderColor: #8e8e8e;
+	 backgroundColor: #FFFFFF;
+	 color: #000000;
+	 textSelectedColor: #FFFFFF;
+	 selectionColor: #3370ce;
+	 useRollOver: false;
+	 selectionDuration: 10;
+}
+
+DataGrid {
+   alternatingRowColors: #ffffff, #ffffff;
+   headerColors: #efefef, #ffffff;
+   vGridLines: true;
+   vGridLineColor: #cccccc;
+   useRollOver: false;
+   selectionColor: #3370ce;
+   color: #000000;
+   textSelectedColor: #ffffff;
+   fontSize: 10;
+   themeColor: #3370ce;
+}
+
+VScrollBar {
+	cornerRadius: 15;
+   highlightAlphas: 0.79, 0.2;
+   fillColors: #195eb9, #adf8ff, #195eb9, #adf8ff;
+   fillAlphas: 1, 1, 1, 1;
+   borderColor: #999999;
+   trackColors: #c0c0c0, #FFFFFF;
+}
+
+HScrollBar {
+	cornerRadius: 15;
+   highlightAlphas: 0.79, 0.2;
+   fillColors: #195eb9, #adf8ff, #195eb9, #adf8ff;
+   fillAlphas: 1, 1, 1, 1;
+   borderColor: #999999;
+   trackColors: #c0c0c0, #FFFFFF;
+}
+
+DateChooser {
+	cornerRadius: 15;
+   highlightAlphas: 0.79, 0.2;
+   fillColors: #195eb9, #adf8ff, #195eb9, #adf8ff;
+   fillAlphas: 1, 1, 1, 1;
+   borderColor: #999999;
+   todayColor: #3370ce;
+   headerColors: #f9f9f9, #cacaca;
+   dropShadow: true;
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+import bkde.as3.boards.GraphingBoard;
+import bkde.as3.parsers.MathParser;
+import bkde.as3.parsers.CompiledObject;
+
+private var gboard:GraphingBoard;
+
+private function onStartup() : void {
+  gboard = new GraphingBoard( plotHost.width, plotHost.height );
+  plotHost.addChild( gboard );
+
+  gboard.changeBorderColorAndThick(0,0);
+  gboard.setAxesColorAndThick( 0xCCCCCC, 1 );
+  
+  runPlot();
+}
+
+private function runPlot() : void
+{
+  var procFun:MathParser = new MathParser(['x']);
+  var co:CompiledObject = procFun.doCompile( funcText.text );
+
+  var xDiffs:Array = [
+    { diff:1, color: 0xFF0000 },
+    { diff:2, color: 0x00FF00 },
+    { diff:4, color: 0x0000FF },
+    { diff:8, color: 0xFFFF00 }  ];
+
+  gboard.cleanBoard();
+  gboard.setVarsRanges(-10,10,-10,10);
+  gboard.setMaxNumGraphs( xDiffs.length );
+  gboard.drawAxes();
+
+  for( var i:String in xDiffs )
+  {
+    var output:Array = new Array();
+    for( var x:Number = -10; x < 10; x += 0.1 )
+      output.push( [ x, procFun.doEval( co.PolishArray, [x / Number( xDiffs[i].diff ) ] ) ] );
+    gboard.drawGraph( int(i) + 1, ( xDiffs.length + 1 ) - int(i), output, xDiffs[i].color );
+  }
+}
+
+private function onResize() : void { 
+  if ( initialized == false ) return;
+  gboard.width = plotHost.width;
+  gboard.height = plotHost.height;
+}
+]]>
+</mx:Script>
+<mx:Panel width="100%" height="100%" title="Math Plotter" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+<mx:HBox>
+  <mx:TextInput id="funcText" text="sin(x*2)*10" />
+  <mx:Button label="Plot" click="runPlot()" />
+</mx:HBox>
+  <mx:UIComponent id="plotHost" width="100%" height="100%" resize="onResize()" />
+</mx:Panel>
+</mx:Application>

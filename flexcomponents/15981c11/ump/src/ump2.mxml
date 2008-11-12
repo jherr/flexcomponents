@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+   creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+import com.afcomponents.umap.types.LatLng;
+import com.afcomponents.umap.gui.*;
+import com.afcomponents.umap.events.MapEvent;
+import com.afcomponents.umap.core.UMap;
+import mx.core.UIComponent;
+
+private var map:UMap = new UMap();
+
+private function onStartup() : void {
+  var uic:UIComponent = new UIComponent();
+  uic.setStyle( 'top', 0 );
+  uic.setStyle( 'left', 0 );
+  uic.width = width;
+  uic.height = height;
+  addChildAt( uic, 0 );
+
+  map.setSize( width, height );
+  map.addEventListener(MapEvent.READY, onMapReady);
+  uic.addChild( map );  
+}	
+private function onMapReady( event:MapEvent ) : void {
+  map.addControl( new ZoomControl() );
+  map.addControl( new MapTypeControl() );
+  map.addControl( new PositionControl() );
+  map.setCenter( new LatLng( 41, -105 ) );
+  map.setZoom( 4 );
+}
+]]>
+</mx:Script>
+</mx:Application>

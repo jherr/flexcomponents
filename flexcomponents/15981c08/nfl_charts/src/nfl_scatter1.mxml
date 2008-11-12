@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="searchPlayers()"
+  xmlns:degrafa="http://www.degrafa.com/2007">
+
+<mx:Style>
+Application {
+  background-gradient-colors: #66FF66, #eeffee;
+  font-weight: bold;
+  font-size: 14;
+}
+</mx:Style>
+
+<mx:Script>
+<![CDATA[
+import mx.graphics.SolidColor;
+import mx.graphics.Stroke;
+import mx.charts.series.PlotSeries;
+import mx.core.UIComponent;
+import mx.managers.DragManager;
+import mx.events.DragEvent;
+import mx.charts.HitData;
+
+private var requestPlayer:Object = null;
+
+private function searchPlayers() : void {
+  footballRO.findPlayer.send( srchText.text );
+}
+
+private function onFindPlayer() : void {
+  var players:Array = footballRO.findPlayer.lastResult;
+  for each( var player:Object in players ) {
+    player.name = player.first + " " + player.last;
+  }
+  playerList.dataProvider = players;
+}
+
+private function onPlayerDblClick() : void {
+  requestPlayer = playerList.selectedItem;
+  footballRO.getGamesByPlayer.send( playerList.selectedItem.id );
+}
+
+private var dataSeriesList:Array = [];
+
+private var fills:Array = [ 0xFF0000, 0x00FF00, 0x0000FF ];
+
+private function onGamesByPlayer() : void {
+  var ls:PlotSeries = new PlotSeries();  
+  ls.displayName = requestPlayer.first + " " + requestPlayer.last;
+  ls.xField = "passyd";
+  ls.yField = "att";
+  ls.setStyle( 'stroke', new Stroke( fills[ dataSeriesList.length ], 1 ) );
+  ls.setStyle( 'fill', new SolidColor( fills[ dataSeriesList.length ], 0.5 ) );
+  ls.setStyle( 'radius', 10 );
+  ls.dataProvider = footballRO.getGamesByPlayer.lastResult;
+  
+  dataSeriesList.push( ls );
+  
+  lineChart.series = dataSeriesList;
+}
+
+private function makeDataTip( hd:HitData ) : String {
+  return "<b>"+hd.item.team+"</b> "+hd.item.year+" week "+hd.item.week;
+}
+
+private function onDragDrop( event:DragEvent ) : void {
+  var items:Array = event.dragSource.dataForFormat("items") as Array;
+  for each( var player:Object in items ) {
+    requestPlayer = player;
+    footballRO.getGamesByPlayer.send( player.id );
+  }
+}
+
+private function onDragEnter( event:DragEvent ) : void {
+  var dragInitiator:UIComponent = UIComponent(event.currentTarget);
+  DragManager.acceptDragDrop( dragInitiator );
+}
+
+private function onDragOver( event:DragEvent ) : void {
+  DragManager.showFeedback( DragManager.COPY );
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="footballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="football.FootballService" destination="football.FootballService"
+  showBusyCursor="true">
+<mx:method name="findPlayer" result="onFindPlayer()">
+<mx:arguments>
+  <mx:Name />
+</mx:arguments>
+</mx:method>
+<mx:method name="getGamesByPlayer" result="onGamesByPlayer()">
+<mx:arguments>
+  <mx:Player />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<mx:VBox paddingBottom="15" paddingLeft="15" paddingRight="15" paddingTop="15" backgroundColor="#cccccc"
+  borderColor="#eeeeee" cornerRadius="15" borderThickness="3" borderStyle="solid"
+  width="90%" height="90%" top="30" left="30" dragEnter="onDragEnter(event)" dragOver="onDragOver(event)"
+  dragDrop="onDragDrop(event)">
+<mx:filters>
+  <mx:DropShadowFilter distance="10" alpha="0.7" />
+</mx:filters>
+
+<mx:PlotChart width="100%" height="100%" id="lineChart" showDataTips="true" dataTipFunction="makeDataTip">
+
+<mx:backgroundElements>
+<degrafa:Surface>
+  <degrafa:fills>
+  	<degrafa:SolidFill id="whiteFill" color="white" />
+  </degrafa:fills>
+  <degrafa:GeometryGroup>
+  	<degrafa:RegularRectangle x="0" y="0" width="{lineChart.width}" height="{lineChart.height}"
+       fill="{whiteFill}" />
+  </degrafa:GeometryGroup>
+</degrafa:Surface>
+<mx:GridLines direction="both">
+  <mx:horizontalStroke>
+  	<mx:Stroke color="#bbbbbb" />
+  </mx:horizontalStroke>
+  <mx:verticalStroke>
+  	<mx:Stroke color="#bbbbbb" />
+  </mx:verticalStroke>
+</mx:GridLines>
+</mx:backgroundElements>
+
+<mx:verticalAxis>
+  <mx:LinearAxis title="Attempts" />
+</mx:verticalAxis>
+<mx:horizontalAxis>
+  <mx:LinearAxis title="Yards" />
+</mx:horizontalAxis>
+</mx:PlotChart>
+<mx:Legend dataProvider="{lineChart}" direction="horizontal" />
+
+</mx:VBox>
+
+<mx:Panel title="Search" width="200" height="150" paddingBottom="5" paddingLeft="5"
+  paddingRight="5" paddingTop="5" layout="vertical" left="600" top="10" borderAlpha="0.8">
+  <mx:TextInput width="100%" id="srchText" text="Aikman" keyUp="searchPlayers()" />
+  <mx:List id="playerList" width="100%" height="100%" labelField="name"
+  	doubleClickEnabled="true" doubleClick="onPlayerDblClick()" dragEnabled="true" />
+</mx:Panel>
+
+</mx:Application>

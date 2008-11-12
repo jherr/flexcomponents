@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  backgroundGradientColors="[#333333, #222222]"
+  xmlns="http://www.degrafa.com/2007" xmlns:flash.filters="flash.filters.*">
+        
+<mx:Image alpha=".3" source="http://localhost/pics/IMG_1558.jpg"
+  autoLoad="true" maintainAspectRatio="true" scaleContent="false"
+  top="150" left="50">
+  <mx:filters><flash.filters:BlurFilter blurX="20" blurY="20"/></mx:filters>
+</mx:Image>
+<mx:Image mask="{topMask}" source="http://localhost/pics/IMG_1558.jpg"
+  autoLoad="true" maintainAspectRatio="true" scaleContent="false"
+  top="150" left="50" />
+
+<Surface>
+<GeometryGroup id="topMask" x="{xSlider.value}" y="{ySlider.value}" rotation="{rotationSlider.value}">
+  <fills><SolidFill color="#FFF" alpha="1" id="fill1"/></fills>
+  <RegularRectangle width="{widthSlider.value}" height="{heightSlider.value}"
+     fill="{fill1}" stroke="{stroke1}"/>
+</GeometryGroup>
+<GeometryGroup x="{xSlider.value}" y="{ySlider.value}" rotation="{rotationSlider.value}">
+  <stroke><SolidStroke color="#000" weight="2" id="stroke1"/></stroke>
+  <RegularRectangle width="{widthSlider.value}" height="{heightSlider.value}"
+    stroke="{stroke1}"/>
+</GeometryGroup>
+</Surface>
+
+<mx:VBox top="10" backgroundColor="#666666" borderStyle="solid" borderColor="#111111"
+  cornerRadius="8" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" left="5">
+<mx:Form>
+  <mx:FormItem label="Width">
+    <mx:HSlider id="widthSlider" minimum="0" maximum="600" liveDragging="true" value="300"/>
+  </mx:FormItem>
+  <mx:FormItem label="Height">
+    <mx:HSlider id="heightSlider" minimum="0" maximum="600" liveDragging="true" value="140"/>
+  </mx:FormItem>
+  <mx:FormItem label="X">
+    <mx:HSlider id="xSlider" minimum="0" maximum="1000" liveDragging="true" value="220"/>
+  </mx:FormItem>
+  <mx:FormItem label="Y">
+    <mx:HSlider id="ySlider" minimum="0" maximum="1000" liveDragging="true" value="220"/>
+  </mx:FormItem>
+  <mx:FormItem label="Rotation">
+    <mx:HSlider id="rotationSlider" minimum="0" maximum="360" liveDragging="true" value="0"/>
+  </mx:FormItem>
+</mx:Form>
+</mx:VBox>
+      
+</mx:Application>

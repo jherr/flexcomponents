@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas autoLayout="true" xmlns:mx="http://www.adobe.com/2006/mxml" creationComplete="createListeners()">
+	<!--
+		Select Tree Version 0.1 (Beta)
+		Written By Steve House
+		http://www.stevehouse.org
+		Modification/Distribution of source is acceptable but this header must remain in place.
+		Updates will be posted to the site above.
+	-->
+	
+	<!-- Events fired out by this component -->
+	<mx:Metadata>
+       [Event(name="change")]
+    </mx:Metadata>
+
+
+	<mx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			
+			[Bindable] private var _dataProvider:Object;
+			[Bindable] private var _labelField:String;
+			
+			// TODO: The _selectedItem property and the corresponding getter and setter below accept a generic Object
+			// however you may want to type them to the actual item types you are using
+			[Bindable] private var _selectedItem:Object;
+			private var _idFunction:Function;
+			private var _textFunction:Function;
+			private var _isOpen:Boolean;
+			
+			public function get dataProvider():Object {
+				return this._dataProvider;
+			}
+			public function set dataProvider(o:Object):void {
+				this._dataProvider = o;
+			}
+			public function get labelField():String {
+				return this._labelField;
+			}
+			public function set labelField(s:String):void {
+				this._labelField = s;
+			}
+			public function get idFunction():Function {
+				return this._idFunction;
+			}
+			public function set idFunction(f:Function):void {
+				this._idFunction = f;
+			}
+			public function get selectedItem():Object {
+				return this._selectedItem;
+			}
+			public function set selectedItem(o:Object):void {
+				this._selectedItem = o;
+			}
+			public function get textFunction():Function {
+				return this._textFunction;
+			}
+			public function set textFunction(f:Function):void {
+				this._textFunction = f;
+			}
+			
+			// TODO: Add ability to have an item selected by default (Work in progress)
+			/* 
+			public function setSelection(s:Subject):void {			
+				// Set field to blank if null
+				if(s == null) {
+					itemInputBox.text = "";	
+					this.selectedItem = null;
+					itemTree.selectedItem = null;
+					itemTree.selectedIndices = new Array;
+				}
+				else {
+					this.selectedItem = s;
+					itemTree.selectedItem = this.selectedItem;
+					itemInputBox.text = s.sSubject;
+					// Loop over the tree items, find and select the item
+					var aItems:Array = (itemTree.dataProvider as ArrayCollection).toArray();
+					var aSelections:ArrayCollection;
+					aSelections = selectChildren(aItems,s);
+					itemTree.selectedIndices = aSelections.toArray();
+				}
+			}
+			
+			private function selectChildren(aItems:Array, s:Subject):ArrayCollection {
+				var aSelections:ArrayCollection = new ArrayCollection();
+				for(var i:int=0; i < aItems.length; i++) {
+					if(Subject(aItems[i]).iSubjectId == s.iSubjectId) {
+						aSelections.addItem(i);
+					}
+					if(Subject(aItems[i]).children != null) {
+						var aChildSelections:ArrayCollection;
+						aChildSelections = selectChildren(Subject(aItems[i]).children,s);
+						if(aChildSelections.length > 0) {
+							for(var j:int=0; j < aChildSelections.length; j++) {
+								aSelections.addItem(aChildSelections[j]);
+							}
+						}
+					}
+				}
+				return aSelections;
+			}
+			*/
+			
+			private function createListeners():void {
+				itemTree.addEventListener(FocusEvent.FOCUS_OUT,focusOut);
+				addEventListener(KeyboardEvent.KEY_UP,handleKeyboard);
+			}
+			
+			private function selectItem(event:Event):void {
+				// If the selected node is not a branch, then select item
+				// fill in the text display and hide the selection tree
+				if(!event.target.dataDescriptor.isBranch(event.target.selectedItem)) {					
+					itemInputBox.text = textFunction(event.target.selectedItem);
+					this.selectedItem = event.target.selectedItem;
+					this.dispatchEvent(new Event("change"));
+				}
+				
+				
+			}
+			
+			private function focusIn(e:FocusEvent):void {
+				showSelectTree(true);
+			}
+			
+			private function focusOut(e:FocusEvent):void {
+				showSelectTree(false);
+			}
+			
+			private function handleKeyboard(e:KeyboardEvent):void {
+				if(e.keyCode == 32) showSelectTree(!this._isOpen);
+				if(e.keyCode == 13) showSelectTree(false);
+			}
+			
+			public function toggleOpenClose(e:Event):void {
+				showSelectTree(!this._isOpen);
+			}
+			
+			public function showSelectTree(bShow:Boolean):void {
+				this.itemTree.visible=bShow;
+				this.itemTree.includeInLayout=bShow;
+				this._isOpen=bShow;
+				if(this._isOpen) focusManager.setFocus(itemTree);
+			}
+			
+			
+			// Clear the selected item
+			public function clearSelection():void {
+				this.itemInputBox.text = '';
+				this.itemTree.selectedIndex = -1;
+				this.selectedItem = null;
+				this.dispatchEvent(new Event("change"));
+			}
+					
+			
+		   ]]>
+	</mx:Script>
+	
+	<mx:ComboBox id="itemComboBox" x="0" y="0" width="300" enabled="true" tabEnabled="{this.tabEnabled}" tabIndex="{this.tabIndex}" />
+	<mx:TextInput x="0" y="2" id="itemInputBox" styleName="SliddingTreeTextInput" text="" click="toggleOpenClose(event)" editable="false" width="300" tabEnabled="false" />
+	<mx:Tree x="0" y="22" id="itemTree" dataProvider="{this._dataProvider}" labelField="{this._labelField}" visible="false" showRoot="false" width="300" height="231" allowMultipleSelection="false" click="toggleOpenClose(event)" change="selectItem(event)" showEffect="WipeDown" hideEffect="WipeUp" includeInLayout="false" tabEnabled="false" />
+	
+</mx:Canvas>
+

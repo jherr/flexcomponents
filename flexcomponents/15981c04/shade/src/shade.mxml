@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  width="100%" height="100%"
+  verticalScrollPolicy="on"
+  creationComplete="picData.send()" xmlns:flexlib="flexlib.containers.*">
+<mx:Script>
+<![CDATA[
+import flexlib.containers.WindowShade;
+import mx.controls.Image;
+import mx.rpc.events.ResultEvent;
+
+private function onPicResult( event:ResultEvent ) : void {
+  for each( var pic:XML in event.result..image ) {
+  	var ws:WindowShade = new WindowShade();
+  	ws.label = pic.@name.toString();
+  	
+  	var img:Image = new Image();
+  	img.data = 'http://localhost/pics/'+pic.@name.toString();
+  	img.width = 400;
+  	img.height = 300;
+  	ws.addChild( img );
+
+  	addChild( ws );
+  }
+}
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/wide.xml" id="picData" resultFormat="e4x"
+  result="onPicResult( event )" />
+</mx:Application>

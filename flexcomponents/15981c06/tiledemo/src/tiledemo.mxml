@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="onStartup(event)" backgroundColor="white" backgroundAlpha="1"
+  backgroundGradientColors="[#ffffff,#ffffff]" backgroundGradientAlphas="[1,1]">
+<mx:Script>
+<![CDATA[
+import mx.core.UIComponent;
+import com.digicrafts.controls.FotoTile;
+
+public function onStartup( event:Event ) : void {
+  var uic:UIComponent = new UIComponent();
+  addChild( uic );
+
+  var pt:FotoTile = new FotoTile();
+  uic.addChild( pt );
+
+  pt.move( 0 - ( width / 2 ), 0 );
+  pt.setSize( width, height );
+  pt.source = 'http://localhost/pics/thom/ptimages.xml';
+  pt.start();
+}  
+]]>
+</mx:Script>
+</mx:Application>

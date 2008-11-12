@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="baseballRO.getTeamList.send()"
+  xmlns:ilog="http://www.ilog.com/2007/ilog/flex"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+
+<mx:Script>
+<![CDATA[
+import mx.charts.series.items.BubbleSeriesItem;
+import mx.graphics.SolidColor;
+import mx.charts.series.items.PlotSeriesItem;
+import mx.graphics.IFill;
+import mx.charts.ChartItem;
+import mx.charts.HitData;
+
+private function onYearsResult() : void {
+  chart.dataProvider = baseballRO.getYearsByTeam.lastResult;
+}
+
+private function onTeamsList() : void {
+  teamSelector.dataProvider = baseballRO.getTeamList.lastResult;
+  teamSelector.selectedIndex = 0;
+}
+
+private function onTeamChange() : void {
+  if ( teamSelector.selectedItem != null && teamSelector.selectedItem.teamid != null )
+    baseballRO.getYearsByTeam.send( teamSelector.selectedItem.teamid );
+}
+
+private function makeDataTip( hd:HitData ):String {
+  return "Hits <b>"+hd.item.h+"</b><br/>Doubles <b>"+hd.item['2b']+"</b>";
+}
+
+private var lastPt:Point = null;
+
+private function onMouseDown( event:MouseEvent ) : void {
+  lastPt = new Point( event.localX, event.localY );
+}
+private function onMouseUp( event:MouseEvent ) : void {
+  lastPt = null;
+}
+private function onMouseMove( event:MouseEvent ) : void {
+  if ( lastPt == null ) return;
+  chart.rotationAngle += ( event.localX - lastPt.x ) * 0.2;
+  chart.elevationAngle += ( event.localY - lastPt.y );
+  lastPt = new Point( event.localX, event.localY );
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="baseballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="baseball.BaseballService" destination="baseball.BaseballService"
+  showBusyCursor="true">
+<mx:method name="getYearsByTeam" result="onYearsResult()">
+<mx:arguments>
+  <mx:Team />
+</mx:arguments>
+</mx:method>
+<mx:method name="getTeamList" result="onTeamsList()" />
+</mx:RemoteObject>
+
+<mx:Image width="1000" source="@Embed('background.jpg')">
+  <mx:filters>
+  	<mx:BlurFilter blurX="4" blurY="4" />
+  </mx:filters>
+</mx:Image>
+
+<mx:VBox paddingBottom="10" paddingLeft="10" paddingRight="19" paddingTop="10" verticalGap="10" width="85%" height="85%"
+  top="50" left="50" borderThickness="4" borderColor="#dddddd" backgroundColor="white" backgroundAlpha="0.7"
+  cornerRadius="15" borderStyle="solid"
+  mouseDown="onMouseDown(event)" mouseUp="onMouseUp(event)" mouseMove="onMouseMove(event)">
+<mx:ComboBox id="teamSelector" labelField="name" change="onTeamChange()" />
+<ilog:BarChart3D id="chart" type="overlaid" width="100%" height="100%" depthGap="10" dataTipFunction="makeDataTip" showDataTips="true">
+<ilog:wallsFill>
+  <mx:SolidColor color="0x226666" alpha="0.5"/>
+</ilog:wallsFill>
+<ilog:verticalAxis>
+  <mx:CategoryAxis categoryField="yearid" />
+</ilog:verticalAxis>
+<ilog:series>
+  <ilog:BarSeries3D yField="yearid" xField="2b" displayName="Doubles" />
+  <ilog:BarSeries3D yField="yearid" xField="hr" displayName="Homers" />
+  <ilog:BarSeries3D yField="yearid" xField="3b" displayName="Triples" />
+</ilog:series>
+</ilog:BarChart3D>
+<mx:Legend dataProvider="{chart}" direction="horizontal" />
+</mx:VBox>
+
+</mx:Application>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" 
+  xmlns:ext="nl.wv.extenders.panel.*"
+  layout="absolute" width="800" height="600">
+
+<mx:Style source="treasuremap.css"/>
+
+<ext:SuperPanel x="30" y="50" width="343" height="298"  
+  title="Controls" layout="absolute">
+<mx:TextInput width="150" top="60" left="30" />
+<mx:CheckBox label="Checkbox one" top="90" left="30" />
+<mx:RadioButton label="Radio two" groupName="radiogroup1" top="150" left="30" />
+<mx:Button label="Submit" top="210" left="30" />
+</ext:SuperPanel>
+
+</mx:Application>

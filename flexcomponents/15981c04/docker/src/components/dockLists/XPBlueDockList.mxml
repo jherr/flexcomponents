@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+@LICENSE@
+-->
+<containers:DockTaskListFX 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:containers="com.teotiGraphix.containers.*" 
+ 	title="{headerTitle}"
+
+ 	titleBarDoubleClickEnabled="false"
+ 	titleBarThickness="24"
+ 	
+ 	dragHandleRenderer="components.buttons.BlueDragHandle"
+ 	minimizeButtonRenderer="components.buttons.MinimizeArrow"
+ 	
+ 	showMenuButton="true"
+ 	
+ 	verticalScrollPolicy="off"
+ 	horizontalScrollPolicy="off"
+ 	
+  	styleName="blueTaskListStyles"
+ 	titleBarStyleName="blueTaskListTitleBarStyles"
+ 	
+ 	creationComplete="init()"
+ 	
+ 	minWidth="0" minHeight="0"
+ 	width="100%" height="100%">
+
+	<!--
+		@PROJECT_BLOCK@
+	-->	
+
+<!--
+barThickness="{headerThickness}"
+-->
+	
+	<mx:Style>
+
+
+		
+.blueTaskListStyles {
+	borderStyle:"none";	
+	
+	paddingTop:0;
+	paddingLeft:0;
+	paddingBottom:0;
+	paddingRight:0;		
+}
+
+.blueTaskListTitleBarStyles {
+	
+	borderSkin:Embed('/assets/dock-title-background-blue.png',
+		scaleGridTop=2, scaleGridBottom=18,
+		scaleGridLeft=1, scaleGridRight=19);
+	
+	paddingTop:0;
+	paddingBottom:0;
+	fontFamily:"Tahoma";
+	verticalAlign:"middle";
+	fontWeight:"bold";
+	fontSize:11;
+	letterSpacing :0;
+	
+}
+	
+	</mx:Style>
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import com.teotiGraphix.containers.taskListClasses.DockTaskListBarControlData;
+			import com.teotiGraphix.events.WorkSpaceEvent;
+			
+			import mx.controls.PopUpButton;
+			import mx.core.IUIComponent;
+			
+			//------------------------------------------------------------------
+			//
+			//  Private :: Fields
+			//
+			//------------------------------------------------------------------
+			
+			[Bindable]
+			public var headerTitle:String;
+			
+			[Bindable]
+			public var headerThickness:Number = 20;
+			
+			//------------------------------------------------------------------
+			//
+			//  Private :: Methods
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 * @private
+			 */
+			private function init():void
+			{
+				// The parent will dispatch the event when the menuPopUp 
+				// property is changed and we pick it up the event and value
+				// held in the data property of the event
+				parent.addEventListener(
+					"menuPopUpChanged", 
+					menuPopUpChangedHandler);
+			}
+			
+			/**
+			 * @private
+			 */
+			private function menuPopUpChangedHandler(event:WorkSpaceEvent):void
+			{
+				// do we have title bar data to check
+				if (titleBarData is DockTaskListBarControlData)
+				{
+					var button:PopUpButton
+					// is the menuButton property referenced
+					if (DockTaskListBarControlData(titleBarData).menuButton is PopUpButton)
+					{
+						// save it
+						button = PopUpButton(DockTaskListBarControlData(titleBarData).menuButton);
+						// set the PopUpButton's popUp property
+						button.popUp = IUIComponent(event.data);
+					}
+				}
+			}
+			
+		]]>
+	</mx:Script>
+
+</containers:DockTaskListFX>

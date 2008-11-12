@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="picData.send()" 
+  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Style>
+Application { 
+  background-alpha: 1;
+  background-color: #000000;
+  background-gradient-colors: #000000,#330033;
+  padding-left: 0;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+</mx:Style>
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import mx.core.UIComponent;
+import com.digicrafts.controls.PhotoFlip;
+
+private var pf:PhotoFlip = new PhotoFlip();
+
+public function onPicData( event:ResultEvent ) : void {
+  var uic:UIComponent = new UIComponent();
+  
+  pf.setSize( width, height );
+
+  pf.mirror = 0.5;
+  pf.vPerspective = 0.69;
+  pf.hPerspective = 0.79;
+  pf.itemScaleRatio = 1.3;
+  pf.mouseEnabled = true;
+  pf.popItemScale = 2;
+  pf.popupItemDistance = 150;
+  pf.itemDistance = 70;
+  pf.maxDimension = 80;
+  
+  for each ( var pic:XML in event.result..image ) {
+    var imgObj:Object = {};
+    imgObj.source = "http://localhost/pics/harold/"+pic.@name.toString();
+    imgObj.type = 'image';
+    pf.addItem( imgObj );
+  }
+
+  uic.addChild( pf );
+  addChild( uic );
+}  
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/harold/images.xml" id="picData" resultFormat="e4x"
+  result="onPicData(event)" />
+</mx:Application>

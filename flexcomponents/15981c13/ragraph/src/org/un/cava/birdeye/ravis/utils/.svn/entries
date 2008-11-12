@@ -1,0 +1,70 @@
+8
+
+dir
+186
+http://birdeye.googlecode.com/svn/trunk/ravis/libRaVis/org/un/cava/birdeye/ravis/utils
+http://birdeye.googlecode.com/svn
+
+
+
+2008-06-20T02:41:16.125432Z
+177
+spoxta
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+0a0cd488-4f43-0410-b420-6b07f9963996
+
+GraphicUtils.as
+file
+
+
+
+
+2008-07-04T02:22:19.000000Z
+500fbb1bd95065d09fc0f513fa246342
+2008-06-08T22:18:30.865024Z
+149
+spoxta
+
+events
+dir
+
+geom
+dir
+
+Geometry.as
+file
+
+
+
+
+2008-07-04T02:22:19.000000Z
+6e97b285d42f43db7ad73740d96cdc5c
+2008-06-14T12:54:20.624368Z
+157
+spoxta
+
+StopWatch.as
+file
+
+
+
+
+2008-07-04T02:22:19.000000Z
+6b5fed738c1ebbe1c2ab607ce00ab22b
+2008-05-26T17:37:33.494767Z
+97
+spoxta
+

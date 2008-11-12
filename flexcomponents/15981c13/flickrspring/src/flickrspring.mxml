@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:fc="http://www.adobe.com/2006/fc"
+  layout="absolute" creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+import com.adobe.flex.extras.controls.springgraph.Graph;
+import com.adobe.webapis.flickr.methodgroups.Photos;
+import com.adobe.webapis.flickr.events.FlickrResultEvent;
+import com.adobe.webapis.flickr.*;
+
+private var flickrSvc:FlickrService = new FlickrService( "63cb0229bda229b375145c794b29543f" );
+
+private var items:Graph = new Graph();
+private var rootItem:FlickrItemData;
+private var searchText:String = 'dog';
+
+public static var instance:flickrspring = null;
+
+public function openNode( item:FlickrItemData ) : void {
+  if ( item.photo != null ) {
+    flickrSvc.photos.getInfo( item.photo.id );
+  }
+  if ( item.text != null ) {
+    searchText = item.text;
+    onSearch();
+  }
+}
+
+private function onStartup() : void {
+  instance = this;
+  
+  flickrSvc.permission = AuthPerm.NONE;
+  flickrSvc.addEventListener( FlickrResultEvent.PHOTOS_SEARCH, onPhotoSearchResult );
+  flickrSvc.addEventListener( FlickrResultEvent.PHOTOS_GET_INFO, onPhotoInfoResult );
+
+  rootItem = new FlickrItemData( searchText );
+  rootItem.text = searchText;
+  items.add( rootItem );
+  s.dataProvider = items;
+
+  onSearch();
+}
+private function onSearch() : void {
+  flickrSvc.photos.search( "", searchText, "", "", null, null, null, null, License.ATTRIBUTION, "tags", 10 );
+}
+private function onPhotoInfoResult( event:FlickrResultEvent ) : void {
+  for each( var t:PhotoTag in event.data.photo.tags ) {
+    if ( items.find( t.tag ) == null ) {
+    var item:FlickrItemData = new FlickrItemData( t.tag );
+    item.text = t.tag;
+    items.add( item );
+    items.link( items.find( event.data.photo.id ), item );
+    }
+  }
+}
+private function onPhotoSearchResult( event:FlickrResultEvent ) : void {
+  for each( var p:Photo in event.data.photos.photos ) {
+    var item:FlickrItemData = new FlickrItemData( p.id );
+    item.photo = p;
+    items.add( item );
+    items.link( items.find( searchText ), item );
+  }
+}
+]]>
+</mx:Script>
+<fc:SpringGraph id="s" backgroundColor="#ffffff" 
+  lineColor="#333388CC" left="0" right="0" top="0" bottom="0"
+  itemRenderer="FlickrItem" repulsionFactor="0.4" width="100%" height="100%">
+</fc:SpringGraph>
+</mx:Application>

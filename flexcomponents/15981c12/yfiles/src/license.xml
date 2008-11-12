@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<license>
+	<name>yWorks GmbH</name>
+	<email>support@yworks.com</email>
+	<type>eval</type>
+	<version>1.2.1</version>
+	<date>07/01/2008</date>
+	<expires>08/01/2008</expires>
+	<domains>
+		<domain>*</domain>
+	</domains>
+	<localhost>true</localhost>
+	<key>41e290725f96f80e806a3d64f615e99b2d10671d</key>
+</license>

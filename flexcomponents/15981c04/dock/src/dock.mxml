@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  xmlns:flexlib="flexlib.containers.*">
+<flexlib:Docker>
+<flexlib:DockableToolBar draggable="true" initialPosition="top">
+  <mx:Button label="Google" />
+  <mx:Button label="Yahoo" />
+  <mx:Button label="Microsoft" />
+</flexlib:DockableToolBar>
+<flexlib:DockableToolBar draggable="true" initialPosition="top">
+  <mx:TextInput />
+  <mx:Button label="Search" />
+</flexlib:DockableToolBar>
+<flexlib:DockableToolBar draggable="true" initialPosition="top">
+  <mx:CheckBox label="Live update" />
+  <mx:CheckBox label="Send messages" />
+</flexlib:DockableToolBar>
+</flexlib:Docker>
+</mx:Application>

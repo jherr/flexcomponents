@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+  xmlns:vp="views.player.*" layout="absolute"
+  creationComplete="onStartup()" backgroundColor="#757A80"
+  width="320" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+
+<mx:HTTPService id="album" url="http://localhost/music/album.xml" resultFormat="e4x"
+  result="onAlbumResult(event);" />
+
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import vo.MP3Player;
+import vo.TrackVO;
+
+[Bindable]
+private var mp3Player:MP3Player = MP3Player.getInstance();
+
+private function onStartup():void {
+  album.send();
+  mp3Player.addEventListener("onDelayError",onDelayError);
+}
+private function onAlbumResult( event:ResultEvent ) : void {
+  var aTracks:Array = new Array();
+  for each( var track:XML in event.result..track ) {
+    aTracks.push(new TrackVO( '', '', '', '', '',
+       '', '', 'http://localhost/music/'+track.@file.toString(),
+       0, 0, track.@name.toString(), '' ) );
+  }
+  mp3Player.dataProvider.source = aTracks;
+  mp3Player.play();
+}
+private function onDelayError(event:Event):void{
+  mp3Player.isPaused = false;
+  mp3Player.getNextTrack();
+}
+]]>
+</mx:Script>
+
+<mx:Style source="style.css"/>
+<mx:Image source="@Embed('headshot.jpg')" width="100%" />
+<mx:HBox backgroundColor="white" top="350" width="100%"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off"
+  paddingTop="10" paddingBottom="10" horizontalAlign="center"
+  borderSides="top,bottom" borderColor="#757A80" borderThickness="2"
+  borderStyle="solid">
+<vp:ControlsSmall horizontalAlign="center" verticalAlign="middle" borderStyle="none" />
+</mx:HBox>
+</mx:Application>

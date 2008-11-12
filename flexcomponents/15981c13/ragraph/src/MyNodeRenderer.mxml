@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100" height="20" horizontalScrollPolicy="off"
+  verticalScrollPolicy="off" creationComplete="onData()" dataChange="onData()" paddingBottom="3"
+  paddingLeft="3" paddingRight="3" paddingTop="3" cornerRadius="5" borderColor="#999999" borderStyle="solid"
+  backgroundColor="#cccccc" backgroundAlpha="0.7" borderThickness="1" horizontalAlign="center">
+<mx:Script>
+<![CDATA[
+private function onData() : void {
+  if ( !initialized || !data ) return;
+  var met:TextLineMetrics = txt.measureText( data.data.name );
+  width = met.width + 15;
+  height = met.height + 8;
+  
+  setStyle( 'backgroundColor', data.data.color );
+  setStyle( 'borderColor', data.data.color );
+  
+  if ( data.data.image != null ) {
+    img.source = data.data.image;
+    img.width = 50;
+    img.height = 50;
+    img.visible = true;
+    img.includeInLayout = true;
+    height += 60;
+  }
+}
+]]>
+</mx:Script>
+<mx:Image id="img" visible="false" height="0" width="0" includeInLayout="false" />
+<mx:Label id="txt" text="{data.data.name}" fontSize="14" fontWeight="bold" color="white" />
+</mx:VBox>

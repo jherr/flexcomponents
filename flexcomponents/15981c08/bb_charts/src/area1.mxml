@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="baseballRO.getTeamList.send()"
+  xmlns:degrafa="http://www.degrafa.com/2007">
+
+<mx:Style>
+Application {
+  background-gradient-colors: #9999FF, #eeeeff;
+  font-weight: bold;
+  font-size: 14;
+}
+</mx:Style>
+<mx:Script>
+<![CDATA[
+import mx.charts.series.items.BubbleSeriesItem;
+import mx.graphics.SolidColor;
+import mx.charts.series.items.PlotSeriesItem;
+import mx.graphics.IFill;
+import mx.charts.ChartItem;
+import mx.charts.HitData;
+
+private function onYearsResult() : void {
+  areaChart.dataProvider = baseballRO.getYearsByTeam.lastResult;
+}
+
+private function onTeamsList() : void {
+  teamSelector.dataProvider = baseballRO.getTeamList.lastResult;
+  teamSelector.selectedIndex = 0;
+}
+
+private function onTeamChange() : void {
+  if ( teamSelector.selectedItem != null && teamSelector.selectedItem.teamid != null )
+    baseballRO.getYearsByTeam.send( teamSelector.selectedItem.teamid );
+}
+
+private function makeDataTip( hd:HitData ):String {
+  return "Hits <b>"+hd.item.h+"</b><br/>Doubles <b>"+hd.item['2b']+"</b>";
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="baseballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="baseball.BaseballService" destination="baseball.BaseballService"
+  showBusyCursor="true">
+<mx:method name="getYearsByTeam" result="onYearsResult()">
+<mx:arguments>
+  <mx:Team />
+</mx:arguments>
+</mx:method>
+<mx:method name="getTeamList" result="onTeamsList()" />
+</mx:RemoteObject>
+
+<mx:VBox paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" backgroundColor="white"
+  backgroundAlpha="0.4" borderColor="#cccccc" cornerRadius="15" borderThickness="3" borderStyle="solid"
+  width="100%" height="100%">
+	
+<mx:HBox>
+<mx:ComboBox id="teamSelector" labelField="name" change="onTeamChange()" />
+<mx:Legend dataProvider="{areaChart}" direction="horizontal" />
+</mx:HBox>
+
+<mx:AreaChart id="areaChart" dataTipFunction="makeDataTip" type="stacked" width="100%" height="100%">
+
+<mx:backgroundElements>
+<degrafa:Surface>
+  <degrafa:fills>
+  	<degrafa:SolidFill id="whiteFill" color="white" alpha="0.6" />
+  </degrafa:fills>
+  <degrafa:GeometryGroup>
+  	<degrafa:RegularRectangle x="0" y="0" width="{areaChart.width}" height="{areaChart.height}"
+       fill="{whiteFill}" />
+  </degrafa:GeometryGroup>
+</degrafa:Surface>
+<mx:GridLines>
+  <mx:horizontalStroke>
+  	<mx:Stroke color="#bbbbbb" />
+  </mx:horizontalStroke>
+</mx:GridLines>
+</mx:backgroundElements>
+
+<mx:verticalAxis>
+  <mx:LinearAxis title="Count" />
+</mx:verticalAxis>
+
+<mx:horizontalAxis>
+  <mx:CategoryAxis title="Year" categoryField="yearid" />
+</mx:horizontalAxis>
+
+<mx:series>
+  <mx:AreaSeries xField="yearid" yField="h" displayName="Hits">
+    <mx:areaFill><mx:SolidColor color="#99ff99" /></mx:areaFill>
+    <mx:areaStroke><mx:Stroke color="#00ff00" weight="3" /></mx:areaStroke>
+  </mx:AreaSeries>
+  <mx:AreaSeries xField="yearid" yField="2b" displayName="Doubles">
+    <mx:areaFill><mx:SolidColor color="#ff9999" /></mx:areaFill>
+    <mx:areaStroke><mx:Stroke color="#ff0000" weight="3" /></mx:areaStroke>
+  </mx:AreaSeries>
+  <mx:AreaSeries xField="yearid" yField="3b" displayName="Triples">
+    <mx:areaFill><mx:SolidColor color="#9999ff" /></mx:areaFill>
+    <mx:areaStroke><mx:Stroke color="#0000ff" weight="3" /></mx:areaStroke>
+  </mx:AreaSeries>
+  <mx:AreaSeries xField="yearid" yField="hr" displayName="Home runs">
+    <mx:areaFill><mx:SolidColor color="#ff99ff" /></mx:areaFill>
+    <mx:areaStroke><mx:Stroke color="#ff00ff" weight="3" /></mx:areaStroke>
+  </mx:AreaSeries>
+</mx:series>
+</mx:AreaChart>
+</mx:VBox>
+
+</mx:Application>

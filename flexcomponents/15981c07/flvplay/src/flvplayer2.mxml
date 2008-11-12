@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="onStartup()" xmlns="http://www.degrafa.com/2007"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Script>
+<![CDATA[
+import mx.core.UIComponent;
+import fl.video.FLVPlayback;
+
+private var player:FLVPlayback = new FLVPlayback();
+
+private function onStartup() : void {
+  Security.allowDomain( 'localhost' );
+  
+  var uic:UIComponent = new UIComponent();
+  uic.width = 480;
+  uic.height = 360;
+  uic.setStyle('top',0);
+  uic.setStyle('left',0);
+  vidPnl.addChild( uic );
+  
+  player.addEventListener('skinLoaded',onSkinLoaded);
+  uic.addChild( player );
+
+  player.mask = topMask;
+  player.x = 0;
+  player.y = 0;
+  player.width = 500;
+  player.height = 400;
+  player.skinBackgroundColor = 0x333333;
+  player.skinBackgroundAlpha = 0.6;
+  player.skin = "http://localhost/videos/AFComponents_PixelOverlaySkin.swf";
+  player.skinAutoHide = false;
+  player.autoPlay = true;
+  player.scaleMode = "maintainAspectRatio";
+}
+private function onSkinLoaded( event:Object ) : void {
+  player.source = 'http://localhost/videos/dance.flv';
+}
+]]>
+</mx:Script>
+<Surface>
+<GeometryGroup id="topMask" x="95" y="50">
+  <fills><SolidFill color="#FFF" alpha="1" id="fill1"/></fills>
+  <stroke><SolidStroke color="#000" weight="2" id="stroke1"/></stroke>
+  <RoundedRectangle width="495" height="368" cornerRadius="10"
+     fill="{fill1}" stroke="{stroke1}"/>
+</GeometryGroup>
+</Surface>
+<mx:Image source="@Embed('lifecycle.jpg')" width="680">
+  <mx:filters>
+  	<mx:BlurFilter blurX="3" blurY="3" />
+  </mx:filters>
+</mx:Image>
+<mx:HBox id="vidPnl" paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" top="20" left="80"
+  backgroundAlpha="0">
+  <mx:filters>
+    <mx:DropShadowFilter distance="10" alpha="0.5" />
+  </mx:filters>
+</mx:HBox>
+</mx:Application>

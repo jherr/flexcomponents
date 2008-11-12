@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="onStartup()" backgroundAlpha="0" horizontalScrollPolicy="off"
+  verticalScrollPolicy="off">
+<mx:Script>
+<![CDATA[
+import mx.core.UIComponent;
+import fl.video.FLVPlayback;
+
+private var player:FLVPlayback = new FLVPlayback();
+
+private function onStartup() : void {
+  Security.allowDomain( 'localhost' );
+
+  var uic:UIComponent = new UIComponent();
+  uic.width = 480;
+  uic.height = 360;
+  uic.setStyle('top',0);
+  uic.setStyle('left',0);
+  vidPnl.addChild( uic );
+  
+  player.addEventListener('skinLoaded',onSkinLoaded);
+  uic.addChild( player );
+
+  player.x = 0;
+  player.y = 0;
+  player.width = 480;
+  player.height = 360;
+  player.skinBackgroundColor = 0x333333;
+  player.skinBackgroundAlpha = 0.6;
+  player.skin = "http://localhost/videos/AFComponents_ClassicSkin.swf";
+  player.skinAutoHide = false;
+  player.autoPlay = true;
+  player.scaleMode = "maintainAspectRatio";
+}
+private function onSkinLoaded( event:Object ) : void {
+  player.source = 'http://localhost/videos/MVI_3412.FLV';
+}
+]]>
+</mx:Script>
+<mx:Image source="@Embed('flower1.jpg')" width="680">
+  <mx:filters>
+    <mx:BlurFilter blurX="5" blurY="5" />
+  </mx:filters>
+</mx:Image>
+<mx:HBox id="vidPnl" paddingBottom="45" paddingLeft="15" paddingRight="15" paddingTop="15" top="20" left="80"
+  backgroundAlpha="0.4" backgroundColor="white" cornerRadius="10" borderStyle="solid"
+  borderColor="#666666" borderThickness="2" rotation="5">
+  <mx:filters>
+    <mx:DropShadowFilter />
+  </mx:filters>
+</mx:HBox>
+</mx:Application>

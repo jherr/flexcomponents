@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="usdataRO.getAll.send('it');">
+
+<mx:RemoteObject id="usdataRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="usdata.USDataService" destination="usdata.USDataService"
+  showBusyCursor="true">
+<mx:method name="getAll">
+<mx:arguments>
+  <mx:table />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+	
+<mx:DataGrid dataProvider="{usdataRO.getAll.lastResult}" width="100%" height="100%" sortableColumns="true">
+<mx:columns>
+  <mx:DataGridColumn dataField="state" headerText="State" sortable="true" />
+  <mx:DataGridColumn dataField="statepopulation" headerText="Population" />
+  <mx:DataGridColumn dataField="companies" headerText="Companies" />
+  <mx:DataGridColumn dataField="employees" headerText="Employees" />
+  <mx:DataGridColumn dataField="payroll" headerText="Payroll" />
+  <mx:DataGridColumn dataField="sales" headerText="Sales" />
+</mx:columns>
+</mx:DataGrid>
+
+</mx:Application>

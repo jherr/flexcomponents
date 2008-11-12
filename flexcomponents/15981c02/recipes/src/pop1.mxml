@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  currentState="in">
+<mx:Style>
+HBox {
+  background-image: Embed('background.png');
+  border-thickness: 3;
+  border-style: solid;
+  corner-radius: 3;
+  vertical-align: middle;
+  horizontal-align: center;  
+  border-color: #034EA2;
+}
+Label { 
+  font-weight: bold;
+  font-size: 20;
+}
+.shelf { 
+  font-weight: normal;
+  font-size: 15;
+}
+</mx:Style>
+<mx:ApplicationControlBar dock="true">
+  <mx:Button label="In" click="currentState='in';" />
+  <mx:Button label="Out" click="currentState='out';" />
+</mx:ApplicationControlBar>
+<mx:states>
+  <mx:State name="in">
+  	<mx:SetStyle target="{shelf}" name="left" value="50" />
+  </mx:State>
+  <mx:State name="out">
+  	<mx:SetStyle target="{shelf}" name="left" value="280" />
+  </mx:State>
+</mx:states>
+<mx:HBox id="shelf" top="50" left="50" width="200" height="300">
+  <mx:Label text="Shelf Content" styleName="shelf" />
+</mx:HBox>
+<mx:HBox top="10" left="10" width="300" height="400">
+  <mx:Label text="Top Content" />
+</mx:HBox>
+</mx:Application>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:v="views.*" 
+	xmlns:vp="views.player.*" 
+	borderStyle="solid" borderThickness="1" minWidth="250" horizontalAlign="center"
+	borderColor="#000000" cornerRadius="7" backgroundColor="#ffffff">
+<mx:Script>
+	<![CDATA[
+		import vo.MP3Player;
+		
+		[Bindable]
+		private var	mp3Player:MP3Player = MP3Player.getInstance();
+			
+		private function sliderChange(event:Event):void{			
+			mp3Player.pause(true);
+			mp3Player.startTime = songSlider.value;
+		}
+		private function dataTipFunction(item:Object):String{
+            var tempString:String = '';
+            var templength:Number = Number(item);
+				
+			var tempMinutes:Number = Math.floor(templength / 1000 / 60);
+			var tempSeconds:Number = Math.floor(templength / 1000) % 60;
+			tempString = tempMinutes+":"+(tempSeconds < 10?"0"+tempSeconds:tempSeconds);
+            
+            if(mp3Player.isPaused)
+	            mp3Player.sPosition = tempString;
+	            
+            return tempString;
+        }
+        private function sliderMouseUp(event:Event):void{
+        	if( mp3Player.isResumeSet )
+	        	mp3Player.play();
+        }
+        
+	]]>
+</mx:Script>
+	<mx:Label text="{mp3Player.currentTrack + 1} of {mp3Player.dataProvider.length}" width="100%"/>
+	<mx:VBox width="100%" horizontalAlign="center">
+		<mx:Label text="{mp3Player.currentTrackVO.title}" width="100%" textAlign="center"/>
+		<mx:Label text="{mp3Player.currentTrackVO.artist}" width="100%" textAlign="center"/>
+		<mx:Label text="{mp3Player.currentTrackVO.album}" width="100%" textAlign="center"/>
+	</mx:VBox>
+	<mx:Spacer height="100%" width="100%"/>
+	<mx:HSlider id="songSlider" change="sliderChange(event)" 
+			allowTrackClick="true" 
+			liveDragging="true" 
+			minimum="0" maximum="{mp3Player.length}" 
+			value="{mp3Player.position}" thumbRelease="sliderMouseUp(event)" 
+			dataTipPlacement="top" 
+			dataTipFormatFunction="dataTipFunction"
+			width="100%"/>
+	<mx:HBox width="100%">
+		<mx:Label text="{mp3Player.sPosition}"/>
+		<mx:Spacer width="100%"/>
+		<mx:Label text="{mp3Player.sLength}"/>
+	</mx:HBox> 
+	<mx:VBox width="100%">
+		<vp:ButtonControl id="musicControls" width="100%" horizontalAlign="center"/>
+		<mx:Spacer height="10"/>
+	</mx:VBox>
+</mx:VBox>

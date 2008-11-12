@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config>
+	<context-root>http://localhost:8080/yfiles-flex/</context-root>
+	<swf-nodes>false</swf-nodes>
+	<service-extension></service-extension>
+</config>

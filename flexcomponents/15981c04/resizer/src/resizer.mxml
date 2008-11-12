@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+  creationComplete="picData.send();" layout="vertical">
+<mx:HTTPService url="http://localhost/pics/wide.xml" id="picData" resultFormat="e4x"
+  result="onPicResult( event )" />
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import mx.controls.Image;
+
+import com.teotiGraphix.managers.ResizePosition;
+import com.teotiGraphix.managers.ResizeManagerFX;
+import com.teotiGraphix.managers.MoveManagerFX;
+
+private function onPicResult( event:ResultEvent ) : void {
+  var count:int = 0;
+  for each( var pic:XML in picData.lastResult..image ) {
+  	if ( count++ > 5 ) break;
+  	
+  	var ratio:Number = ( Math.random() * 0.5 ) + 0.5;
+  	var img:Image = new Image();
+  	img.data = 'http://localhost/pics/'+pic.@name.toString();
+  	img.height = 225 * ratio;
+  	img.width = 300 * ratio;
+  	img.move( Math.random() * ( width - 300 ),
+       Math.random() * ( height - 225 ) );
+
+  	parentCanvas.addChild( img );
+  }
+  MoveManagerFX.addParentClient(parentCanvas);
+  ResizeManagerFX.addParentClient(parentCanvas);
+}
+]]>
+</mx:Script>
+<mx:Style>
+.masterStyle {
+  moveManagerStyleName:"moveStyle";
+  resizeManagerStyleName:"resizeStyle";
+  moveClientOverlayAlpha:0.5;
+  resizeClientOverlayAlpha:0.8;
+  lockAspectRatio:true;
+}
+.moveStyle {
+  overlayBorderThickness:5;
+  overlayBorderOffset:"outside";
+}
+.resizeStyle {
+  overlayButtonOffset:"inside";
+  overlayButtonThickness:10;
+  overlayButtonWidth:10;
+  overlayFillColor:#FF0000;
+}
+</mx:Style>
+<mx:Canvas id="parentCanvas"
+  styleName="masterStyle"
+  backgroundColor="#FFFFFF" backgroundAlpha="0.3"
+  width="100%" height="100%" />
+</mx:Application>

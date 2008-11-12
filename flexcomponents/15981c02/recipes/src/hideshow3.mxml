@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal"
+  currentState="hide">
+<mx:ApplicationControlBar dock="true">
+  <mx:Button label="Hide" click="currentState='hide';" />
+  <mx:Button label="Show" click="currentState='show';" />
+</mx:ApplicationControlBar>
+<mx:Style>
+HBox {
+  background-image: Embed('background.png');
+  border-thickness: 3;
+  border-style: solid;
+  corner-radius: 3;
+  vertical-align: middle;
+  horizontal-align: center;  
+  border-color: #034EA2;
+}
+Label { 
+  font-weight: bold;
+  font-size: 20;
+}
+.shelf { 
+  font-weight: normal;
+  font-size: 15;
+}
+</mx:Style>
+<mx:transitions>
+<mx:Transition fromState="hide" toState="show">
+  <mx:Sequence>
+  <mx:SetPropertyAction target="{panel2}" name="visible" />
+  <mx:Fade target="{panel2}" alphaFrom="0" alphaTo="1" duration="500" />
+  </mx:Sequence>
+</mx:Transition>
+<mx:Transition fromState="show" toState="hide">
+  <mx:Sequence>
+  <mx:Fade target="{panel2}" alphaFrom="1" alphaTo="0" duration="500" />
+  <mx:SetPropertyAction target="{panel2}" name="visible" />
+  </mx:Sequence>
+</mx:Transition>
+</mx:transitions>
+<mx:states>
+  <mx:State name="hide">
+    <mx:SetProperty target="{panel2}" name="visible" value="false" />
+  </mx:State>
+  <mx:State name="show">
+    <mx:SetProperty target="{panel2}" name="visible" value="true" />
+  </mx:State>
+</mx:states>
+<mx:HBox width="50%" height="100%" id="panel1">
+  <mx:Label text="Panel 1" />
+</mx:HBox>
+<mx:HBox width="50%" height="100%" id="panel2">
+  <mx:Label text="Panel 2" />
+</mx:HBox>
+</mx:Application>

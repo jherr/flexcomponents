@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+import flex.FlexGraph;
+import mx.core.UIComponent;
+import flare.demos.*;
+
+private var graph:FlexGraph = new FlexGraph();
+
+private function onStartup() : void {
+  var uic:UIComponent = new UIComponent();
+  addChild( uic );
+  uic.addChild( graph );
+}	
+]]>
+</mx:Script>
+<mx:ApplicationControlBar dock="true">
+  <mx:Button label="Starburst" click="graph.starbust();" />
+  <mx:ButtonBar id="treeType" itemClick="graph.changeLayout(treeType.selectedIndex)"
+  	dataProvider="{['Force Directed','Node Link Tree','Indented Tree','Radial Tree','Circle']}"
+  	selectedIndex="0" />
+</mx:ApplicationControlBar>
+</mx:Application>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:controls="com.fxcomponents.controls.*" 
+  backgroundColor="black" verticalAlign="middle" width="400" height="300"
+  creationComplete="picData.send();" backgroundGradientColors="[#000000,#662266]"
+  backgroundGradientAlphas="[1,1]">
+<mx:Style source="stylesheet.css" />
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+
+public function onPicData( event:ResultEvent ) : void {
+  var pics:Array = [];
+  for each( var pic:XML in picData.lastResult..image ) {
+    pics.push( { image: pic.@name, caption: 'Megan', details:'A nice Megan picture.' } );
+  }
+  sls.dataProvider = pics;
+}  
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/wide.xml" id="picData" resultFormat="e4x"
+  result="onPicData(event)" />
+  <controls:SlideShow id="sls" width="300" height="225" imageField="image" captionField="caption" detailsField="details" imagePath="http://localhost/pics/" />    
+</mx:Application>

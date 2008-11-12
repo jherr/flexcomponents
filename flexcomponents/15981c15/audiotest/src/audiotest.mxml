@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+	xmlns:ma="com.jherrington.miniaudio.*">
+<ma:Player source="http://localhost/music/02 Shirley Bassey - Where Do I Begin (Away Team Mix).mp3"
+	autoPlay="true" width="200" />
+</mx:Application>

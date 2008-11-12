@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="htmlData.send()">
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import com.adobe.serialization.json.JSONDecoder;
+
+private function onHTMLResult( event:ResultEvent ) : void {
+  var js:String = event.result.toString();
+  var jsd:JSONDecoder = new JSONDecoder( js );
+  stateGrid.dataProvider = jsd.getValue();
+}
+]]>
+</mx:Script>
+<mx:HTTPService id="htmlData" resultFormat="text"
+  url="http://localhost/fcdata/json.php" result="onHTMLResult(event);" />
+<mx:Panel title="State data" width="100%" height="100%">
+  <mx:DataGrid id="stateGrid" width="100%" height="100%" />
+</mx:Panel>
+</mx:Application>

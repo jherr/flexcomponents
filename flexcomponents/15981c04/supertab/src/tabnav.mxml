@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  xmlns:flexlib="flexlib.controls.*">
+<mx:Panel width="100%" height="100%" title="Super Tab Nav"
+  paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" verticalGap="0">
+<flexlib:SuperTabBar width="100%" dataProvider="{stack}" closePolicy="always" editableTabLabels="true">
+</flexlib:SuperTabBar>
+<mx:ViewStack id="stack" width="100%" height="100%" borderColor="#cccccc" borderStyle="solid" borderThickness="1">
+<mx:HBox label="Megan 1" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+  <mx:Image source="@Embed('assets/megan1.jpg')" height="300" />
+</mx:HBox>
+<mx:HBox label="Megan 2" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+  <mx:Image source="@Embed('assets/megan2.jpg')" height="300" />
+</mx:HBox>
+<mx:HBox label="Megan 3" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+  <mx:Image source="@Embed('assets/megan3.jpg')" height="300" />
+</mx:HBox>
+</mx:ViewStack>
+</mx:Panel>
+</mx:Application>

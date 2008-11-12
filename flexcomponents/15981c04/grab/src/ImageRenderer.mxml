@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" height="200" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+  <mx:Image top="1" left="1" source="http://localhost/pics/{data}" height="195"
+    toolTip="{data}">
+    <mx:filters>
+      <mx:DropShadowFilter />
+    </mx:filters>
+  </mx:Image>
+</mx:Canvas>

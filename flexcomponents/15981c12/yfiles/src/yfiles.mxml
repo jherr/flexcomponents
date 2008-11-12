@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+  xmlns:yworks="com.yworks.ui.*"
+  applicationComplete="init()" layout="vertical">
+
+<mx:XML id="licenseXML" source="license.xml" />
+
+<mx:Script>
+<![CDATA[
+	import com.yworks.graph.model.INode;
+import com.yworks.support.Config;
+import com.yworks.util.Util;
+
+private function init():void {
+	Util.registerLicense(licenseXML);
+	Config.getInstance().configURL = "config.xml";
+	Config.getInstance().addEventListener( Event.COMPLETE, initApplication );
+}
+
+private function initApplication( evt:Event ) : void {
+	var n1:INode = graphCanvas.graph.createNode();
+	graphCanvas.graph.addLabel( n1, "Genres" );
+	var n2:INode = graphCanvas.graph.createNode();
+	graphCanvas.graph.addLabel( n2, "Rock" );
+	graphCanvas.graph.createEdgeBetweenNodes( n1, n2 );
+}
+]]>
+</mx:Script>
+
+<mx:Panel title="yFiles Flex - Bands" width="100%" height="100%">
+  <yworks:GraphCanvasComponent id="graphCanvas" backgroundColor="0xffffff" width="100%" height="100%"/>
+</mx:Panel>
+
+</mx:Application>

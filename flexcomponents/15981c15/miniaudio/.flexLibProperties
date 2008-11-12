@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<flexLibProperties version="1">
+   <includeClasses>
+      <classEntry path="com.jherrington.miniaudio.AudioPlayerEvent"/>
+      <classEntry path="com.jherrington.miniaudio.Player"/>
+   </includeClasses>
+   <includeResources/>
+   <namespaceManifests/>
+</flexLibProperties>

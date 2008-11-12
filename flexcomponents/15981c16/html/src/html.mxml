@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="htmlData.send()">
+<mx:Script>
+<![CDATA[
+import mx.collections.ArrayCollection;
+import mx.rpc.events.ResultEvent;
+
+[Bindable]
+private var stateData:ArrayCollection = new ArrayCollection();
+
+private function stripTags( htmlString:String ) : String {
+  return htmlString.replace( /<.*?>/g, '' );
+}
+private function onHTMLResult( event:ResultEvent ) : void {
+  var html:String = event.result.toString();
+  html = html.replace( /\r/g, '' );
+  html = html.replace( /\n/g, '' );
+  for each ( var row:String in html.match( /<tr>(.*?)<\/tr>/g ) ) {
+  	var cells:Array = row.match( /<td>(.*?)<\/td>/g );
+  	if ( cells.length > 0 ) {
+  	  stateData.addItem( {
+  	  	state:stripTags(cells[0]),
+  	  	companies:Number(stripTags(cells[1])),
+  	  	employees:Number(stripTags(cells[2])),
+  	  	payroll:Number(stripTags(cells[3])),
+  	  	sales:Number(stripTags(cells[4])),
+  	  	statepopulation:Number(stripTags(cells[5]))
+  	  } );
+  	}
+  }
+}
+]]>
+</mx:Script>
+<mx:HTTPService id="htmlData" resultFormat="text"
+  url="http://localhost/fcdata/html.php" result="onHTMLResult(event);" />
+<mx:Panel title="State data" width="100%" height="100%">
+  <mx:DataGrid dataProvider="{stateData}" width="100%" height="100%" />
+</mx:Panel>
+</mx:Application>

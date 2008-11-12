@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:degrafa="http://www.degrafa.com/2007" 
+	resize="invalidateProperties()">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.events.CollectionEvent;
+			import mx.collections.ListCollectionView;
+			import com.degrafa.core.IGraphicsStroke;
+			import com.degrafa.core.IGraphicsFill;
+			import com.degrafa.core.DegrafaObject;
+			import com.degrafa.paint.SolidFill;
+			
+			[Bindable]	public var backgroundFill : IGraphicsFill;
+			[Bindable]	public var borderStroke : IGraphicsStroke;
+			[Bindable]	public var lineStroke : IGraphicsStroke;
+			
+			private var _dataProvider : ListCollectionView;
+			private var _dataField : String = "";
+			
+			private var _minimum : Number = 0;
+			private var _maximum : Number = 100;
+			
+			public function get dataProvider() : ListCollectionView
+			{
+				return _dataProvider;
+			}
+			
+			public function set dataProvider( value : ListCollectionView ) : void
+			{
+				_dataProvider = value;
+				_dataProvider.addEventListener( CollectionEvent.COLLECTION_CHANGE, onDataChange, false, 0, true );
+				invalidateProperties();
+			}
+			
+			public function get dataField() : String
+			{
+				return _dataField;
+			}
+			
+			public function set dataField( value : String ) : void
+			{
+				_dataField = value;
+				invalidateProperties();
+			}
+			
+			public function get minimum() : Number
+			{
+				return _minimum;
+			}
+			
+			public function set minimum( value : Number ) : void
+			{
+				_minimum = value;
+				invalidateProperties();
+			}
+			
+			public function get maximum() : Number
+			{
+				return _maximum;
+			}
+			
+			public function set maximum( value : Number ) : void
+			{
+				_maximum = value;
+				invalidateProperties();
+			}
+			
+			private function onDataChange( event : Event ) : void
+			{
+				invalidateProperties();
+			}
+			
+			override protected function commitProperties():void
+			{
+				super.commitProperties();
+				
+				var renderData:String = "";
+				if ( _dataProvider && _minimum < _maximum )
+				{
+					var widthIncrement : Number = width / ((_dataProvider.length > 1) ? (_dataProvider.length-1) : 1);
+					
+					var relativeMin : Number = 0;
+					var relativeMax : Number = _maximum - _minimum;
+				
+					for ( var x : int = 0; x < _dataProvider.length; x ++ )
+					{
+						var o : * = _dataProvider.getItemAt( x );
+						var value : Number = (dataField != "") ? parseFloat( o[ dataField ] ) : o;
+						if ( isNaN( value ) )
+							value = 0;
+						else
+						{
+							value = (value - _minimum);
+							value = Math.min( value, relativeMax );
+							value = Math.max( value, relativeMin );
+							value = value / relativeMax;
+							value = 1 - value;
+						}
+						renderData += Math.floor( widthIncrement * x ).toString() + "," + Math.round( value * height ).toString() + " ";
+					}
+				}
+				
+				//prevents error if pass empty renderdata
+				if ( renderData == "" )
+					renderData = "0,0";
+					
+				polyline.data = renderData;
+			}
+			
+			
+		]]>
+	</mx:Script>
+	
+	
+	<degrafa:GeometryComposition graphicsTarget="{[this]}">
+    	
+    	<degrafa:RegularRectangle fill="{backgroundFill}" stroke="{borderStroke}"
+			height="{ height }"
+            width="{ width }"/>
+        
+        <!-- Creating a Polygon. -->
+        <degrafa:Polyline id="polyline" stroke="{lineStroke}" data="0,0"/>
+    
+    </degrafa:GeometryComposition>
+	    
+</mx:Canvas>
+

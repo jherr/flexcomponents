@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+@LICENSE@
+-->
+<controls:ButtonFX
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:controls="com.teotiGraphix.controls.*"
+	upSkin="{arrowUp}"
+	overSkin="{arrowUp}"
+	downSkin="{arrowUp}"
+	disabledSkin="{arrowUp}"
+	selectedUpSkin="{arrowSelectedUp}"
+	selectedOverSkin="{arrowSelectedUp}"
+	selectedDownSkin="{arrowSelectedUp}"
+	selectedDisabledSkin="{arrowSelectedUp}"
+	width="8" height="8">
+	
+	<!--
+		@PROJECT_BLOCK@
+	-->	
+	
+	<mx:Script>
+		<![CDATA[
+			
+			[Bindable]
+			[Embed(source="/assets/min-arrow-up.png")]
+			protected var arrowUp:Class;
+			
+			[Bindable]
+			[Embed(source="/assets/min-arrow-selected-up.png")]
+			protected var arrowSelectedUp:Class;
+
+			
+		]]>
+	</mx:Script>
+	
+</controls:ButtonFX>

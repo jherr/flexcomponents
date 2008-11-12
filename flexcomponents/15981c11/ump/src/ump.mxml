@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+   creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+import com.afcomponents.umap.core.UMap;
+import mx.core.UIComponent;
+
+private var map:UMap = new UMap();
+
+private function onStartup() : void {
+  var uic:UIComponent = new UIComponent();
+  uic.setStyle( 'top', 0 );
+  uic.setStyle( 'left', 0 );
+  uic.width = width;
+  uic.height = height;
+  addChildAt( uic, 0 );
+
+  map.setSize( width, height );
+  uic.addChild( map );  
+}	
+]]>
+</mx:Script>
+</mx:Application>

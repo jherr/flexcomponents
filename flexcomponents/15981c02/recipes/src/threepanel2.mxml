@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  currentState="one">
+<mx:Style>
+Panel {
+  background-image: Embed('background.png');
+  vertical-align: middle;
+  horizontal-align: center;  
+}
+Label { 
+  font-weight: bold;
+  font-size: 20;
+}
+</mx:Style>
+<mx:transitions>
+  <mx:Transition fromState="one" toState="two">
+  	<mx:Sequence>
+  	<mx:SetPropertyAction target="{p2}" name="includeInLayout" />
+  	<mx:SetPropertyAction target="{p2}" name="visible" />
+  	<mx:Resize targets="{[p1,p2]}" />
+  	</mx:Sequence>
+  </mx:Transition>
+  <mx:Transition fromState="two" toState="three">
+  	<mx:Sequence>
+  	<mx:SetPropertyAction target="{p3}" name="includeInLayout" />
+  	<mx:SetPropertyAction target="{p3}" name="visible" />
+  	<mx:Resize targets="{[p1,p2,p3]}" />
+  	</mx:Sequence>
+  </mx:Transition>
+  <mx:Transition fromState="three" toState="two">
+  	<mx:Sequence>
+  	<mx:Resize targets="{[p1,p2,p3]}" />
+  	<mx:SetPropertyAction target="{p3}" name="visible" />
+  	<mx:SetPropertyAction target="{p3}" name="includeInLayout" />
+  	</mx:Sequence>
+  </mx:Transition>
+  <mx:Transition fromState="two" toState="one">
+  	<mx:Sequence>
+  	<mx:Resize targets="{[p1,p2]}" />
+  	<mx:SetPropertyAction target="{p2}" name="visible" />
+  	<mx:SetPropertyAction target="{p2}" name="includeInLayout" />
+  	</mx:Sequence>
+  </mx:Transition>
+</mx:transitions>
+<mx:ApplicationControlBar dock="true">
+  <mx:Button id="b1" label="One" click="currentState='one';b3.visible=false;" />
+  <mx:Button label="Two" click="currentState='two';b3.visible=true;b1.visible=true;" />
+  <mx:Button id="b3" label="Three" click="currentState='three';b1.visible=false;" visible="false" />
+</mx:ApplicationControlBar>
+<mx:states>
+<mx:State name="one">
+  <mx:SetProperty target="{p1}" name="height" value="100%" />
+  <mx:SetProperty target="{p2}" name="height" value="0%" />
+  <mx:SetProperty target="{p2}" name="includeInLayout" value="false" />
+  <mx:SetProperty target="{p2}" name="visible" value="false" />
+  <mx:SetProperty target="{p3}" name="includeInLayout" value="false" />
+  <mx:SetProperty target="{p3}" name="visible" value="false" />
+</mx:State>
+<mx:State name="two">
+  <mx:SetProperty target="{p1}" name="height" value="50%" />
+  <mx:SetProperty target="{p2}" name="height" value="50%" />
+  <mx:SetProperty target="{p2}" name="includeInLayout" value="true" />
+  <mx:SetProperty target="{p2}" name="visible" value="true" />
+  <mx:SetProperty target="{p3}" name="includeInLayout" value="false" />
+  <mx:SetProperty target="{p3}" name="visible" value="false" />
+</mx:State>
+<mx:State name="three">
+  <mx:SetProperty target="{p1}" name="height" value="33%" />
+  <mx:SetProperty target="{p2}" name="height" value="33%" />
+  <mx:SetProperty target="{p3}" name="height" value="33%" />
+  <mx:SetProperty target="{p2}" name="includeInLayout" value="true" />
+  <mx:SetProperty target="{p2}" name="visible" value="true" />
+  <mx:SetProperty target="{p3}" name="includeInLayout" value="true" />
+  <mx:SetProperty target="{p3}" name="visible" value="true" />
+</mx:State>
+</mx:states>
+<mx:Panel id="p1" title="Panel One" width="100%">
+  <mx:Label text="Panel One" />
+</mx:Panel>
+<mx:Panel id="p2" title="Panel Two" width="100%">
+  <mx:Label text="Panel Two" />
+</mx:Panel>
+<mx:Panel id="p3" title="Panel Three" width="100%">
+  <mx:Label text="Panel Three" />
+</mx:Panel>
+</mx:Application>

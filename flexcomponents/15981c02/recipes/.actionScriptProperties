@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<actionScriptProperties mainApplicationPath="hideshow1.mxml" version="3">
+   <compiler additionalCompilerArguments="-locale en_US" copyDependentFiles="true" enableModuleDebug="true" generateAccessible="false" htmlExpressInstall="true" htmlGenerate="true" htmlHistoryManagement="true" htmlPlayerVersion="9.0.28" htmlPlayerVersionCheck="true" outputFolderPath="bin-debug" sourceFolderPath="src" strict="true" useApolloConfig="false" verifyDigests="true" warn="true">
+      <compilerSourcePath/>
+      <libraryPath defaultLinkType="1">
+         <libraryPathEntry kind="4" path=""/>
+         <libraryPathEntry kind="1" linkType="1" path="libs"/>
+      </libraryPath>
+      <sourceAttachmentPath/>
+   </compiler>
+   <applications>
+      <application path="grower1.mxml"/>
+      <application path="hideshow1.mxml"/>
+      <application path="threepanel1.mxml"/>
+      <application path="twopanel2.mxml"/>
+      <application path="hideshow2.mxml"/>
+      <application path="emerge1.mxml"/>
+      <application path="pop2.mxml"/>
+      <application path="pop1.mxml"/>
+      <application path="flip1.mxml"/>
+      <application path="hideshow3.mxml"/>
+      <application path="flip2.mxml"/>
+      <application path="threepanel2.mxml"/>
+      <application path="twopanel1.mxml"/>
+      <application path="slidein1.mxml"/>
+      <application path="grower2.mxml"/>
+      <application path="slidein2.mxml"/>
+      <application path="emerge2.mxml"/>
+   </applications>
+   <modules/>
+   <buildCSSFiles/>
+</actionScriptProperties>

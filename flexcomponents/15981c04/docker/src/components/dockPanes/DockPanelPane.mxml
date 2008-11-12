@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+@LICENSE@
+-->
+<containers:DockPaneFX 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	xmlns:containers="com.teotiGraphix.containers.*" 
+	
+	titleIcon="{dragHandleClass}"
+	
+	showBorder="false"
+	showTitleBar="false"
+	showDragHandle="false"
+	dragHandleStyleName="dragHandleStyles"
+	
+	manageDepth="true"
+	resizeEnabled="true"
+
+	dockData="{ToolTypes.PANEL_TOOL}"
+	
+	dockComplete="dockCompleteHandler(event)"
+	floatComplete="floatCompleteHandler(event)"
+	paneResizeComplete="paneResizeCompleteHandler(event)"
+	
+	minWidth="0" minHeight="0"
+	width="100%"> 
+	
+	<!--
+		@PROJECT_BLOCK@
+		
+		The DockPanelPane is an example of composition using the 
+		DockPaneFX component.
+		
+		This example shows how to use a composite component such 
+		as the Panel and push the DockPaneFX functionality backwards
+		from the user interface.
+		
+		In this example it looks a if the Panel has the docking 
+		functionality.
+		
+	-->	
+	
+	<mx:Style>
+
+/*
+	Set the skins that will be used for the dragHandleRenderer.
+*/
+.dragHandleStyles {
+	upSkin:Embed(source="/assets/drag-handle-blue.png");
+	overSkin:Embed(source="/assets/drag-handle-blue.png");
+	downSkin:Embed(source="/assets/drag-handle-blue.png");
+	disabledSkin:Embed(source="/assets/drag-handle-blue.png");
+}		
+		
+	</mx:Style>
+	
+	<mx:Script>
+		<![CDATA[
+			
+			/*
+			
+				Normally I would put this type of logic in an ActionScript
+				Class file as a component.
+				
+				I write in mxml/as to show you how you can interact with 
+				bindable properties of the component.
+				
+				It really depends on the situation when to separate code,
+				when in doubt, usually it should go to an ActionScript class.
+				
+			*/
+			
+			import com.teotiGraphix.containers.events.PaneEvent;
+			import com.teotiGraphix.barControls.events.BarEvent;
+			import com.teotiGraphix.containers.IDockAreaClient;
+			import com.teotiGraphix.containers.IPane;
+			import com.teotiGraphix.containers.events.DockEvent;
+			import com.teotiGraphix.managers.dragManagerClasses.DragInfo;
+			
+			import components.baseExample.ToolTypes;
+			
+			import mx.containers.Panel;
+			import mx.core.DragSource;
+			import mx.core.UITextField;
+			import mx.core.mx_internal;
+			
+			use namespace mx_internal;
+
+			//------------------------------------------------------------------
+			//
+			//  Private :: Fields
+			//
+			//------------------------------------------------------------------
+			
+			// the reference to the composite Panel
+			private var panelInstance:Panel;
+			
+			// the class that will render the dragHandle
+			[Bindable]
+			[Embed(source="/assets/drag-handle-blue.png")]
+			private var dragHandleClass:Class;
+
+			//------------------------------------------------------------------
+			//
+			//  Overriden Protected :: Properties
+			//
+			//------------------------------------------------------------------
+
+			/**
+			 * Create the panelInstance for the component.
+			 */
+			override protected function createChildren():void
+			{
+				// create the composite panel
+				panelInstance = new Panel();
+				
+				// set it's icon and title
+				panelInstance.titleIcon = dragHandleClass;
+				panelInstance.title = title;
+				
+				// make it consume all of this DockPaneFX's content area
+				panelInstance.percentWidth = 100;
+				panelInstance.percentHeight = 100;
+				
+				// Don't let the Panel mess up the DockPaneFX's measurements
+				panelInstance.minWidth = 0;
+				panelInstance.minHeight = 0;
+				
+				// add the panel to the content children
+				addChild(panelInstance);	
+				
+				// listen for the mouseDown event of the Panel's titleBar.
+				// NOTE :: the titleBar of the Panel is only availible AFTER
+				// you have called addChild() on the Panel.
+				// createChildren() is not called until addChild() in the parent
+				// has been called.
+				panelInstance.getTitleBar().addEventListener(
+					MouseEvent.MOUSE_DOWN, 
+					titleBar_mouseDown);
+											
+				super.createChildren();
+			}
+
+			//------------------------------------------------------------------
+			//
+			//  Overriden Public :: Properties
+			//
+			//------------------------------------------------------------------
+
+			/**
+			 * Create the children of the component.
+			 */
+			override public function createComponentsFromDescriptors(
+				recurse:Boolean=true):void
+			{
+				// actually create the instances
+				super.createComponentsFromDescriptors(recurse);
+				
+				// loop through all of the instances, check for Panel
+				for (var i:int = 0; i < numChildren; i++)
+				{
+					var child:DisplayObject = getChildAt(i);
+					
+					// if the child is a panel, skip it
+					if (child is Panel)
+						continue;
+					
+					// if we have a contentPane
+					if (contentPane)
+					{
+						// remove the mxml child from the contentPane
+					    contentPane.removeChild(DisplayObject(child));
+					}
+					else
+					{
+						// just remove the mxml child from the container
+						removeChild(DisplayObject(child));
+					}
+					// add the child to our content children
+					panelInstance.addChild(child);
+				}
+			}
+			
+			//------------------------------------------------------------------
+			//
+			//  Private titleBar :: Handlers
+			//
+			//------------------------------------------------------------------
+
+			/**
+			 * The Panel's titleBar mouseDown handler.
+			 */
+			private function titleBar_mouseDown(event:MouseEvent):void
+			{
+				// if we are within 20 pixels of the left side and
+				// this event is not from the title
+				if (event.localX < 20 && !(event.target is UITextField))
+				{
+					// make a drag source object
+					var source:DragSource = new DragSource();
+					// make a drag info object
+					var info:DragInfo = new DragInfo(event, this, source);
+					// start the drag docking operation
+					doDrag(info);
+				}
+				// just do the normal titleBar operation of drag and depth
+				else
+				{
+					// if this pane is NOT docked
+					if (!isDocked)
+					{
+						// order us to the top
+						// you could also put this in a mouseDown handler for
+						// this instance, so any click on a popUp will bring it
+						// to the front
+						// Remember :: This is for the composite Panel, the DockPaneFX
+						// component already has this functionality built in
+						bringToFront();
+						// start moving the pane
+						startMove();
+					}
+				}
+			}
+			
+			//------------------------------------------------------------------
+			//
+			//  Private this :: Handlers
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 * The handler for the 'dockComplete' event dispatched
+			 * from the DockPaneFX instance.
+			 */
+			private function dockCompleteHandler(event:DockEvent):void
+			{
+				trace("dockCompleteHandler()");
+				// the initiator is a DockPaneFX (IDockAreaClient)
+				var initiator:IDockAreaClient = event.dockInitiator;
+
+				initiator.percentWidth = 100;
+			}
+			
+			/**
+			 * The handler for the 'floatComplete' event dispatched
+			 * from the DockPaneFX instance.
+			 */
+			private function floatCompleteHandler(event:DockEvent):void
+			{
+				trace("floatCompleteHandler()");
+				// cancel the default of the float operation
+				event.preventDefault();
+				
+				// the initiator is a DockPaneFX (IDockAreaClient)
+				var initiator:IDockAreaClient = event.dockInitiator;
+
+				// Explicitly reset our width and height
+				initiator.width = 300;
+				initiator.height = 300;
+			}
+			
+			/**
+			 * This handler is fired AFTER the resize manager has finished
+			 * it's resizing operation.
+			 * When the resize manager sizes a component it must set the
+			 * client's width and height properties. 
+			 * If you want your percentWidth to remain, you must set it back 
+			 * after the manager is done sizing.
+			 */
+			private function paneResizeCompleteHandler(event:PaneEvent):void
+			{
+				// If we're docked, set us back to stretch
+				if (isDocked)
+					percentWidth = 100;
+			}
+
+		]]>
+	</mx:Script>
+	
+</containers:DockPaneFX>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="picData.send()" backgroundColor="black" backgroundAlpha="1"
+  backgroundGradientColors="[#000000,#000000]" backgroundGradientAlphas="[1,1]">
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import mx.core.UIComponent;
+import com.digicrafts.controls.RotationMenu;
+
+private var rm:RotationMenu = new RotationMenu();
+
+public function onPicData( event:ResultEvent ) : void {
+  var uic:UIComponent = new UIComponent();
+ 
+  rm.perspectiveScaling = true;
+  rm.perspectiveTransform = true;
+  rm.mouseEnabled = true;
+  rm.globalScale = 0.3;
+  rm.x = 0;
+  rm.y = 0;
+  rm.autoStart = true;
+  rm.mouseScroll = true;
+  rm.move( 0, height - 100 );
+  rm.setSize( width, 100 );
+  rm.rotationY = 0;
+  rm.rotationX = -8;
+  rm.blur = 50;
+  rm.alpha = 15;
+ 
+  for each ( var pic:XML in event.result..image ) {
+    var imgObj:Object = {};
+    imgObj.name = "http://localhost/pics/food/"+pic.@name.toString();
+    rm.addItem( imgObj );
+  }
+  
+  uic.addChild( rm );
+  addChild( uic );
+}  
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/food/images.xml" id="picData" resultFormat="e4x"
+  result="onPicData(event)" />
+</mx:Application>

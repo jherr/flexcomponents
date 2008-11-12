@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  currentState="top" xmlns:mxeffects="com.adobe.ac.mxeffects.*">
+<mx:Style>
+Panel {
+  background-image: Embed('background.png');
+  vertical-align: middle;
+  horizontal-align: center;  
+}
+Label { 
+  font-weight: bold;
+  font-size: 50;
+}
+</mx:Style>
+<mx:transitions>
+  <mx:Transition fromState="top" toState="bottom">
+    <mxeffects:Flip siblings="{[ftile]}" target="{btile}" />
+  </mx:Transition>
+  <mx:Transition fromState="bottom" toState="top">
+    <mxeffects:Flip siblings="{[btile]}" target="{ftile}" />
+  </mx:Transition>
+</mx:transitions>
+<mx:ApplicationControlBar dock="true">
+  <mx:Button label="Top" click="currentState='top';" />
+  <mx:Button label="Bottom" click="currentState='bottom';" />
+</mx:ApplicationControlBar>
+<mx:states>
+  <mx:State name="top">
+  	<mx:SetProperty target="{vs}" name="selectedChild" value="{ftile}" />
+  </mx:State>
+  <mx:State name="bottom">
+  	<mx:SetProperty target="{vs}" name="selectedChild" value="{btile}" />
+  </mx:State>
+</mx:states>
+<mx:ViewStack id="vs" width="70%" height="90%">
+  <mx:Panel id="ftile" title="Top" verticalAlign="middle" horizontalAlign="center" width="100%" height="100%">
+    <mx:Label text="Top" fontSize="30" />
+  </mx:Panel>
+  <mx:Panel id="btile" title="Bottom" verticalAlign="middle" horizontalAlign="center" width="100%" height="100%">
+    <mx:Label text="Bottom" fontSize="30" />
+  </mx:Panel>
+</mx:ViewStack>
+</mx:Application>

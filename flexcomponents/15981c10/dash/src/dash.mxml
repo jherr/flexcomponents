@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  xmlns:ilog="http://www.ilog.com/2007/ilog/flex" xmlns:local="*" creationComplete="onStartup()"
+  width="748" height="416">
+<mx:Script>
+<![CDATA[
+private function onStartup() : void {
+  var t:Timer = new Timer( 100, 0 );
+  t.addEventListener(TimerEvent.TIMER,onTimer);
+  t.start();
+}
+private function onTimer( event:Event ) : void {
+  mph.value += ( Math.random() * 13 ) - 6;
+  rpm.value += ( Math.random() * 100 ) - 50;
+  fuel.value += ( Math.random() ) - 0.5;
+  battery.value += ( Math.random() * 3 ) - 0.5;
+
+  mph.value = Math.floor( Math.round( mph.value * 100 ) / 100.0 );
+  rpm.value = Math.floor( Math.round( rpm.value * 100 ) / 100.0 );
+  fuel.value = Math.floor( Math.round( fuel.value * 100 ) / 100.0 );
+  battery.value = Math.floor( Math.round( battery.value * 100 ) / 100.0 );
+}
+]]>
+</mx:Script>
+<mx:Image source="@Embed('back.png')" />
+<ilog:SimpleCircularGauge id="mph" x="46" y="42" width="265" height="265" value="55" minimum="0" maximum="200"
+  minorTickInterval="10" majorTickInterval="20" animationDuration="200"/>
+<ilog:SimpleCircularGauge id="rpm" x="421" y="42" width="265" height="265" minimum="0" maximum="10000"
+  majorTickInterval="1000" minorTickInterval="500" value="1000" animationDuration="200"/>
+<ilog:SimpleVerticalGauge id="fuel" x="334" y="31" width="63.75" height="265" fontSize="10" majorTickInterval="25"
+  minorTickInterval="5" showLabels="false" value="80" showTrack="true" showMinorTicks="false" showMajorTicks="false"/>
+<mx:Label x="151" y="246" text="MPH" color="#FFFFFF" fontWeight="bold" fontSize="20"/>
+<mx:Label x="112" y="327" text="Battery" color="#FFFFFF" fontWeight="bold" fontSize="20"/>
+<mx:Label x="526" y="246" text="RPM" color="#FFFFFF" fontWeight="bold" fontSize="20"/>
+<mx:Label x="341" y="291" text="Fuel" color="#FFFFFF" fontWeight="bold" fontSize="20"/>
+<local:LightRampRectangularGauge id="battery" width="400" height="36" animationDuration="250" x="204" y="326"
+  minimum="0" maximum="100" value="50"  color="#FFFFFF"/>
+</mx:Application>

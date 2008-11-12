@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ilog:NumericCircularGauge xmlns:mx="http://www.adobe.com/2006/mxml" 
+                           xmlns:ilog="http://www.ilog.com/2007/ilog/flex"
+                           xmlns:local="*" showTrack="false"
+                           showMinorTicks="false" showLabels="false">
+  <ilog:scale>
+    <ilog:CircularLinearScale majorTickInterval="5"/>
+  </ilog:scale>                                                            
+  <ilog:scaleRenderer>
+    <ilog:CircularScaleRenderer majorTickWidth="20" radius="45%">
+      <ilog:majorTickRenderer>
+        <mx:Component>
+          <local:LightCircularTickRenderer/>
+        </mx:Component>
+      </ilog:majorTickRenderer>
+    </ilog:CircularScaleRenderer>
+  </ilog:scaleRenderer>
+  <ilog:valueRenderer>
+    <local:LightCircularValueRenderer/>
+  </ilog:valueRenderer>
+</ilog:NumericCircularGauge>

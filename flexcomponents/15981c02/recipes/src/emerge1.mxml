@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  currentState="out" creationComplete="onResize()" resize="onResize()" horizontalScrollPolicy="off"
+  verticalScrollPolicy="off">
+<mx:Script>
+<![CDATA[
+private function onResize() : void {
+  if ( !initialized ) return;
+  inTop.value = height - panel.height;
+  outTop.value = height;
+  panel.setStyle( 'top', ( currentState == 'out' ) ? outTop.value : inTop.value );
+}  
+]]>
+</mx:Script>
+<mx:Style>
+HBox {
+  background-image: Embed('background.png');
+  border-thickness: 3;
+  border-style: solid;
+  corner-radius: 3;
+  vertical-align: middle;
+  horizontal-align: center;  
+  border-color: #034EA2;
+  background-alpha: 0.8;
+}
+Label { 
+  font-weight: bold;
+  font-size: 50;
+}
+</mx:Style>
+<mx:ApplicationControlBar dock="true">
+  <mx:Button label="In" click="currentState='in';" />
+  <mx:Button label="Out" click="currentState='out';" />
+</mx:ApplicationControlBar>
+<mx:states>
+  <mx:State name="in">
+    <mx:SetStyle target="{panel}" name="top" value="300" id="inTop" />
+  </mx:State>
+  <mx:State name="out">
+   <mx:SetStyle target="{panel}" name="top" value="300" id="outTop" />
+  </mx:State>
+</mx:states>
+<mx:Label top="10" left="10" text="Content Area" fontSize="40" />
+<mx:HBox id="panel" left="0" width="100%" height="150">
+<mx:Label text="Popup Area" />
+</mx:HBox>
+</mx:Application>

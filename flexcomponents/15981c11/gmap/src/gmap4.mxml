@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+import com.google.maps.services.GeocodingEvent;
+import com.google.maps.services.ClientGeocoder;
+import com.google.maps.controls.ZoomControl;
+import com.google.maps.controls.MapTypeControl;
+import com.google.maps.MapEvent;
+import com.google.maps.LatLng;
+import com.google.maps.Map;
+import mx.core.UIComponent;
+
+private var map:Map = new Map();
+
+private function onStartup() : void {
+  var uic:UIComponent = new UIComponent();
+  uic.setStyle( 'top', 0 );
+  uic.setStyle( 'left', 0 );
+  uic.width = width;
+  uic.height = height;
+  addChildAt( uic, 0 );
+  
+  map.key = 'ABQIAAAA3Kt8qrkBKE7MtyPSeK0BFBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxT_b3kOF6ttj_RAXnPX7M2DDV3xFA';
+  map.width = width;
+  map.height = height;
+  map.addEventListener( MapEvent.MAP_READY, onMapReady );
+  uic.addChild( map );
+  
+  locPanel.setStyle( 'top', height - locPanel.height - 20 );
+}	
+private function onMapReady( event:MapEvent ) : void {
+  map.setCenter( new LatLng( 34.101509, -118.32691 ) );
+  map.setZoom( 16 );
+  
+  map.addControl( new MapTypeControl() );
+  map.addControl( new ZoomControl() );
+}
+private function onGeocodeSuccess( event:GeocodingEvent ) : void {
+  map.setCenter( event.response.placemarks[0].point );
+}
+private function onKeyDown( event:KeyboardEvent ) : void {
+  if ( event.keyCode == Keyboard.ENTER ) {
+    var cg:ClientGeocoder = new ClientGeocoder( "USA" );
+    cg.addEventListener( GeocodingEvent.GEOCODING_SUCCESS, onGeocodeSuccess );
+    cg.geocode( loc.text );
+  }
+}
+]]>
+</mx:Script>
+<mx:Panel id="locPanel" title="Location" top="500" left="20" borderAlpha="0.95">
+  <mx:TextInput id="loc" keyDown="onKeyDown( event )" width="300" />
+</mx:Panel>
+</mx:Application>

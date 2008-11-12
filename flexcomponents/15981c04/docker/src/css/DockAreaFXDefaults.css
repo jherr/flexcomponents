@@ -1,0 +1,1158 @@
+
+ResizeBarControl {
+    backgroundAlpha:0.4;
+    backgroundColor:#FFFFFF;
+    borderStyle:"solid";
+    paddingBottom:0;
+    paddingLeft:0;
+    paddingRight:0;
+    paddingTop:0;
+    /*
+     * The width of the toggle button in direction vertical or horizontal.
+     */
+    toggleButtonWidth:50;
+}
+
+TitleBarControl {
+    borderAlpha:1;
+    borderSkin:ClassReference("com.teotiGraphix.skins.halo.TitleBackground");
+    borderStyle:"none";
+    /*
+     * Creates the edge higlight of the border edge.
+     */
+    bottomHiglight:true;
+    /*
+     * The default width of the buttons.
+     */
+    buttonHeight:20;
+    /*
+     * The placement of the label reletive to the icon within the bar control.
+     */
+    buttonOrder:"normal";
+    /*
+     * The placement of the button group withing the bar control.
+     */
+    buttonPlacement:"right";
+    /*
+     * The default height of the buttons.
+     */
+    buttonWidth:20;
+    /*
+     * The styleName applied to the close button.
+     */
+    /*closeButtonStyleName:undefined;*/
+    /*
+     * Skin style, the bottom edge alpha of the TitleBackground.
+     */
+    edgeAlpha:0.3;
+    /*
+     * Skin style, the bottom edge color of the TitleBackground.
+     */
+    edgeColor:#FFFFFF;
+    /*
+     * Skin style, the edge offset of the TitleBackground.
+     */
+    edgeOffset:1;
+    horizontalGap:2;
+    /*
+     * The styleName applied to the maximize button.
+     */
+    /*maximizeButtonStyleName:undefined;*/
+    /*
+     * The styleName applied to the minimize button.
+     */
+    /*minimizeButtonStyleName:undefined;*/
+    offsetBorder:true;
+    paddingBottom:2;
+    paddingLeft:2;
+    paddingRight:2;
+    paddingTop:2;
+    textRollOverColor:#000000;
+    /*
+     * The text rollover decoration for the label when activated.
+     */
+    textRollOverDecoration:"underline";
+    verticalAlign:"middle";
+    verticalGap:2;
+}
+
+CollapsiblePaneFX {
+    /*
+     * The length of the transition when the client resizes close, in milliseconds.
+     */
+    closeDuration:400;
+    /*
+     * An easing function to control the close resize transition.
+     */
+    /*closeEasingFunction:undefined;*/
+    /*
+     * The length of the transition when the client resizes open, in milliseconds.
+     */
+    openDuration:400;
+    /*
+     * An easing function to control the open resize transition.
+     */
+    /*openEasingFunction:undefined;*/
+    /*
+     * The styleName of the titleBarInstance when the pane is closed.
+     */
+    /*titleBarStyleNameClosed:undefined;*/
+    /*
+     * The styleName of the titleBarInstance when the pane is open.
+     */
+    /*titleBarStyleNameOpened:undefined;*/
+    /*
+     * The styleName of the titleBarInstance's label when the  pane is closed.
+     */
+    /*titleStyleNameClosed:undefined;*/
+    /*
+     * The styleName of the titleBarInstance's label when the  pane is open.
+     */
+    /*titleStyleNameOpened:undefined;*/
+}
+
+.dockAreaResizeBarStyles {
+    backgroundAlpha:0.4;
+    backgroundColor:#CCD0D0;
+    borderColor:#CCD0D0;
+    borderStyle:"solid";
+    cornerRadius:3;
+}
+
+DockAreaFX {
+    backgroundAlpha:0.4;
+    backgroundColor:#FFFFFF;
+    borderStyle:"solid";
+    /*
+     * The alpha the boundingBoxSkin uses to fade it's background.
+     */
+    boundingBoxAlpha:0.7;
+    /*
+     * The color the boundingBoxSkin uses to color it's background.
+     */
+    /*boundingBoxColor:undefined;*/
+    /*
+     * The skin for the bounding box instance.
+     */
+    boundingBoxSkin:ClassReference("com.teotiGraphix.skins.teo.dockArea.BoundingBoxSkin");
+    /*
+     * The thickess the boundingBoxSkin's background.
+     */
+    boundingBoxThickness:1;
+    boundsCheckEnabled:false;
+    /*
+     * The length of the transition when the client resizes close, in milliseconds.
+     */
+    closeDuration:400;
+    /*
+     * An easing function to control the close resize transition.
+     */
+    /*closeEasingFunction:undefined;*/
+    cornerRadius:4;
+    /*
+     * The alpha the dragProxySkin uses to fade it's background.
+     */
+    dragProxyAlpha:0.7;
+    /*
+     * The color the dragProxySkin uses to color it's background.
+     */
+    /*dragProxyColor:undefined;*/
+    /*
+     * The skin for the drag proxy instance.
+     */
+    dragProxySkin:ClassReference("com.teotiGraphix.skins.teo.dockArea.DragProxySkin");
+    /*
+     * The thickness the dragProxySkin uses to fade it's background.
+     */
+    /*dragProxyThickness:undefined;*/
+    horizontalGap:2;
+    offsetBorder:true;
+    /*
+     * The length of the transition when the client resizes open, in milliseconds.
+     */
+    openDuration:400;
+    /*
+     * An easing function to control the open resize transition.
+     */
+    /*openEasingFunction:undefined;*/
+    overlayButtonOffset:"inside";
+    overlayFillAlpha:0.4;
+    overlayFillColor:#242424;
+    paddingBottom:2;
+    paddingLeft:2;
+    paddingRight:2;
+    paddingTop:2;
+    verticalGap:2;
+}
+
+DockPaneFX {
+    backgroundAlpha:0.4;
+    backgroundColor:#FFFFFF;
+    borderStyle:"solid";
+    cornerRadius:4;
+    /*
+     * The styleName of the titleBar instance when the pane isDocked property is true.
+     */
+    dockStyleName:"dockPaneDockStyles";
+    /*
+     * The styleName of the titleBar instance when the pane isDocked property is true.
+     */
+    dockTitleBarStyleName:"dockPaneDockTitleBarStyles";
+    /*
+     * The styleName of the titleBar label instance when the pane isDocked property is true.
+     */
+    dockTitleStyleName:"dockPaneDockTitleStyles";
+    /*
+     * The styleName to apply to the dragHandleInstance.
+     */
+    /*dragHandleStyleName:undefined;*/
+    /*
+     * The thickness of the default drag handle.
+     */
+    dragHandleThickness:10;
+    /*
+     * The styleName of the titleBar instance when the pane isDocked property is true.
+     */
+    floatStyleName:"dockPaneFloatStyles";
+    /*
+     * The styleName of the titleBar instance when the pane isDocked property is false (floating window).
+     */
+    floatTitleBarStyleName:"dockPaneFloatTitleBarStyles";
+    /*
+     * The styleName of the titleBar label instance when the pane isDocked property is false (floating window).
+     */
+    floatTitleStyleName:"dockPaneFloatTitleStyles";
+    /*
+     * When the style hitTestType is set to 'function', the resize manager will use this style to calculate resize hit areas.
+     */
+    /*hitTestFunction:undefined;*/
+    /*
+     * The type of hit test performed on the client component.
+     */
+    hitTestType:"overlay";
+    hitTestType:"function";
+    horizontalGap:2;
+    movePopUpOverlayAlpha:0;
+    moveType:"realtime";
+    /*
+     * Specifies what type of offset the ResizeManagerFX uses when creating the overlay and sizing the overlay.
+     */
+    overlayButtonOffset:"center";
+    /*
+     * The Class used to render the overlay's buttons.
+     */
+    overlayButtonRenderer:ClassReference("com.teotiGraphix.managers.overlayClasses.OverlayButton");
+    /*
+     * The buttons skins the overlayButtonRenderer style renders.
+     */
+    overlayButtonSkin:ClassReference("com.teotiGraphix.skins.teo.overlayClasses.OverlayButtonSkin");
+    /*
+     * The thickness of the overlay's button skins.
+     */
+    overlayButtonThickness:4;
+    /*
+     * When the value of this style is 0, the buttons stretch to fill the whole component, when a number greater than 0, the resize buttons will look like anchors.
+     */
+    overlayButtonWidth:0;
+    /*
+     * The corner radius for the overlay's assets if applied.
+     */
+    overlayCornerRadius:0;
+    /*
+     * The fill alpha value of the OverlayButtonSkin default skin.
+     */
+    overlayFillAlpha:1;
+    /*
+     * The fill color value of the OverlayButtonSkin default skin.
+     */
+    overlayFillColor:#0099FF;
+    paddingBottom:2;
+    paddingLeft:2;
+    paddingRight:2;
+    paddingTop:2;
+    /*
+     * The value used to control the alpha of the client resize overlay.
+     */
+    resizeClientOverlayAlpha:0;
+    /*
+     * The value used to control the alpha of the popup resize overlay.
+     */
+    resizePopUpOverlayAlpha:0.5;
+    resizeType:"none";
+    /*
+     * The type of resize the manager applies to the specific client when a resize operation is in effect.
+     */
+    resizeType:'none';
+    verticalGap:2;
+}
+
+.dockPaneDockTitleStyles {
+    fontWeight:"bold";
+}
+
+.dockPaneFloatTitleStyles {
+    fontWeight:"bold";
+}
+
+.dockPaneFloatStyles {
+    dropShadowDistance:1;
+    dropShadowEnabled:true;
+}
+
+.dockPaneDockTitleBarStyles {
+    backgroundAlpha:0;
+    borderSkin:ClassReference("com.teotiGraphix.skins.halo.TitleBackground");
+    verticalAlign:"middle";
+}
+
+.dockPaneFloatTitleBarStyles {
+    backgroundAlpha:0;
+    borderSkin:ClassReference("com.teotiGraphix.skins.halo.TitleBackground");
+    verticalAlign:"middle";
+}
+
+LayoutContainerFX {
+    /*
+     * Alpha level of the color defined by the <code>backgroundColor</code> property, of the image or SWF file defined by the <code>backgroundImage</code> style.
+     */
+    backgroundAlpha:1;
+    /*
+     * Background color of a component.
+     */
+    /*backgroundColor:undefined;*/
+    /*
+     * Background color of the component when it is disabled.
+     */
+    /*backgroundDisabledColor:undefined;*/
+    /*
+     * Background image of a component.
+     */
+    /*backgroundImage:undefined;*/
+    /*
+     * Scales the image specified by <code>backgroundImage</code>  to different percentage sizes.
+     */
+    backgroundSize:"auto";
+    borderAlpha:1;
+    /*
+     * An array of alpha values for the corresponding color in the borderColors array.
+     */
+    borderAlphas: 1, 1 ;
+    /*
+     * Color of the border.
+     */
+    borderColor:#B7BABC;
+    /*
+     * Colors used to tint the border of the control.
+     */
+    borderColors: #FFFFFF, #FFFFFF ;
+    /*
+     * Bounding box sides.
+     */
+    borderSides:"top left bottom right";
+    /*
+     * The border skin of the component.
+     */
+    borderSkin:ClassReference("mx.skins.halo.HaloBorder");
+    /*
+     * Bounding box style.
+     */
+    borderStyle:"inset";
+    /*
+     * Bounding box thickness.
+     */
+    borderThickness:1;
+    /*
+     * The corner radius for the bottom left corner of the border.
+     */
+    cornerBottomLeft:NaN;
+    /*
+     * The corner radius for the bottom right corner of the border.
+     */
+    cornerBottomRight:NaN;
+    /*
+     * The 4 corner radii of the border in string space-delimited list.
+     */
+    /*cornerRadii:undefined;*/
+    /*
+     * Radius of component corners.
+     */
+    cornerRadius:0;
+    /*
+     * The corner radius for the top left corner of the border.
+     */
+    cornerTopLeft:NaN;
+    /*
+     * The corner radius for the top right corner of the border.
+     */
+    cornerTopRight:NaN;
+    /*
+     * Color of the drop shadow.
+     */
+    dropShadowColor:#000000;
+    /*
+     * Boolean property that specifies whether the component has a visible  drop shadow.
+     */
+    dropShadowEnabled:false;
+    /*
+     * An array of alpha values for the corresponding colors in the gradientColors array.
+     */
+    gradientAlphas:0.6, 0.4;
+    /*
+     * The angle of the gradient fill.
+     */
+    /*gradientAngle:undefined;*/
+    /*
+     * An array of RGB hexadecimal color values to be used in the gradient;  for example, red is 0xFF0000, blue is 0x0000FF, and so on.
+     */
+    gradientColors: #FFFFFF, #FFFFFF ;
+    /*
+     * A number that controls the location of the focal point of the gradient.
+     */
+    gradientFocalPoint:0;
+    /*
+     * A value from the InterpolationMethod class that specifies which value to use:  InterpolationMethod.
+     */
+    gradientInterpMethod:"rgb";
+    /*
+     * An array of color distribution ratios.
+     */
+    gradientRatios: 0, 255 ;
+    /*
+     * A value from the SpreadMethod class that specifies which spread method to use.
+     */
+    gradientSpreadMethod:"pad";
+    /*
+     * The direction of the gradient fill.
+     */
+    gradientStyle:"vertical";
+    /*
+     * A value from the GradientType class that specifies which  gradient type to use: GradientType.
+     */
+    gradientType:"linear";
+    /*
+     * Alpha transparencies used for the highlight fill of controls.
+     */
+    highlightAlphas:0.3, 0.0;
+    /*
+     * Not implemented.
+     */
+    /*highlightAngle:undefined;*/
+    /*
+     * Colors used to tint the background of the control.
+     */
+    highlightColors:#FFFFFF,#FFFFFF;
+    /*
+     * The 'squeeze' ratio that is applied to the highlight of the skin.
+     */
+    highlightRatio:0.5;
+    /*
+     * The fill ratios applied to the higlight gradient.
+     */
+    highlightRatios:0,255;
+    /*
+     * Wether the higlight has rounded corner on the bottom.
+     */
+    hightlightRoundedCorners:false;
+    /*
+     * Horizontal alignment of children in the container.
+     */
+    horizontalAlign:"left";
+    /*
+     * Number of pixels between children in the horizontal direction.
+     */
+    horizontalGap:8;
+    /*
+     * Offsets the border instance by the bar thickness and  barGap.
+     */
+    offsetBorder:false;
+    /*
+     * Number of pixels between the container's bottom border  and the bottom edge of its content area.
+     */
+    paddingBottom:0;
+    /*
+     * Number of pixels between the container's left border  and the left edge of its content area.
+     */
+    paddingLeft:0;
+    /*
+     * Number of pixels between the container's right border  and the right edge of its content area.
+     */
+    paddingRight:0;
+    /*
+     * Number of pixels between the container's top border  and the top edge of its content area.
+     */
+    paddingTop:0;
+    /*
+     * Direction of the drop shadow.
+     */
+    shadowDirection:"center";
+    /*
+     * Distance of the drop shadow.
+     */
+    shadowDistance:2;
+    /*
+     * Vertical alignment of children in the container.
+     */
+    verticalAlign:"top";
+    /*
+     * Number of pixels between children in the vertical direction.
+     */
+    verticalGap:6;
+}
+
+PaneFX {
+    borderAlpha:0.4;
+    /*
+     * The styleName of the titleBarInstance's label instance.
+     */
+    /*headerAlphas:undefined;*/
+    /*
+     * Insets the titleBar inside the borderMetrics if true.
+     */
+    insetTitleBar:true;
+    /*
+     * Wether to show the chrome beneath the titleBar in the pane.
+     */
+    titleBarChrome:true;
+    /*
+     * The gap of the titleBar between it's inside edge and the content children.
+     */
+    titleBarGap:0;
+    /*
+     * The styleName of the titleBarInstance.
+     */
+    /*titleBarStyleName:undefined;*/
+    /*
+     * The thickness of the titleBar if not NaN.
+     */
+    titleBarThickness:NaN;
+    /*
+     * The styleName of the titleBarInstance's label instance.
+     */
+    /*titleStyleName:undefined;*/
+}
+
+ResizeDockAreaFX {
+    /*
+     * The styleName for the resizeBar when it's direction is horizontal.
+     */
+    /*horizontalResizeBarStyleName:undefined;*/
+    /*
+     * Insets the resizeBar inside the borderMetrics if true.
+     */
+    insetResizeBar:false;
+    /*
+     * The gap of the resizeBar between it's inside edge and the content children.
+     */
+    resizeBarGap:4;
+    /*
+     * The styleName of the resizeBarInstance.
+     */
+    resizeBarStyleName:"dockAreaResizeBarStyles";
+    /*
+     * The thickness of the resizeBar if not NaN.
+     */
+    resizeBarThickness:NaN;
+    /*
+     * The styleName for the resizeBar when it's direction is vertical.
+     */
+    /*verticalResizeBarStyleName:undefined;*/
+}
+
+TaskListFX {
+    borderStyle:"solid";
+    offsetBorder:true;
+    paddingBottom:3;
+    paddingLeft:3;
+    paddingRight:3;
+    paddingTop:3;
+    verticalGap:6;
+}
+
+DockPaneTitleBar {
+    /*
+     * The styleName to apply to the dragHandleInstance.
+     */
+    /*dragHandleStyleName:undefined;*/
+}
+
+TaskListBarControl {
+    borderStyle:"solid";
+    /*
+     * The textDecoration of the bar's label on mouseOver if the parent's barDoubleClickEnabled is set to false.
+     */
+    textRollOverDecoration:"underline";
+}
+
+LayoutComponentFX {
+    borderAlpha:1;
+    horizontalAlign:"left";
+    horizontalGap:2;
+    /*
+     * The styleName for the label of the component.
+     */
+    /*labelStyleName:undefined;*/
+    paddingBottom:2;
+    paddingLeft:2;
+    paddingRight:2;
+    paddingTop:2;
+    verticalAlign:"middle";
+    verticalGap:2;
+}
+
+WorkSpaceComponentFX {
+    /*
+     * Alpha level of the color defined by the <code>backgroundColor</code> property, of the image or SWF file defined by the <code>backgroundImage</code> style.
+     */
+    backgroundAlpha:1;
+    /*
+     * Background color of a component.
+     */
+    /*backgroundColor:undefined;*/
+    /*
+     * Background color of the component when it is disabled.
+     */
+    /*backgroundDisabledColor:undefined;*/
+    /*
+     * Background image of a component.
+     */
+    /*backgroundImage:undefined;*/
+    /*
+     * Scales the image specified by <code>backgroundImage</code>  to different percentage sizes.
+     */
+    backgroundSize:"auto";
+    /*
+     * An array of alpha values for the corresponding color in the borderColors array.
+     */
+    borderAlphas: 1, 1 ;
+    /*
+     * Color of the border.
+     */
+    borderColor:#B7BABC;
+    /*
+     * Colors used to tint the border of the control.
+     */
+    borderColors: #FFFFFF, #FFFFFF ;
+    /*
+     * Bounding box sides.
+     */
+    borderSides:"top left bottom right";
+    /*
+     * The border skin of the component.
+     */
+    borderSkin:ClassReference("mx.skins.halo.HaloBorder");
+    /*
+     * Bounding box style.
+     */
+    borderStyle:"inset";
+    /*
+     * Bounding box thickness.
+     */
+    borderThickness:1;
+    /*
+     * The corner radius for the bottom left corner of the border.
+     */
+    cornerBottomLeft:NaN;
+    /*
+     * The corner radius for the bottom right corner of the border.
+     */
+    cornerBottomRight:NaN;
+    /*
+     * The 4 corner radii of the border in string space-delimited list.
+     */
+    /*cornerRadii:undefined;*/
+    /*
+     * Radius of component corners.
+     */
+    cornerRadius:0;
+    /*
+     * The corner radius for the top left corner of the border.
+     */
+    cornerTopLeft:NaN;
+    /*
+     * The corner radius for the top right corner of the border.
+     */
+    cornerTopRight:NaN;
+    /*
+     * Color of the drop shadow.
+     */
+    dropShadowColor:#000000;
+    /*
+     * Boolean property that specifies whether the component has a visible  drop shadow.
+     */
+    dropShadowEnabled:false;
+    /*
+     * An array of alpha values for the corresponding colors in the gradientColors array.
+     */
+    gradientAlphas:0.6, 0.4;
+    /*
+     * The angle of the gradient fill.
+     */
+    /*gradientAngle:undefined;*/
+    /*
+     * An array of RGB hexadecimal color values to be used in the gradient;  for example, red is 0xFF0000, blue is 0x0000FF, and so on.
+     */
+    gradientColors: #FFFFFF, #FFFFFF ;
+    /*
+     * A number that controls the location of the focal point of the gradient.
+     */
+    gradientFocalPoint:0;
+    /*
+     * A value from the InterpolationMethod class that specifies which value to use:  InterpolationMethod.
+     */
+    gradientInterpMethod:"rgb";
+    /*
+     * An array of color distribution ratios.
+     */
+    gradientRatios: 0, 255 ;
+    /*
+     * A value from the SpreadMethod class that specifies which spread method to use.
+     */
+    gradientSpreadMethod:"pad";
+    /*
+     * The direction of the gradient fill.
+     */
+    gradientStyle:"vertical";
+    /*
+     * A value from the GradientType class that specifies which  gradient type to use: GradientType.
+     */
+    gradientType:"linear";
+    /*
+     * Alpha transparencies used for the highlight fill of controls.
+     */
+    highlightAlphas:0.3, 0.0;
+    /*
+     * Not implemented.
+     */
+    /*highlightAngle:undefined;*/
+    /*
+     * Colors used to tint the background of the control.
+     */
+    highlightColors:#FFFFFF,#FFFFFF;
+    /*
+     * The 'squeeze' ratio that is applied to the highlight of the skin.
+     */
+    highlightRatio:0.5;
+    /*
+     * The fill ratios applied to the higlight gradient.
+     */
+    highlightRatios:0,255;
+    /*
+     * Wether the higlight has rounded corner on the bottom.
+     */
+    hightlightRoundedCorners:false;
+    /*
+     * Horizontal alignment of children in the container.
+     */
+    horizontalAlign:"left";
+    /*
+     * Number of pixels between children in the horizontal direction.
+     */
+    horizontalGap:8;
+    /*
+     * Number of pixels between the container's bottom border  and the bottom edge of its content area.
+     */
+    paddingBottom:0;
+    /*
+     * Number of pixels between the container's left border  and the left edge of its content area.
+     */
+    paddingLeft:0;
+    /*
+     * Number of pixels between the container's right border  and the right edge of its content area.
+     */
+    paddingRight:0;
+    /*
+     * Number of pixels between the container's top border  and the top edge of its content area.
+     */
+    paddingTop:0;
+    /*
+     * Direction of the drop shadow.
+     */
+    shadowDirection:"center";
+    /*
+     * Distance of the drop shadow.
+     */
+    shadowDistance:2;
+    /*
+     * Vertical alignment of children in the container.
+     */
+    verticalAlign:"top";
+    /*
+     * Number of pixels between children in the vertical direction.
+     */
+    verticalGap:6;
+}
+
+MoveManagerFX {
+    /*
+     * Determines if the manager checks the client's parent bounds when performing an operation.
+     */
+    boundsCheckEnabled:true;
+    /*
+     * The style determines of the client overlay is visible while the popup overlay is moved.
+     */
+    clientOverlayVisibleAtMove:false;
+    /*
+     * If the manager shows the cursor.
+     */
+    cursorEnabled:true;
+    /*
+     * The value used to control the alpha of the client move overlay.
+     */
+    moveClientOverlayAlpha:0;
+    /*
+     * The Class used to render the client move overlay.
+     */
+    moveClientOverlayRenderer:ClassReference("com.teotiGraphix.managers.overlayClasses.MoveOverlay");
+    /*
+     * The move cursor skin for the MoveManagerFX.
+     */
+    moveCursorSkin:Embed(source="moveCursor.png");
+    /*
+     * The move cursor's x offset.
+     */
+    moveCursorXOffset:-10;
+    /*
+     * The move cursor's y offset.
+     */
+    moveCursorYOffset:-10;
+    /*
+     * The length of the transition when the client moves, in milliseconds.
+     */
+    moveDuration:400;
+    /*
+     * An easing function to control the move transition.
+     */
+    /*moveEasingFunction:undefined;*/
+    /*
+     * The style that determines if the moveButton is enabled or disable in the client overlay.
+     */
+    moveEnabled:true;
+    /*
+     * This is the styleName that the manager will look for when cascading styles.
+     */
+    moveManagerStyleName:"moveManagerStyles";
+    /*
+     * The value used to control the alpha of the popup move overlay.
+     */
+    movePopUpOverlayAlpha:0.5;
+    /*
+     * The Class used to render the popUp move overlay.
+     */
+    movePopUpOverlayRenderer:ClassReference("com.teotiGraphix.managers.overlayClasses.MoveOverlay");
+    /*
+     * The distance before the client component will move in any direction.
+     */
+    moveTolerance:0;
+    /*
+     * The type of move the manager applies to the specific client when a move operation is in effect.
+     */
+    moveType:'none';
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayAnchorX:"left";
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayAnchorY:"top";
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayBottom:0;
+    /*
+     * The Class used to render the overlay's buttons.
+     */
+    overlayButtonRenderer:ClassReference("com.teotiGraphix.managers.overlayClasses.OverlayButton");
+    /*
+     * The buttons skins the overlayButtonRenderer style renders.
+     */
+    overlayButtonSkin:ClassReference("com.teotiGraphix.skins.teo.overlayClasses.OverlayButtonSkin");
+    /*
+     * The thickness of the overlay's button skins.
+     */
+    overlayButtonThickness:10;
+    /*
+     * When the value of this style is 0, the buttons stretch to fill the whole component, when a number greater than 0, the resize buttons will look like anchors.
+     */
+    overlayButtonWidth:0;
+    /*
+     * The corner radius for the overlay's assets if applied.
+     */
+    overlayCornerRadius:0;
+    /*
+     * The fill alpha value of the OverlayButtonSkin default skin.
+     */
+    overlayFillAlpha:1;
+    /*
+     * The fill color value of the OverlayButtonSkin default skin.
+     */
+    overlayFillColor:#0099FF;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayHeight:0;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayLeft:0;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayRight:0;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayTop:0;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayWidth:0;
+    /*
+     * The style determines of the popup overlay is visible while it is moved.
+     */
+    popUpOverlayVisibleAtMove:true;
+    /*
+     * If a tooltip is displayed during a manager operation.
+     */
+    toolTipEnabled:false;
+    /*
+     * The offset of the tooltip in the x direction from the cursor.
+     */
+    toolTipOffsetX:0;
+    /*
+     * The offset of the tooltip in the y direction from the cursor.
+     */
+    toolTipOffsetY:0;
+}
+
+ResizeManagerFX {
+    /*
+     * Determines if the manager checks the client's parent bounds when performing an operation.
+     */
+    boundsCheckEnabled:true;
+    /*
+     * The style determines of the client overlay is visible while the  popup overlay is resized.
+     */
+    clientOverlayVisibleAtResize:false;
+    /*
+     * The styleName for the embedded client resize overlay.
+     */
+    clientStyleName:"clientReiszeOverlayStyles";
+    /*
+     * If the manager shows the cursor.
+     */
+    cursorEnabled:true;
+    /*
+     * When the style hitTestType is set to 'function', the resize manager will use this style to calculate resize hit areas.
+     */
+    /*hitTestFunction:undefined;*/
+    /*
+     * The type of hit test performed on the client component.
+     */
+    hitTestType:"overlay";
+    /*
+     * The horizontal cursor skin for the component.
+     */
+    horizontalCursorSkin:Embed(source="horizontalCursor.png");
+    /*
+     * The horizontal cursor's x offset.
+     */
+    horizontalCursorXOffset:-10;
+    /*
+     * The horizontal cursor's y offset.
+     */
+    horizontalCursorYOffset:-5;
+    /*
+     * The left diagonal cursor skin for the component.
+     */
+    leftDiagonalCursorSkin:Embed(source="leftDiagonalCursor.png");
+    /*
+     * The left diagonal cursor's x offset.
+     */
+    leftDiagonalCursorXOffset:-8;
+    /*
+     * The left diagonal cursor's y offset.
+     */
+    leftDiagonalCursorYOffset:-8;
+    /*
+     * Locks the aspect ratio of the client that is being resized.
+     */
+    lockAspectRatio:false;
+    /*
+     * The length of the transition when the client moves, in milliseconds.
+     */
+    moveDuration:400;
+    /*
+     * An easing function to control the move transition.
+     */
+    /*moveEasingFunction:undefined;*/
+    /*
+     * Specifies what type of offset the ResizeManagerFX uses when creating the overlay and sizing the overlay.
+     */
+    overlayButtonOffset:"center";
+    /*
+     * The Class used to render the overlay's buttons.
+     */
+    overlayButtonRenderer:ClassReference("com.teotiGraphix.managers.overlayClasses.OverlayButton");
+    /*
+     * The buttons skins the overlayButtonRenderer style renders.
+     */
+    overlayButtonSkin:ClassReference("com.teotiGraphix.skins.teo.overlayClasses.OverlayButtonSkin");
+    /*
+     * The thickness of the overlay's button skins.
+     */
+    overlayButtonThickness:10;
+    /*
+     * When the value of this style is 0, the buttons stretch to fill the whole component, when a number greater than 0, the resize buttons will look like anchors.
+     */
+    overlayButtonWidth:0;
+    /*
+     * The corner radius for the overlay's assets if applied.
+     */
+    overlayCornerRadius:0;
+    /*
+     * The fill alpha value of the OverlayButtonSkin default skin.
+     */
+    overlayFillAlpha:1;
+    /*
+     * The fill color value of the OverlayButtonSkin default skin.
+     */
+    overlayFillColor:#0099FF;
+    /*
+     * The style determines of the popUp overlay is visible while the  client is resizing.
+     */
+    popUpOverlayVisibleAtResize:true;
+    /*
+     * The styleName for the popup client resize overlay.
+     */
+    popUpStyleName:"popUpResizeOverlayStyles";
+    /*
+     * The value used to control the alpha of the client resize overlay.
+     */
+    resizeClientOverlayAlpha:0;
+    /*
+     * The Class used to render the client resize overlay.
+     */
+    resizeClientOverlayRenderer:ClassReference("com.teotiGraphix.managers.overlayClasses.ResizeOverlay");
+    /*
+     * The length of the transition when the client resizes, in milliseconds.
+     */
+    resizeDuration:400;
+    /*
+     * An easing function to control the resize transition.
+     */
+    /*resizeEasingFunction:undefined;*/
+    /*
+     * The style that determines if the resize buttons are visible.
+     */
+    resizeEnabled:true;
+    /*
+     * The styleName for the style point from a component styleName.
+     */
+    resizeManagerStyleName:"resizeManagerStyles";
+    /*
+     * The value used to control the alpha of the popup resize overlay.
+     */
+    resizePopUpOverlayAlpha:0.5;
+    /*
+     * The Class used to render the popup resize overlay.
+     */
+    resizePopUpOverlayRenderer:ClassReference("com.teotiGraphix.managers.overlayClasses.ResizeOverlay");
+    /*
+     * The type of resize the manager applies to the specific client when a resize operation is in effect.
+     */
+    resizeType:'none';
+    /*
+     * The right diagonal cursor skin for the component.
+     */
+    rightDiagonalCursorSkin:Embed(source="rightDiagonalCursor.png");
+    /*
+     * The right diagonal cursor's x offset.
+     */
+    rightDiagonalCursorXOffset:-8;
+    /*
+     * The right diagonal cursor's y offset.
+     */
+    rightDiagonalCursorYOffset:-8;
+    /*
+     * If a tooltip is displayed during a manager operation.
+     */
+    toolTipEnabled:false;
+    /*
+     * The offset of the tooltip in the x direction from the cursor.
+     */
+    toolTipOffsetX:0;
+    /*
+     * The offset of the tooltip in the y direction from the cursor.
+     */
+    toolTipOffsetY:0;
+    /*
+     * The horizontal cursor skin for the component.
+     */
+    verticalCursorSkin:Embed(source="verticalCursor.png");
+    /*
+     * The vertical cursor's x offset.
+     */
+    verticalCursorXOffset:-5;
+    /*
+     * The vertical cursor's y offset.
+     */
+    verticalCursorYOffset:-11;
+}
+
+MoveOverlay {
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayAnchorX:"left";
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayAnchorY:"top";
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayBottom:0;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayHeight:0;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayLeft:0;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayRight:0;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayTop:0;
+    /*
+     * The top anchor for the overlay.
+     */
+    overlayWidth:0;
+}
+
+Overlay {
+    /*
+     * The corner radius for the overlay's assets if applied.
+     */
+    overlayCornerRadius:0;
+    /*
+     * The fill alpha value of the OverlayButtonSkin default skin.
+     */
+    overlayFillAlpha:1;
+    /*
+     * The fill color value of the OverlayButtonSkin default skin.
+     */
+    overlayFillColor:#242424;
+}
+
+ResizeOverlay {
+    /*
+     * The width or (length) of the resize overlay's top, right, bottom and left buttons.
+     */
+    overlayButtonWidth:0;
+}

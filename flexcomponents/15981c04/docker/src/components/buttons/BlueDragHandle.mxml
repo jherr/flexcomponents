@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+@LICENSE@
+-->
+<controls:ButtonFX
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:controls="com.teotiGraphix.controls.*"
+	upSkin="{upSkin}"
+	overSkin="{upSkin}"
+	downSkin="{upSkin}"
+	disabledSkin="{upSkin}"
+	width="7" height="16">
+	
+	<!--
+		@PROJECT_BLOCK@
+	-->	
+
+	<mx:Script>
+		<![CDATA[
+
+			[Bindable]
+			[Embed(source="/assets/drag-handle-blue.png")]
+			protected var upSkin:Class;
+				
+		]]>
+	</mx:Script>
+	
+</controls:ButtonFX>

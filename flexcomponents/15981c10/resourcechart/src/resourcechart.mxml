@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+                xmlns:ilog="http://www.ilog.com/2007/ilog/flex">
+
+<mx:Style>
+.myTaskItemStyle {
+  textStyleName : "myTextStyle"; 
+  textRollOverColor : white; 
+  textSelectedColor : green; 
+  textSelectedRollOverColor : blue;
+  background-color: #ee99ee;
+}
+.myTextStyle {
+  color: #333333;
+  fontWeight : "bold";
+}
+</mx:Style>
+
+<mx:Script>
+<![CDATA[
+import mx.collections.ArrayCollection;
+  
+[Bindable]
+public var resources:ArrayCollection = new ArrayCollection([
+  { id: "lori", name: "Lori" },
+  { id: "jack", name: "Jack" },
+  { id: "megan", name: "Megan" }
+] );
+
+[Bindable]
+public var tasks:ArrayCollection = new ArrayCollection([
+  { resourceId: "lori", name: "Investigate new offices", startTime: "1/14/2008 8:0:0", endTime: "1/17/2008 17:0:0" },
+  { resourceId: "jack", name: "Clean current office", startTime: "1/16/2008 2:0:0", endTime: "1/16/2008 20:0:0" },
+  { resourceId: "jack", name: "Move office", startTime: "1/18/2008 2:0:0", endTime: "1/18/2008 20:0:0" },
+  { resourceId: "megan", name: "Help move office", startTime: "1/18/2008 2:0:0", endTime: "1/18/2008 20:0:0" }
+]);
+]]>
+</mx:Script>
+
+<ilog:ResourceChart id="resourceChart" width="100%" height="100%"
+  resourceDataProvider="{resources}" taskDataProvider="{tasks}" taskItemStyleName="myTaskItemStyle">
+<ilog:timeScale>
+  <ilog:TimeScale backgroundColors="{['white', '#999999']}" rollOverAlpha="0.5" rollOverColor="green" />
+</ilog:timeScale>
+</ilog:ResourceChart>
+</mx:Application>

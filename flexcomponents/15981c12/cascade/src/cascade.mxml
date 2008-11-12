@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  xmlns:cl="com.rd.widget.cascadelist.*" creationComplete="bands.send()">
+
+<mx:HTTPService id="bands" url="http://localhost/music/music.xml" resultFormat="e4x" result="onBands(event);" />
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+
+[Bindable]
+private var treeData:Object = [];
+
+private function getMembers( band:XML ) : Array {
+  var members:Array = [];
+  for each ( var member:XML in band.member ) {
+  	members.push( { label: member.toString() } );
+  }
+  return members;
+}
+private function getBands( genre:XML ) : Array {
+  var bands:Array = [];
+  for each ( var band:XML in genre.band ) {
+  	bands.push( { label: band.@name, children: getMembers( band ) } );
+  }
+  return bands;
+}
+private function onBands( event:ResultEvent ) : void {
+  var genres:Array = [];
+  for each ( var genre:XML in event.result..genre ) {
+  	genres.push( { label: genre.@name, children: getBands( genre ) } );
+  }
+  treeData = {label:"root", root:true, children: genres };
+}
+]]>
+</mx:Script>
+<mx:Panel title="Cascade List">
+  <cl:CascadeList dataProvider="{treeData}" initialNumberOfLevels="2" width="500" height="300" />
+</mx:Panel>
+</mx:Application>

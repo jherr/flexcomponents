@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  xmlns:ilog="http://www.ilog.com/2007/ilog/flex"
+  creationComplete="onStartup()" backgroundGradientColors="[#ffffff,#bbbbff]">
+<mx:Script>
+<![CDATA[
+import ilog.charts3d.series.PieSeries3D;
+import ilog.charts3d.PieChart3D;
+import mx.effects.Zoom;
+import mx.effects.Effect;
+import ilog.maps.MapEvent;
+import ilog.maps.MapSymbol;
+import mx.controls.Label;
+import mx.graphics.SolidColor;
+
+import ilog.utils.ColorUtil;
+import ilog.maps.MapFeature;
+import mx.rpc.events.ResultEvent;
+
+private function onStartup() : void {
+  _reqTable = 'it';
+  usdataRO.getAll.send( _reqTable );
+}
+
+private function scaleColor( minColor:Object, maxColor:Object, percent:Number ) : uint {
+  var color:Object = {
+    r: maxColor.r - ( ( 1.0 - percent ) * ( maxColor.r - minColor.r ) ),
+    g: maxColor.g - ( ( 1.0 - percent ) * ( maxColor.g - minColor.g ) ),
+    b: maxColor.b - ( ( 1.0 - percent ) * ( maxColor.b - minColor.b ) )
+  }
+  return ColorUtil.RGBToUint( color );
+}
+
+private var _usObject:Object = null;
+
+private function getValue( stateData:Object ) : Number {
+  return parseFloat( stateData.sales ) / parseFloat( _usObject.sales );
+}
+
+private var _reqTable:String = '';
+private var _usData:Object = {};
+
+private function onGetAllResult() : void {
+  _usData[ _reqTable ] = usdataRO.getAll.lastResult;
+  _reqTable = null;
+  if ( _usData[ 'it' ] == null ) _reqTable = 'it';
+  if ( _usData[ 'realestate' ] == null ) _reqTable = 'realestate';
+  if ( _usData[ 'construction' ] == null ) _reqTable = 'construction';
+  if ( _reqTable != null ) usdataRO.getAll.send( _reqTable );
+  else updateMap();
+}
+
+private function getState( table:String, state:String ) : Object {
+  for each( var s0:Object in _usData[table] ) {
+    if ( s0.state == state )
+      return s0;
+  }
+  return null;
+}
+
+private function updateMap() : void {
+  var minColor:Object = { r: 0, g: 255, b: 0 };
+  var maxColor:Object = { r: 255, g: 0, b: 0 };
+
+  for each ( var s0:Object in _usData['it'] ) {
+    if ( s0.state == 'United States' ) {
+      _usObject = s0;
+    }
+  }
+
+  var minVal:Number = Number.MAX_VALUE;
+  var maxVal:Number = Number.MIN_VALUE;
+  for each ( var s1:Object in _usData['it'] ) {
+    if ( s1.state == 'United States' ) continue;
+    var emp1:Number = getValue( s1 );
+    minVal = Math.min( minVal, emp1 );
+    maxVal = Math.max( maxVal, emp1 );
+  }
+  
+  for each ( var featName:String in mymap.featureNames ) {
+    var feat1:MapFeature = mymap.getFeature( featName );
+    if ( feat1 )
+      feat1.setStyle('fill',new SolidColor( scaleColor( minColor, maxColor, 0 ), 1 ) );
+  }
+  
+  var symbols:Array = [];
+  for each ( var s2:Object in _usData['it'] ) {
+    var emp2:Number = getValue( s2 );
+    var feat2:MapFeature = mymap.getFeatureFromLocaleName( s2.state );
+    if ( feat2 )
+    {
+      var per:Number = ( emp2 - minVal ) / ( maxVal - minVal );
+      feat2.setStyle('fill',new SolidColor( scaleColor( minColor, maxColor, per ), 1 ) );
+
+      var pc:PieChart3D = new PieChart3D();
+          pc.flatnessFactor = 1.5;
+          pc.showDataTips = true;
+          pc.width = 50;
+          pc.height = 50;
+          
+          var data:Array = [];
+          if ( getState('it',s2.state) != null ) data.push( { field: 'IT', value: getState('it',s2.state).sales } );
+          if ( getState('realestate',s2.state) != null ) data.push( { field: 'Real Estate', value: getState('realestate',s2.state).sales } );
+          if ( getState('construction',s2.state) != null ) data.push( { field: 'Construction', value: getState('construction',s2.state).sales } );
+
+          var series:PieSeries3D = new PieSeries3D();
+          series.field = "value";
+          series.nameField = "field";
+          series.explodeRadius = 0.03;
+          pc.series = [ series ];
+          pc.dataProvider = data;
+
+      var ms:MapSymbol = new MapSymbol();
+      ms.key = feat2.key;
+      ms.component = pc;
+
+      symbols.push( ms );
+    }
+  }
+  mymap.symbols = symbols;
+}
+
+private var _effects:Array = new Array();
+ 
+private function createEffect(f:MapFeature):Effect {
+  var z:Zoom = new Zoom();
+  z.zoomWidthFrom = 1;
+  z.zoomWidthTo = 1.5; 
+  z.zoomHeightFrom = 1;
+  z.zoomHeightTo = 1.5; 
+  z.duration = 300;
+  return z;
+} 
+
+private function play(s:MapFeature, io:Boolean):void {      
+  var z:Effect = _effects[s];
+  if(z == null) {
+    z = createEffect(s);         
+    _effects[s] = z;
+  }
+  if(z.isPlaying) {
+    z.reverse();
+  } else {
+    z.play([s], io);
+  }
+}
+    
+public function rollOver(event:MapEvent):void {
+  var m:MapFeature = event.mapFeature;
+  m.parent.setChildIndex(m, m.parent.numChildren - 1);
+  play(m, false);
+}
+   
+private function rollOut(e:MapEvent):void {
+  var m:MapFeature = e.mapFeature;
+  play(m, true);
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="usdataRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="usdata.USDataService" destination="usdata.USDataService"
+  showBusyCursor="true">
+<mx:method name="getAll" result="onGetAllResult()">
+<mx:arguments>
+  <mx:Table />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<ilog:USStatesMap width="100%" height="100%" id="mymap" mapItemRollOver="rollOver(event)"
+  mapItemRollOut="rollOut(event)" allowNavigation="true" animationDuration="300" zoomableSymbols="true"
+  clipContent="false">
+<ilog:filters>
+  <mx:DropShadowFilter distance="10" alpha="0.5" />
+</ilog:filters>
+<ilog:backgroundFill>
+  <mx:SolidColor alpha="0" />
+</ilog:backgroundFill>
+</ilog:USStatesMap>
+
+</mx:Application>

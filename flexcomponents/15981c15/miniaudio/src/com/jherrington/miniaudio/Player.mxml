@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  horizontalScrollPolicy="off"
+  verticalScrollPolicy="off" creationComplete="onStartup()" styleName="player">
+<mx:Style>
+.player {
+  paddingTop: 5;
+  paddingBottom: 5;
+  paddingLeft: 5;
+  paddingRight: 5;
+  borderColor: #cccccc;
+  borderStyle: solid;
+  borderThickness: 1; 
+  backgroundColor: white;
+}
+.songName {
+  fontSize: 14;
+  fontWeight: bold;
+}
+</mx:Style>
+<mx:Script>
+<![CDATA[
+private var _playing:Boolean = false;
+private var _autoPlay:Boolean = false;
+private var _sound:Sound = null;
+private var _soundChan:SoundChannel = null;
+private var _source:Object = null;
+private var _resumePoint:Number = 0;
+
+[Event("AudioPlayerEvent.LOADED")]
+[Event("AudioPlayerEvent.FINISHED")]
+[Event("AudioPlayerEvent.PLAY")]
+[Event("AudioPlayerEvent.PAUSE")]
+
+public function get playing( ) : Boolean {
+  return _playing;
+}	
+
+public function get autoPlay( ) : Boolean {
+  return _autoPlay;
+}	
+
+public function set autoPlay( play:Boolean ) : void {
+  _autoPlay = play;
+}	
+
+public function get sound( ) : Sound {
+  return _sound;
+}	
+
+public function get source( ) : Object {
+  return _source;
+}	
+
+public function set source( src:Object ) : void {
+  _source = src;
+  if ( _source as Sound != null )
+  	_sound = _source as Sound;
+  else
+    _sound = new Sound( new URLRequest( _source as String ) );
+  _sound.addEventListener(Event.ID3, onTags);
+  _sound.addEventListener(Event.OPEN, onLoad);
+}
+
+private function onLoad( event:Event ) : void {
+  if ( autoPlay && playing == false )
+    onPlay();
+}
+
+private function onStartup() : void {
+  dispatchEvent( new AudioPlayerEvent( AudioPlayerEvent.LOADED ) );
+}
+
+private function onTags( event:Event ) : void {
+  mp3Name.text = _sound.id3.songName;
+}
+
+private function onPlayComplete( event:Event ) : void {
+  _soundChan = null;
+  _playing = false;
+  updateUI();
+
+  dispatchEvent( new AudioPlayerEvent( AudioPlayerEvent.FINISHED ) );
+}
+
+private function onPlay() : void {
+  if ( _playing ) {
+  	_resumePoint = _soundChan.position;
+  	_soundChan.stop();
+  	_soundChan = null;
+    _playing = false;
+    
+    dispatchEvent( new AudioPlayerEvent( AudioPlayerEvent.PAUSE ) );
+  } else {
+    _soundChan = _sound.play( _resumePoint );
+	var transform:SoundTransform = _soundChan.soundTransform;
+    transform.volume = vol.value;
+    _soundChan.soundTransform = transform;
+    _soundChan.addEventListener(Event.SOUND_COMPLETE,onPlayComplete);
+    _playing = true;
+
+    dispatchEvent( new AudioPlayerEvent( AudioPlayerEvent.PLAY, _soundChan ) );
+  }
+  updateUI();
+}
+private function onVolumeChange( ) : void {
+  if ( playing ) {
+	var transform:SoundTransform = _soundChan.soundTransform;
+    transform.volume = vol.value;
+    _soundChan.soundTransform = transform;
+  }
+}
+private function updateUI( ) : void {
+  playBtn.label = _playing ? 'Pause' : 'Play';
+}
+]]>
+</mx:Script>
+<mx:Label id="mp3Name" text="" width="100%" truncateToFit="true" styleName="songName" />
+<mx:HBox>
+<mx:Button id="playBtn" label="Play" click="onPlay();" styleName="playButton" />
+<mx:HSlider id="vol" width="50" minimum="0" maximum="1" value="1" change="onVolumeChange()"
+  showDataTip="false" styleName="volumeSlider" />
+</mx:HBox>
+</mx:Module>

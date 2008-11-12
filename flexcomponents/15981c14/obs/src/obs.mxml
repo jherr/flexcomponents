@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="800" height="600">
+     
+<mx:Style source="obsidian.css"/>
+
+<mx:MenuBar x="10" y="20" width="339">
+<mx:dataProvider>
+  <mx:String>File</mx:String>
+  <mx:String>Edit</mx:String>
+  <mx:String>View</mx:String>
+  <mx:String>Modify</mx:String>
+  <mx:String>Text</mx:String>
+  <mx:String>Window</mx:String>
+</mx:dataProvider>
+</mx:MenuBar>
+
+<mx:Panel id="panel1" x="80" y="120" width="510" height="330" 
+  layout="vertical" title="Panel" paddingTop="30" paddingLeft="10">
+<mx:HBox paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+<mx:Form>
+<mx:FormItem label="TextArea:">
+  <mx:TextArea height="84" width="150">
+  <mx:text><![CDATA[ Sample text. ]]></mx:text>
+  </mx:TextArea>
+</mx:FormItem>
+<mx:FormItem label="TextInput:">
+  <mx:TextInput width="150"/>
+</mx:FormItem>
+</mx:Form>
+<mx:VBox>
+<mx:CheckBox label="Checkbox one" />
+<mx:CheckBox label="Checkbox two" />
+<mx:RadioButton label="Radio two" groupName="radiogroup1" />
+<mx:RadioButton label="Radio one" groupName="radiogroup1" />
+<mx:PopUpButton label="Pop Up Button"/>
+<mx:ComboBox>
+  <mx:dataProvider>
+    <mx:String>choice 1</mx:String>
+    <mx:String>choice 2</mx:String>
+    <mx:String>choice 3</mx:String>
+    <mx:String>choice 4</mx:String>
+  </mx:dataProvider>
+</mx:ComboBox>
+</mx:VBox>      
+  </mx:HBox>
+<mx:ToggleButtonBar selectedIndex="1">
+  <mx:dataProvider>
+    <mx:String>Button 1</mx:String>
+    <mx:String>Button 2</mx:String>
+    <mx:String>Button 3</mx:String>
+    <mx:String>Button 4</mx:String>
+  </mx:dataProvider>
+</mx:ToggleButtonBar>
+<mx:Button label="Submit" />
+<mx:Button label="Cancel"/>
+</mx:Panel>
+
+</mx:Application>

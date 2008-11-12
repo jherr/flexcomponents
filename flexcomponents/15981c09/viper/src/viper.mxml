@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+  import mx.controls.Image;
+[Embed(source="images/0.png")] private var img0:Class;
+[Embed(source="images/1.png")] private var img1:Class;
+[Embed(source="images/2.png")] private var img2:Class;
+[Embed(source="images/3.png")] private var img3:Class;
+[Embed(source="images/4.png")] private var img4:Class;
+[Embed(source="images/5.png")] private var img5:Class;
+[Embed(source="images/6.png")] private var img6:Class;
+[Embed(source="images/7.png")] private var img7:Class;
+[Embed(source="images/8.png")] private var img8:Class;
+[Embed(source="images/9.png")] private var img9:Class;
+[Embed(source="images/10.png")] private var img10:Class;
+[Embed(source="images/11.png")] private var img11:Class;
+[Embed(source="images/12.png")] private var img12:Class;
+[Embed(source="images/13.png")] private var img13:Class;
+[Embed(source="images/14.png")] private var img14:Class;
+[Embed(source="images/15.png")] private var img15:Class;
+[Embed(source="images/16.png")] private var img16:Class;
+[Embed(source="images/17.png")] private var img17:Class;
+[Embed(source="images/18.png")] private var img18:Class;
+[Embed(source="images/19.png")] private var img19:Class;
+[Embed(source="images/20.png")] private var img20:Class;
+[Embed(source="images/21.png")] private var img21:Class;
+[Embed(source="images/22.png")] private var img22:Class;
+[Embed(source="images/23.png")] private var img23:Class;
+[Embed(source="images/24.png")] private var img24:Class;
+[Embed(source="images/25.png")] private var img25:Class;
+[Embed(source="images/26.png")] private var img26:Class;
+[Embed(source="images/27.png")] private var img27:Class;
+[Embed(source="images/28.png")] private var img28:Class;
+[Embed(source="images/29.png")] private var img29:Class;
+[Embed(source="images/30.png")] private var img30:Class;
+[Embed(source="images/31.png")] private var img31:Class;
+[Embed(source="images/32.png")] private var img32:Class;
+[Embed(source="images/33.png")] private var img33:Class;
+[Embed(source="images/34.png")] private var img34:Class;
+[Embed(source="images/35.png")] private var img35:Class;
+[Embed(source="images/36.png")] private var img36:Class;
+[Embed(source="images/37.png")] private var img37:Class;
+[Embed(source="images/38.png")] private var img38:Class;
+[Embed(source="images/39.png")] private var img39:Class;
+[Embed(source="images/40.png")] private var img40:Class;
+[Embed(source="images/41.png")] private var img41:Class;
+[Embed(source="images/42.png")] private var img42:Class;
+[Embed(source="images/43.png")] private var img43:Class;
+[Embed(source="images/44.png")] private var img44:Class;
+[Embed(source="images/45.png")] private var img45:Class;
+[Embed(source="images/46.png")] private var img46:Class;
+[Embed(source="images/47.png")] private var img47:Class;
+[Embed(source="images/48.png")] private var img48:Class;
+[Embed(source="images/49.png")] private var img49:Class;
+[Embed(source="images/50.png")] private var img50:Class;
+[Embed(source="images/51.png")] private var img51:Class;
+[Embed(source="images/52.png")] private var img52:Class;
+[Embed(source="images/53.png")] private var img53:Class;
+[Embed(source="images/54.png")] private var img54:Class;
+[Embed(source="images/55.png")] private var img55:Class;
+[Embed(source="images/56.png")] private var img56:Class;
+[Embed(source="images/57.png")] private var img57:Class;
+[Embed(source="images/58.png")] private var img58:Class;
+[Embed(source="images/59.png")] private var img59:Class;
+[Embed(source="images/60.png")] private var img60:Class;
+[Embed(source="images/61.png")] private var img61:Class;
+[Embed(source="images/62.png")] private var img62:Class;
+[Embed(source="images/63.png")] private var img63:Class;
+[Embed(source="images/64.png")] private var img64:Class;
+[Embed(source="images/65.png")] private var img65:Class;
+[Embed(source="images/66.png")] private var img66:Class;
+[Embed(source="images/67.png")] private var img67:Class;
+[Embed(source="images/68.png")] private var img68:Class;
+[Embed(source="images/69.png")] private var img69:Class;
+[Embed(source="images/70.png")] private var img70:Class;
+[Embed(source="images/71.png")] private var img71:Class;
+public var frames:Array = [
+new img0(),
+new img1(),
+new img2(),
+new img3(),
+new img4(),
+new img5(),
+new img6(),
+new img7(),
+new img8(),
+new img9(),
+new img10(),
+new img11(),
+new img12(),
+new img13(),
+new img14(),
+new img15(),
+new img16(),
+new img17(),
+new img18(),
+new img19(),
+new img20(),
+new img21(),
+new img22(),
+new img23(),
+new img24(),
+new img25(),
+new img26(),
+new img27(),
+new img28(),
+new img29(),
+new img30(),
+new img31(),
+new img32(),
+new img33(),
+new img34(),
+new img35(),
+new img36(),
+new img37(),
+new img38(),
+new img39(),
+new img40(),
+new img41(),
+new img42(),
+new img43(),
+new img44(),
+new img45(),
+new img46(),
+new img47(),
+new img48(),
+new img49(),
+new img50(),
+new img51(),
+new img52(),
+new img53(),
+new img54(),
+new img55(),
+new img56(),
+new img57(),
+new img58(),
+new img59(),
+new img60(),
+new img61(),
+new img62(),
+new img63(),
+new img64(),
+new img65(),
+new img66(),
+new img67(),
+new img68(),
+new img69(),
+new img70(),
+new img71()];
+
+private var frame:int = 0;
+private var lastX:int = 0;
+private var tracking:Boolean = false;
+private var lastImage:Image = null;
+private var images:Array = [];
+
+private function onStartup() : void {
+  for each ( var bm:Bitmap in frames ) {
+    var img:Image = new Image();
+    img.source = bm;
+    img.visible = false;
+    images.push( img );
+    pnl.addChild( img );
+  }
+  onDegreeChange();
+}
+private function onMouseDown(event:MouseEvent ) : void {
+  lastX = event.localX;
+  tracking = true;
+}
+private function onMouseMove(event:MouseEvent) : void {
+  if ( tracking ) {
+    if ( event.localX < lastX ) frame--;
+    else frame++;
+    if ( frame >= frames.length ) frame = 0;
+    if ( frame < 0 ) frame = frames.length - 1;
+
+    lastX = event.localX;
+
+    onDegreeChange();
+  }
+}
+private function onMouseUp(event:MouseEvent) : void {
+  tracking = false;
+}
+private function onDegreeChange() : void {
+  if ( lastImage != null ) lastImage.visible = false;
+  images[ frame ].visible = true;
+  lastImage = images[ frame ];
+}
+]]>
+</mx:Script>
+  <mx:Panel title="Colonial Viper" paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0"
+    mouseDown="onMouseDown(event)" mouseUp="onMouseUp(event)" mouseMove="onMouseMove(event)" backgroundColor="black">
+    <mx:Canvas id="pnl" width="300" height="250" />
+  </mx:Panel>
+</mx:Application>

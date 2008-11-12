@@ -1,0 +1,220 @@
+@font-face {
+    fontFamily: franci;
+    src: url("Bruce.ttf");
+    fontWeight: normal;
+    alpha: 0.3;
+    
+}  
+global {
+	color: #331206;
+	
+}
+Canvas {
+	backgroundAlpha: 0;
+	backgroundColor: #FFFFFF;
+}
+.tabCanvas {
+	borderSkin: Embed(source="skin.swf", symbol="tab_canvas");
+	
+}
+Label {
+	fontWeight: normal;
+	fontFamily: franci;
+    
+}
+Accordion {
+	headerHeight: 20;	
+}
+AccordionHeader
+{
+	
+	downSkin: Embed(source="skin.swf", symbol="button_up");
+	overSkin: Embed(source="skin.swf", symbol="button_over");
+	selectedDownSkin: Embed(source="skin.swf", symbol="button_up");
+	selectedOverSkin: Embed(source="skin.swf", symbol="button_over");
+	selectedUpSkin: Embed(source="skin.swf", symbol="button_up");
+	upSkin: Embed(source="skin.swf", symbol="button_up");
+	
+	
+	fontFamily: franci;
+	fontWeight: normal;
+	fontSize: 45;
+	headerHeight: 40;
+}
+.acc1 {
+	borderSkin: Embed(source="acc1.swf");
+}
+.acc2 {
+	borderSkin: Embed(source="acc2.swf");
+}
+.acc3 {
+	borderSkin: Embed(source="acc3.swf");
+}
+Application
+{
+	backgroundImage:        Embed(source="bg.jpg");
+}
+
+/*
+//------------------------------
+//  Button
+//------------------------------
+*/
+Button {
+    downSkin: Embed(source="skin.swf", symbol="button_over");
+	overSkin: Embed(source="skin.swf", symbol="button_over");
+	upSkin: Embed(source="skin.swf", symbol="button_up");
+	fontFamily: franci;
+	fontWeight: normal;
+	textRollOverColor: #996633;
+	textSelectedColor: #CC9966;
+	fontSize: 42;
+	
+}
+
+
+
+/*
+//------------------------------
+//  Panel
+//------------------------------
+*/
+Panel {
+   borderSkin: Embed(source="skin.swf", symbol="panel");
+   titleBackgroundSkin: Embed(source="empty.swf", symbol="Panel_titleBackgroundSkin");  
+   titleStyleName: "mypanelTitle";
+
+}
+
+
+
+.mypanelTitle {
+	textIndent: 14;
+	fontFamily: franci;
+	fontWeight: normal;
+	fontSize:40;
+	color: #000000;
+}
+
+TabNavigator{
+	fontSize: 32;
+	fontWeight: normal;
+	tabStyleName: "tabs";
+	firstTabStyleName: "tabs";
+	lastTabStyleName: "textTabs";
+	selectedTabTextStyleName: "textTabs";
+}
+TabBar{
+	fontSize: 32;
+	fontWeight: normal;
+	tabStyleName: "tabs";
+	firstTabStyleName: "tabs";
+	lastTabStyleName: "textTabs";
+	selectedTabTextStyleName: "textTabs";
+}
+.tabs {
+    downSkin: Embed(source="skin.swf", symbol="Tab_overSkin");
+	overSkin: Embed(source="skin.swf", symbol="Tab_overSkin");
+	selectedDownSkin: Embed(source="skin.swf", symbol="TabSelected_upSkin");
+	selectedOverSkin: Embed(source="skin.swf", symbol="TabSelected_upSkin");
+	selectedUpSkin: Embed(source="skin.swf", symbol="TabSelected_upSkin");
+	upSkin: Embed(source="skin.swf", symbol="Tab_upSkin");
+	fontWeight: normal;fontWeight: normal;
+   	fontFamily: franci;
+   	fontSpacing: 2;
+	
+}
+.textTabs {
+   	fontWeight: normal;
+	fontFamily: franci;
+	fontSpacing: 2;
+	backgroundColor: #993300;
+	
+}
+
+/*
+//------------------------------
+//  HorizontalScrollBar
+//------------------------------
+*/
+HScrollBar 
+{
+ 	downArrowDownSkin: Embed(source="skin.swf", symbol="scrollArrowDown");
+	downArrowOverSkin: Embed(source="skin.swf", symbol="scrollArrowDown");
+	downArrowUpSkin: Embed(source="skin.swf", symbol="scrollArrowDown");
+	thumbDownSkin: Embed(source="skin.swf", symbol="slider");
+	thumbIcon: Embed(source="skin.swf", symbol="scrollThumb");
+	thumbOverSkin: Embed(source="skin.swf", symbol="slider");
+	thumbUpSkin: Embed(source="skin.swf", symbol="slider");
+	trackSkin: Embed(source="skin.swf", symbol="track");
+	upArrowDownSkin: Embed(source="skin.swf", symbol="scrollArrowUp");
+	upArrowOverSkin: Embed(source="skin.swf", symbol="scrollArrowUp");
+	upArrowUpSkin: Embed(source="skin.swf", symbol="scrollArrowUp");
+	
+}
+
+
+/*
+//------------------------------
+//  VerticalScrollBar
+//------------------------------
+*/
+VScrollBar
+{
+	downArrowDownSkin: Embed(source="skin.swf", symbol="scrollArrowDown");
+	downArrowOverSkin: Embed(source="skin.swf", symbol="scrollArrowDown");
+	downArrowUpSkin: Embed(source="skin.swf", symbol="scrollArrowDown");
+	thumbDownSkin: Embed(source="skin.swf", symbol="slider");
+	thumbIcon: Embed(source="skin.swf", symbol="scrollThumb");
+	thumbOverSkin: Embed(source="skin.swf", symbol="slider");
+	thumbUpSkin: Embed(source="skin.swf", symbol="slider");
+	trackSkin: Embed(source="skin.swf", symbol="track");
+	upArrowDownSkin: Embed(source="skin.swf", symbol="scrollArrowUp");
+	upArrowOverSkin: Embed(source="skin.swf", symbol="scrollArrowUp");
+	upArrowUpSkin: Embed(source="skin.swf", symbol="scrollArrowUp");
+	
+	
+}
+TextInput {
+	borderSkin: Embed(source="skin.swf", symbol="text");
+	focusSkin: Embed(source="skin.swf", symbol="textfocus");
+	textIndent: 10;
+	fontFamily: franci;
+	fontWeight: normal;
+	fontSize: 20;
+	
+}
+TextArea {
+	borderSkin: Embed(source="skin.swf", symbol="text");
+	focusSkin: Embed(source="skin.swf", symbol="textfocus"); 
+	textIndent: 10;
+	fontFamily: franci;
+	fontWeight: normal;
+	fontSize: 20;
+	
+}
+CheckBox
+{
+	disabledIcon: Embed(source="skin.swf", symbol="checkbox");
+	downIcon: Embed(source="skin.swf", symbol="checkbox");
+	overIcon: Embed(source="skin.swf", symbol="checkbox");
+	selectedDisabledIcon: Embed(source="skin.swf", symbol="checkbox_selected");
+	selectedDownIcon: Embed(source="skin.swf", symbol="checkbox_selected");
+	selectedOverIcon: Embed(source="skin.swf", symbol="checkbox_selected");
+	selectedUpIcon: Embed(source="skin.swf", symbol="checkbox_selected");
+	upIcon: Embed(source="skin.swf", symbol="checkbox");
+}	
+
+RadioButton
+{
+
+	disabledIcon: Embed(source="skin.swf", symbol="radiobutton");
+	downIcon: Embed(source="skin.swf", symbol="radiobutton");
+	overIcon: Embed(source="skin.swf", symbol="radiobutton");
+	selectedDisabledIcon: Embed(source="skin.swf", symbol="radiobutton_selected");
+	selectedDownIcon: Embed(source="skin.swf", symbol="radiobutton_selected");
+	selectedOverIcon: Embed(source="skin.swf", symbol="radiobutton_selected");
+	selectedUpIcon: Embed(source="skin.swf", symbol="radiobutton_selected");
+	upIcon: Embed(source="skin.swf", symbol="radiobutton");
+
+}	

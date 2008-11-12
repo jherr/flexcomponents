@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:Script>
+	<![CDATA[
+		import vo.MP3Player;
+		
+		[Embed(source="DarkPlay.gif")]
+		[Bindable]
+		public var PlayImage:Class;
+		
+		[Embed(source="DarkPause.gif")]
+		[Bindable]
+		public var PauseImage:Class; 
+		
+		[Embed(source="DarkForward.gif")]
+		[Bindable]
+		public var ForwardImage:Class;
+		
+		[Embed(source="DarkRewind.gif")]
+		[Bindable]
+		public var RewindImage:Class;
+		
+		[Bindable]
+		private var	mp3Player:MP3Player = MP3Player.getInstance();
+		
+		private function sliderMouseUp(event:Event):void{
+        	mp3Player.volume = volumeSlider.value;
+        }
+        private function sliderChange(event:Event):void{			
+        	mp3Player.volume = volumeSlider.value;
+		}
+
+	]]>
+</mx:Script>
+	<mx:LinkButton 
+		icon="{RewindImage}" styleName="NavButton"
+		click="mp3Player.getPreviousTrack();"
+		enabled="{mp3Player.isMoveTrackEnabled}"
+		width="27"/>
+	<mx:LinkButton click="mp3Player.play()" id="btnPlay"
+		icon="{PlayImage}" styleName="NavButton" 
+		width="27"
+		/>
+	<mx:LinkButton id="btnPause"
+		icon="{PauseImage}" 
+		styleName="NavButton"
+		click="mp3Player.pause()"
+		width="27" 
+		/>
+	<mx:LinkButton 
+		icon="{ForwardImage}" styleName="NavButton"
+		click="mp3Player.getNextTrack();" 
+		enabled="{mp3Player.isMoveTrackEnabled}"
+		width="27"/>
+	<mx:HSlider 
+		id="volumeSlider"
+		width="50"
+		minimum="0"
+		maximum="100"
+		allowTrackClick="true" 
+		toolTip="Volume"
+		liveDragging="true" 
+		change="sliderChange(event)" 
+		value="{mp3Player.volume}"
+		thumbRelease="sliderMouseUp(event)" 
+		/>
+</mx:HBox>

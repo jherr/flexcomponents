@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="300" height="50"
+  dataChange="onDataChange()" creationComplete="onDataChange()"
+  xmlns:sparkline="sparkline.*" xmlns:degrafa="http://www.degrafa.com/2007"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+
+<mx:Script>
+<![CDATA[
+import mx.collections.ArrayCollection;
+
+private function onDataResult() : void {
+  if ( baseballRO.getYearsByTeam.lastResult.length == 0 ||
+       baseballRO.getYearsByTeam.lastResult[0].teamid != data.teamid )
+     return;
+ 
+  var sparkData:ArrayCollection = new ArrayCollection();
+  var min:Number = Number.MAX_VALUE;
+  var max:Number = Number.MIN_VALUE;
+  for each ( var res:Object in baseballRO.getYearsByTeam.lastResult ) {
+  	var wins:Number = Number( res.w );
+  	min = Math.min( wins, min );
+  	max = Math.max( wins, max );
+  	sparkData.addItem( { wins: wins } );
+  }
+  spark.minimum = min;
+  spark.maximum = max;
+  spark.dataProvider = sparkData;
+}
+private function onDataChange() : void {
+  if ( data != null && initialized )
+    baseballRO.getYearsByTeam.send( data.teamid );
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="baseballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="baseball.BaseballService" destination="baseball.BaseballService"
+  showBusyCursor="true">
+<mx:method name="getYearsByTeam" result="onDataResult()">
+<mx:arguments>
+  <mx:Team />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<sparkline:Sparkline width="150" height="30" id="spark" dataField="wins">
+<sparkline:lineStroke>
+<degrafa:LinearGradientStroke angle="0" weight="3">
+<degrafa:gradientStops>
+  <degrafa:GradientStop color="#330000" ratio="0" />
+  <degrafa:GradientStop color="#FF0000" ratio="1" />
+</degrafa:gradientStops>
+</degrafa:LinearGradientStroke>
+</sparkline:lineStroke>
+</sparkline:Sparkline>
+<mx:Label text="{data.name}" fontSize="14" fontWeight="bold" />
+
+</mx:HBox>

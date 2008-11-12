@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" width="640" height="480" xmlns:ilog="http://www.ilog.com/2007/ilog/flex"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Script>
+<![CDATA[
+import mx.events.VideoEvent;
+
+private var telemetryData:Array = [
+  { time: 0, rpm: 3000, mph: 0 },
+  { time: 1000, rpm: 2500, mph: 0 },
+  { time: 3000, rpm: 3000, mph: 0 },
+  { time: 5000, rpm: 4000, mph: 0 },
+  { time: 7000, rpm: 6000, mph: 70 },
+  { time: 8000, rpm: 7000, mph: 90 },
+  { time: 9000, rpm: 6000, mph: 110 }
+];
+
+private function onPlayheadUpdate( event:VideoEvent ) : void {
+  var curMPH:int = 0;
+  var curRPM:int = 0;
+  for each ( var telObj:Object in telemetryData ) {
+    if ( telObj.time < ( event.playheadTime * 1000 )  ) {
+      curMPH = telObj.mph;
+      curRPM = telObj.rpm;
+    }
+  }
+  mph.value = curMPH;
+  rpm.value = curRPM;
+}  
+]]>
+</mx:Script>
+<mx:VideoDisplay width="640" height="480" source="http://localhost/flexcomp/racing/racing.f4v" autoPlay="true"
+  playheadUpdate="onPlayheadUpdate( event )" />
+  <ilog:SimpleCircularGauge id="rpm" x="467" y="311" minimum="2000" maximum="10000" startAngle="190" endAngle="70"
+    majorTickInterval="2000" width="250" height="250"/>
+  <ilog:SimpleCircularGauge id="mph" x="-109" y="290" width="300" height="300" startAngle="-10" endAngle="100"
+    orientation="cclockwise" minimum="0" maximum="200" majorTickInterval="30"/>
+  <mx:HBox x="0" y="0" width="650" height="70" backgroundColor="#B91C1C" backgroundAlpha="0.5" borderStyle="none">
+    <mx:Text text="Pocono Speedway" fontSize="40" color="#C5C5C5" fontWeight="bold" textAlign="left"/>
+  </mx:HBox>
+</mx:Application>

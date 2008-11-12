@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  xmlns:ma="com.jherrington.miniaudio.*" xmlns:vis="com.fusiox.ui.*"
+  creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+private function onStartup() : void {
+  vis.start();
+}  
+]]>
+</mx:Script>
+<ma:Player source="http://localhost/music/02 Shirley Bassey - Where Do I Begin (Away Team Mix).mp3"
+  autoPlay="true" width="200" />
+<mx:HBox backgroundColor="white" borderColor="#cccccc" borderStyle="solid" borderThickness="1">
+<vis:Visualization id="vis" width="200" height="50" type="bars" />
+</mx:HBox>
+</mx:Application>

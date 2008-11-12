@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="musicData.send()">
+<mx:HTTPService url="http://localhost/music/music.xml" id="musicData" resultFormat="e4x" />
+<mx:TileList dataProvider="{musicData.lastResult..band}" width="100%" height="100%">
+<mx:itemRenderer>
+  <mx:Component>
+    <mx:Canvas width="110" height="110">
+      <mx:Image top="1" left="1" source="http://localhost/music/{data.@image}" height="100" width="100"
+        toolTip="{data.@name}">
+        <mx:filters>
+          <mx:DropShadowFilter />
+        </mx:filters>
+      </mx:Image>
+    </mx:Canvas>
+  </mx:Component>
+</mx:itemRenderer>
+</mx:TileList>
+</mx:Application>

@@ -1,0 +1,9 @@
+/* CSS file */
+.SliddingTreeTextInput {    
+   backgroundAlpha: 0;
+   fontWeight: bold;
+   color: #0b333c;
+   borderStyle: none;
+   cornerRadius: 5;
+   textIndent: 7;
+}

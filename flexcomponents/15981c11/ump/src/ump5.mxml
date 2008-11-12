@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+   creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+import com.afcomponents.umap.overlays.Layer;
+import com.afcomponents.umap.display.geocodermanager.GeoNamesService;
+import com.afcomponents.umap.events.GeocoderEvent;
+import com.afcomponents.umap.display.geocodermanager.GeocoderManager;
+import com.afcomponents.umap.types.LatLng;
+import com.afcomponents.umap.gui.*;
+import com.afcomponents.umap.events.MapEvent;
+import com.afcomponents.umap.core.UMap;
+import mx.core.UIComponent;
+
+private var map:UMap = new UMap();
+private var zoomMap:UMap = new UMap();
+private var dgs:GeocoderManager = new GeocoderManager();
+
+private function onStartup() : void {
+  var uic:UIComponent = new UIComponent();
+  uic.setStyle( 'top', 0 );
+  uic.setStyle( 'left', 0 );
+  uic.width = width;
+  uic.height = height;
+  addChildAt( uic, 0 );
+
+  map.setSize( width, height );
+  map.addEventListener(MapEvent.READY, onMapReady);
+  map.addEventListener(MouseEvent.MOUSE_MOVE,onMapMouseMove);
+  uic.addChild( map );  
+
+  var uic2:UIComponent = new UIComponent();
+  uic2.width = 250;
+  uic2.height = 300;
+  zoomPnl.addChild( uic2 );
+
+  zoomMap.setSize( uic2.width, uic2.height );
+  zoomMap.addEventListener(MapEvent.READY, onZoomMapReady);
+  uic2.addChild( zoomMap );  
+}	
+private function onZoomMapReady( event:MapEvent ) : void {
+  zoomMap.setCenter( new LatLng( 41, -105 ) );
+  zoomMap.setMapType( "aerial" );
+  zoomMap.setZoom( 18 );
+}
+private function onMapMouseMove( event:MouseEvent ) : void {
+  zoomMap.setCenter( map.getMouseLatLng( 18 ) );
+}
+private function onMapReady( event:MapEvent ) : void {
+  map.addControl( new ZoomControl() );
+  map.addControl( new MapTypeControl() );
+  map.addControl( new PositionControl() );
+  map.setCenter( new LatLng( 41, -105 ) );
+  map.setZoom( 4 );
+  
+  dgs.addEventListener( GeocoderEvent.SUCCESS, onGeocodeSuccess );
+  dgs.service.geocodeAddress( 'washington dc', 20, {verbosity:GeoNamesService.FULL} );
+}
+private function onGeocodeSuccess( event:GeocoderEvent ) : void {
+  var layer:Layer = dgs.getLayer(event.results);
+  map.addOverlay(layer);
+  map.setBounds(layer.getBoundsLatLng());
+  zoomMap.setCenter( map.getCenter() );
+}
+]]>
+</mx:Script>
+<mx:Panel id="zoomPnl" title="Zoom In" top="30" left="80" borderAlpha="0.9">
+</mx:Panel>
+</mx:Application>

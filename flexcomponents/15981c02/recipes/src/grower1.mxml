@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  currentState="small" horizontalAlign="left">
+<mx:Style>
+HBox {
+  background-image: Embed('background.png');
+  border-thickness: 3;
+  border-style: solid;
+  corner-radius: 3;
+  vertical-align: middle;
+  horizontal-align: center;  
+  border-color: #034EA2;
+}
+Label { 
+  font-weight: bold;
+  font-size: 50;
+}
+</mx:Style>
+<mx:ApplicationControlBar dock="true">
+  <mx:Button label="Small" click="currentState='small';" />
+  <mx:Button label="Big" click="currentState='big';" />
+</mx:ApplicationControlBar>
+<mx:states>
+  <mx:State name="small">
+    <mx:SetProperty name="width" target="{growbox}" value="300" />
+  </mx:State>
+  <mx:State name="big">
+    <mx:SetProperty name="width" target="{growbox}" value="600" />
+  </mx:State>
+</mx:states>
+<mx:HBox id="growbox" width="300" height="200">
+  <mx:Label text="Grow box" /> 	
+</mx:HBox>
+</mx:Application>

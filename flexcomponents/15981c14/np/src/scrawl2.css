@@ -1,0 +1,51 @@
+/* Scrawl CSS file */
+@font-face
+{
+    font-family: scrawlFont;
+    src: url("assets/aescrawl.ttf");
+    font-weight: normal;
+}     	
+
+.Scrawl { font-family: scrawlFont; color: #000000; }
+
+Application { background-image: Embed('assets/napkin.jpg'); }
+
+ComboBox
+{ 
+	background-size: '100%';
+	border-color: #888888;
+	border-thickness: 4;
+	color: #222222; 
+	fill-alphas: 0.0, 0.0;
+	font-family: scrawlFont; 
+	font-size: 14; 
+	font-weight: normal;
+	roll-over-color: #E4E444;
+	selection-color: #C0C022;
+}
+
+DataGrid
+{ 
+	alternating-item-colors: ClassReference(null);
+	background-image: Embed('assets/napkin.jpg');
+	background-size: '100%';
+	border-color: #333333;
+	border-thickness: 7;
+	color: #222222;
+	font-family: scrawlFont; 
+	font-size: 14; 
+	header-drag-proxy-style-name: Scrawl;
+	header-separator-skin: Embed('assets/header_separator.gif'); /* transparent */
+	header-style-name: Scrawl;
+	roll-over-color: #D3D3D3;
+	selection-color: #C0C0C0;
+	sort-arrow-skin: Embed('assets/sort_arrow.gif');
+	theme-color: #111111;
+	vertical-grid-line-color: #333333;
+}
+
+HDividedBox { divider-skin: Embed('assets/box_divider.gif'); }
+
+Label { color: #222222; font-family: scrawlFont; font-size: 14; }
+
+VDividedBox { divider-skin: Embed('assets/box_divider.gif'); }

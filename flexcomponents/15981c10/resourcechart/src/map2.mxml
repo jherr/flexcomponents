@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  xmlns:ilog="http://www.ilog.com/2007/ilog/flex"
+  creationComplete="onStartup()" width="1000" height="800" horizontalScrollPolicy="off"
+  verticalScrollPolicy="off" backgroundGradientColors="[#ddddff,#3333ff]">
+<mx:Script>
+<![CDATA[
+import ilog.maps.MapEvent;
+import ilog.gauges.circular.renderers.*;
+import mx.effects.Zoom;
+import mx.effects.Effect;
+import mx.controls.Label;
+import mx.graphics.SolidColor;
+
+import ilog.utils.ColorUtil;
+import ilog.maps.MapFeature;
+import mx.rpc.events.ResultEvent;
+
+private var salesMin:Number;
+private var salesMax:Number;
+private var populationMin:Number;
+private var populationMax:Number;
+private var companiesMin:Number;
+private var companiesMax:Number;
+
+private function onStartup() : void {
+  _reqTable = 'it';
+  usdataRO.getAll.send( _reqTable );
+  
+  for each( var elem:Object in selData.elements ) {
+    if ( ( elem as CircularScaleRenderer ) != null ) {
+      var circLabel:CircularScaleRenderer = elem as CircularScaleRenderer;
+      circLabel.percentLabelFontSize = 35;
+      circLabel.setStyle('fontWeight','bold');
+      circLabel.setStyle('color',0xffffff);
+    }
+  }
+}
+
+private function scaleColor( minColor:Object, maxColor:Object, percent:Number ) : uint {
+  var color:Object = {
+    r: maxColor.r - ( ( 1.0 - percent ) * ( maxColor.r - minColor.r ) ),
+    g: maxColor.g - ( ( 1.0 - percent ) * ( maxColor.g - minColor.g ) ),
+    b: maxColor.b - ( ( 1.0 - percent ) * ( maxColor.b - minColor.b ) )
+  }
+  return ColorUtil.RGBToUint( color );
+}
+
+private function getValue( stateData:Object ) : Number {
+  return parseFloat( stateData.sales );
+}
+
+private var _reqTable:String = '';
+private var _usData:Object = {};
+
+private function onGetAllResult() : void {
+  _usData[ _reqTable ] = usdataRO.getAll.lastResult;
+  _reqTable = null;
+  if ( _usData[ 'it' ] == null ) _reqTable = 'it';
+  if ( _usData[ 'realestate' ] == null ) _reqTable = 'realestate';
+  if ( _usData[ 'construction' ] == null ) _reqTable = 'construction';
+  if ( _reqTable != null ) usdataRO.getAll.send( _reqTable );
+  else updateMap();
+}
+
+private function getState( table:String, state:String ) : Object {
+  for each( var s0:Object in _usData[table] ) {
+    if ( s0.state == state )
+      return s0;
+  }
+  return null;
+}
+
+private function updateMap() : void {
+  var minColor:Object = { r: 0, g: 255, b: 0 };
+  var maxColor:Object = { r: 255, g: 0, b: 0 };
+
+  salesMin = Number.MAX_VALUE;
+  salesMax = Number.MIN_VALUE;
+  populationMin = Number.MAX_VALUE;
+  populationMax = Number.MIN_VALUE;
+  companiesMin = Number.MAX_VALUE;
+  companiesMax = Number.MIN_VALUE;
+
+  var minVal:Number = Number.MAX_VALUE;
+  var maxVal:Number = Number.MIN_VALUE;
+  for each ( var s1:Object in _usData[selData.value] ) {
+    if ( s1.state == 'United States' ) continue;
+    var emp1:Number = getValue( s1 );
+    minVal = Math.min( minVal, emp1 );
+    maxVal = Math.max( maxVal, emp1 );
+    
+    var sales:Number = parseFloat( s1.sales );
+    salesMin = Math.min( salesMin, sales );
+    salesMax = Math.max( salesMax, sales );
+    var companies:Number = parseFloat( s1.companies );
+    companiesMin = Math.min( companiesMin, companies );
+    companiesMax = Math.max( companiesMax, companies );
+    var population:Number = parseFloat( s1.payroll );
+    populationMin = Math.min( populationMin, population );
+    populationMax = Math.max( populationMax, population );
+  }
+
+  for each ( var featName:String in mymap.featureNames ) {
+    var feat1:MapFeature = mymap.getFeature( featName );
+    if ( feat1 )
+      feat1.setStyle('fill',new SolidColor( scaleColor( minColor, maxColor, 0 ), 1 ) );
+  }
+  
+  for each ( var s2:Object in _usData[selData.value] ) {
+    var emp2:Number = getValue( s2 );
+    var feat2:MapFeature = mymap.getFeatureFromLocaleName( s2.state );
+    if ( feat2 )
+    {
+      var per:Number = ( emp2 - minVal ) / ( maxVal - minVal );
+      feat2.label = s2.state;
+      feat2.setStyle('fill',new SolidColor( scaleColor( minColor, maxColor, per ), 1 ) );
+    }
+  }
+}
+
+private function onValueChange() : void {
+  updateMap();
+}
+
+private function onMouseOver( event:MapEvent ) : void {
+  var stateData:Object = getState( selData.value, event.mapFeature.label );
+  if ( stateData )
+  {
+    gSales.value = Math.floor( ( ( parseFloat( stateData.sales ) - salesMin ) / ( salesMax - salesMin ) ) * 100.0 );
+    gCompanies.value = Math.floor( ( ( parseFloat( stateData.companies ) - companiesMin ) / ( companiesMax - companiesMin ) ) * 100.0 );
+    gPopulation.value = Math.floor( ( ( parseFloat( stateData.payroll ) - populationMin ) / ( populationMax - populationMin ) ) * 100.0 );
+  }
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="usdataRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="usdata.USDataService" destination="usdata.USDataService"
+  showBusyCursor="true">
+<mx:method name="getAll" result="onGetAllResult()">
+<mx:arguments>
+  <mx:Table />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<ilog:USStatesMap left="20" top="20" width="95%" height="95%" id="mymap" allowNavigation="true"
+  animationDuration="300" mapItemRollOver="onMouseOver(event)">
+<ilog:backgroundFill>
+  <mx:SolidColor alpha="0" />
+</ilog:backgroundFill>
+<ilog:filters>
+  <mx:DropShadowFilter distance="10" alpha="0.5" />
+</ilog:filters>
+</ilog:USStatesMap>
+
+<ilog:BlackKnob top="610" left="580" height="120" width="200" categories="{['it','construction','realestate']}"
+  value="it" valueCommit="onValueChange();" id="selData" titleStyleName="myTtleStyle">
+</ilog:BlackKnob>
+
+<mx:HBox paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10"
+  backgroundColor="#bbbbff" backgroundAlpha="0.8" cornerRadius="15" borderStyle="solid"
+  borderColor="#9999ff" borderThickness="2" x="289" y="10">
+<ilog:BlackSemiCircularGauge width="180" height="120" title="Sales" id="gSales" />
+<ilog:BlackSemiCircularGauge width="180" height="120" title="Companies" id="gCompanies" />
+<ilog:BlackSemiCircularGauge width="180" height="120" title="Population" id="gPopulation" />
+</mx:HBox>
+
+</mx:Application>

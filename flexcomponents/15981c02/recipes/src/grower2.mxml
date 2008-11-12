@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  currentState="small" horizontalAlign="left">
+<mx:ApplicationControlBar dock="true">
+  <mx:Button label="Small" click="currentState='small';" />
+  <mx:Button label="Big" click="currentState='big';" />
+</mx:ApplicationControlBar>
+<mx:states>
+  <mx:State name="small">
+    <mx:SetProperty name="width" target="{growbox}" value="300" />
+  </mx:State>
+  <mx:State name="big">
+    <mx:SetProperty name="width" target="{growbox}" value="600" />
+  </mx:State>
+</mx:states>
+<mx:transitions>
+  <mx:Transition fromState="*" toState="*">
+  	<mx:Resize duration="300" target="{growbox}" />
+  </mx:Transition>
+</mx:transitions>
+<mx:HBox id="growbox" width="300" height="200" borderStyle="solid" borderThickness="2" cornerRadius="5"
+  borderColor="black" backgroundColor="white" paddingBottom="10" paddingLeft="10" paddingRight="10"
+  paddingTop="10">
+  <mx:Label text="Grow box" fontSize="20" /> 	
+</mx:HBox>
+</mx:Application>

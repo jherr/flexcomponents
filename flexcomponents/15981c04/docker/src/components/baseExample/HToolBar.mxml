@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+@LICENSE@
+-->
+<DockPaneFX 
+	xmlns="com.teotiGraphix.containers.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	
+	showCloseButton="false"
+	
+	dockData="{ToolTypes.HORIZONTAL_TOOL}"
+	
+	dockComplete="dockCompleteHandler(event)"
+	floatComplete="floatCompleteHandler(event)"
+	
+	dockTitleBarPlacement="left"
+	floatTitleBarPlacement="top"
+	
+	dragHandleRenderer="components.buttons.BlueDragHandle" 
+	dockStyleName="dockStyles"
+	floatStyleName="floatingStyles"
+	
+	dockTitleBarStyleName="dockingTitleBarStyles"
+	floatTitleBarStyleName="floatingTitleBarStyles"
+	
+	layout="horizontal">
+	
+	<!--
+		@PROJECT_BLOCK@
+	-->
+	
+	<mx:Script>
+		<![CDATA[
+			import components.buttons.BlueDragHandle;
+			import com.teotiGraphix.containers.events.DockEvent;
+			
+			private var oldShowCloseButton:Boolean;
+			
+			private function dockCompleteHandler(event:DockEvent):void
+			{
+				oldShowCloseButton = showCloseButton;
+				if (oldShowCloseButton)
+					showCloseButton = false;
+			}
+			
+			private function floatCompleteHandler(event:DockEvent):void
+			{
+				showCloseButton = oldShowCloseButton;
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Style>
+
+.dockStyles {
+	cornerRadius:0;
+}
+
+.floatingStyles {
+	dropShadowEnabled:true;
+	cornerRadius:5;
+	headerColors:#CCCCCC,#FFFFFF;
+	headerAlphas:0.4,0.2;
+}
+
+.dockingTitleBarStyles {
+
+}
+
+.floatingTitleBarStyles {
+
+	paddingTop:2;
+	paddingLeft:2;
+	paddingBottom:2;
+	paddingRight:2;
+	edgeColor:#666666;
+	edgeOffset:1;
+	highlightAlphas:0.3,0.45;
+}
+		
+	</mx:Style>
+	
+</DockPaneFX>

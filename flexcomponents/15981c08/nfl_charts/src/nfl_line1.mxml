@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="searchPlayers()"
+  xmlns:degrafa="http://www.degrafa.com/2007">
+
+<mx:Style>
+Application {
+  background-gradient-colors: #66FF66, #eeffee;
+  font-weight: bold;
+  font-size: 14;
+}
+</mx:Style>
+
+<mx:Script>
+<![CDATA[
+import mx.charts.HitData;
+
+private function searchPlayers() : void {
+  footballRO.findPlayer.send( srchText.text );
+}
+
+private function onFindPlayer() : void {
+  var players:Array = footballRO.findPlayer.lastResult;
+  for each( var player:Object in players ) {
+    player.name = player.first + " " + player.last;
+  }
+  playerList.dataProvider = players;
+}
+
+private function onPlayerDblClick() : void {
+  footballRO.getGamesByPlayer.send( playerList.selectedItem.id );
+}
+
+private function onGamesByPlayer() : void {
+  var games:Array = footballRO.getGamesByPlayer.lastResult;
+  var gameind:int = 1;
+  for each( var game:Object in games ) {
+    game.game = gameind;
+    gameind++;
+  }
+  lineChart.dataProvider = games;
+}
+
+private function makeDataTip( hd:HitData ) : String {
+  return "<b>"+hd.item.team+"</b> "+hd.item.year+" week "+hd.item.week;
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="footballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="football.FootballService" destination="football.FootballService"
+  showBusyCursor="true">
+<mx:method name="findPlayer" result="onFindPlayer()">
+<mx:arguments>
+  <mx:Name />
+</mx:arguments>
+</mx:method>
+<mx:method name="getGamesByPlayer" result="onGamesByPlayer()">
+<mx:arguments>
+  <mx:Player />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<mx:VBox paddingBottom="15" paddingLeft="15" paddingRight="15" paddingTop="15" backgroundColor="#cccccc"
+  borderColor="#eeeeee" cornerRadius="15" borderThickness="3" borderStyle="solid"
+  width="90%" height="90%" top="30" left="30">
+<mx:filters>
+  <mx:DropShadowFilter distance="10" alpha="0.7" />
+</mx:filters>
+
+<mx:LineChart width="100%" height="100%" id="lineChart" showDataTips="true" dataTipFunction="makeDataTip">
+
+<mx:backgroundElements>
+<degrafa:Surface>
+  <degrafa:fills>
+  	<degrafa:SolidFill id="whiteFill" color="white" />
+  </degrafa:fills>
+  <degrafa:GeometryGroup>
+  	<degrafa:RegularRectangle x="0" y="0" width="{lineChart.width}" height="{lineChart.height}"
+       fill="{whiteFill}" />
+  </degrafa:GeometryGroup>
+</degrafa:Surface>
+<mx:GridLines>
+  <mx:horizontalStroke>
+  	<mx:Stroke color="#bbbbbb" />
+  </mx:horizontalStroke>
+</mx:GridLines>
+</mx:backgroundElements>
+
+<mx:series>
+  <mx:LineSeries yField="att" xField="game" displayName="Attempts" />
+  <mx:LineSeries yField="comp" xField="game" displayName="Completions" />
+  <mx:LineSeries yField="interceptions" xField="game" displayName="Interceptions" />
+</mx:series>
+</mx:LineChart>
+<mx:Legend dataProvider="{lineChart}" direction="horizontal" />
+
+</mx:VBox>
+
+<mx:Panel title="Search" width="200" height="150" paddingBottom="5" paddingLeft="5"
+  paddingRight="5" paddingTop="5" layout="vertical" left="600" top="10" borderAlpha="0.8">
+  <mx:TextInput width="100%" id="srchText" text="Aikman" keyUp="searchPlayers()" />
+  <mx:List id="playerList" width="100%" height="100%" labelField="name" doubleClickEnabled="true" doubleClick="onPlayerDblClick()" />
+</mx:Panel>
+
+</mx:Application>

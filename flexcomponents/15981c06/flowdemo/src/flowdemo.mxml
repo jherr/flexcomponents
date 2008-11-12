@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal"
+  creationComplete="imageData.send()" backgroundColor="white" backgroundAlpha="1"
+  backgroundGradientColors="[#000000,#002200]" backgroundGradientAlphas="[1,1]">
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import fl.data.DataProvider;
+import mx.core.UIComponent;
+import com.afcomponents.flowlist3d.*;
+
+private var flow:FlowList3D = new FlowList3D();
+
+public function onImageData( event:ResultEvent ) : void {
+  var uic:UIComponent = new UIComponent();
+    
+  var dp:DataProvider = new DataProvider();
+  for each ( var image:XML in event.result..image ) {
+    var imgObj:Object = {};
+    imgObj.path = "http://localhost/pics/harold/"+image.@name.toString();
+    imgObj.type = "image";
+    dp.addItem( imgObj );
+  }
+  flow.content = dp;
+  flow.flowListStyle = {angleH:0, angleV:0, displayedItemCount:5,
+    forceRotationY:true, forceRotationZ:true, itemAlpha:0, itemDistance:150,
+    itemRotationY:80, itemRotationZ:-5, itemScale:0.9, selectedPaddingX:200,
+    selectedPaddingY:0, selectedPaddingZ:100, useFlatAngleV:true, useFlatAngleH:true };
+  flow.setSize( width * 0.4, height * 0.5 );
+  
+  uic.addChild( flow );
+  addChild( uic );
+}  
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/harold/images.xml" id="imageData" resultFormat="e4x"
+  result="onImageData(event)" />
+</mx:Application>

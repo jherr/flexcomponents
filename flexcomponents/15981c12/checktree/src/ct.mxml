@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml">
+<mx:XMLListCollection id="folderCollection">
+<mx:XMLList xmlns="">
+<folder state="unchecked" label="Images" isBranch="true" >
+  <folder state="unchecked" isBranch="true" label="Home" >
+      <folder state="unchecked" isBranch="false" label="Megan" />
+      <folder state="unchecked" isBranch="false" label="Lori" />
+      <folder state="unchecked" isBranch="false" label="Oso" />
+  </folder>
+  <folder state="unchecked" isBranch="true" label="Work" />
+</folder>		
+<folder state="unchecked" label="Video" isBranch="true" >
+  <folder state="unchecked" isBranch="false" label="Home" />
+  <folder state="unchecked" isBranch="false" label="Work" />
+</folder>		
+</mx:XMLList>
+</mx:XMLListCollection>
+<mx:Panel width="100%" height="100%" title="Checkbox Tree">
+  <mx:Tree itemRenderer="CheckTreeRenderer" labelField="@label"
+    dataProvider="{folderCollection}" width="100%" height="100%" />
+</mx:Panel>
+</mx:Application>

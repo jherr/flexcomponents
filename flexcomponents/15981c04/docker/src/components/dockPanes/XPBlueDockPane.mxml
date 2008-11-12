@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+@LICENSE@
+-->
+<containers:DockPaneFX 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:containers="com.teotiGraphix.containers.*" 
+	
+	resizeEnabled="true"
+	
+	dockComplete="dockCompleteHandler(event)"
+	floatComplete="floatCompleteHandler(event)"
+	
+	dockStyleName="xpBlueDockStyles"
+	
+ 	floatStyleName="xpBlueFloatStyles"
+ 	floatTitleBarStyleName="xpBlueFloatTitleBarStyles"
+ 	floatTitleStyleName="xpBlueFloatTitleStyles"	
+	
+	showDragHandle="false"
+	showTitleBar="false"
+	
+	minWidth="100" minHeight="100"
+	maxWidth="500" maxHeight="400"
+	
+	horizontalScrollPolicy="off"
+	verticalScrollPolicy="off"
+	
+	width="100%">
+	
+	<!--
+		@PROJECT_BLOCK@
+	-->		
+	
+<!--
+
+	minWidth="100" minHeight="100"
+	maxWidth="500" maxHeight="400">
+	
+-->
+
+	<mx:Style>
+
+/*
+ *======================================
+ * DockPaneFX.floatStyleName
+ *======================================
+ */
+/*
+	Style for the floating dock pane.
+*/
+.xpBlueFloatStyles {
+
+	backgroundColor:#ECE9D8;
+	backgroundSkin:Embed(source="/assets/xpBlueAssets.swf", 
+		symbol="XPBorderSkin");
+	
+	borderSkin:ClassReference("com.teotiGraphix.skins.ShadowGraphicBorder");
+	borderStyle:"solid";
+	borderAlpha:0.8;
+	
+	dropShadowEnabled:true;
+
+	paddingTop:0;
+	paddingLeft:4;
+	paddingBottom:4;
+	paddingRight:4;	
+	
+	horizontalGap:0;
+	
+	resizeType:"realtime";
+}
+
+/*
+ *======================================
+ * DockPaneFX.dockStyleName
+ *======================================
+ */
+/*
+	Style for the dock pane.
+*/
+.xpBlueDockStyles {
+	paddingTop:0;
+	paddingLeft:0; 
+	paddingBottom:0;
+	paddingRight:0;	
+	
+	overlayButtonThickness:3;
+}
+
+/*
+ *======================================
+ * DockPaneFX.floatTitleBarStyleName
+ *======================================
+ */
+/*
+	Style for the floating dock pane title bar.
+*/
+.xpBlueFloatTitleBarStyles {
+	backgroundSkin:Embed(source="/assets/xpBlueAssets.swf", 
+		symbol="XPModalTitleBarBackgroundSkin");
+	
+	borderSkin:ClassReference("com.teotiGraphix.skins.ShadowGraphicBorder");	
+
+	cornerRadii:"0 0 0 0";
+	
+	horizontalGap:2;
+	
+	paddingTop:0;
+	paddingLeft:7;
+	paddingBottom:0;
+	paddingRight:4;
+	
+	verticalAlign:"middle";
+	
+	shadowDistance:0;
+}
+
+/*
+ *======================================
+ * DockPaneFX.floatTitleStyleName
+ *======================================
+ */
+/*
+	Style for the floating dock pane title bar's label.
+*/
+.xpBlueFloatTitleStyles {
+	color:#FFFFFF;
+	
+	fontFamily:"Trebuchet MS";
+	fontSize:11;
+	fontWeight:"bold";
+	
+	textAlign:"left";
+}
+	
+	</mx:Style>
+	
+	<mx:Script>
+		<![CDATA[
+			
+			import com.teotiGraphix.containers.events.DockEvent;
+			import com.teotiGraphix.events.WorkSpaceEvent;
+			
+			import mx.core.IUIComponent;
+			
+			//------------------------------------------------------------------
+			//
+			//  Public Get-Set :: Properties
+			//
+			//------------------------------------------------------------------
+			
+			//--------------------------
+			//  menuPopUp
+			//--------------------------
+			
+			protected var menuPopUpChanged:Boolean = false;
+			private var _menuPopUp:IUIComponent;
+			
+			[Bindable]
+			
+			/**
+			 * The IUIComponent instance that will be used as the
+			 * menuButton's popUp.
+			 */
+			public function get menuPopUp():IUIComponent
+			{
+				return _menuPopUp;
+			}
+			
+			/**
+			 * @private
+			 */			
+			public function set menuPopUp(value:IUIComponent):void
+			{
+				_menuPopUp = value;
+				menuPopUpChanged = true;
+				invalidateProperties();
+			}
+			
+			//------------------------------------------------------------------
+			//
+			//  Overriden Protected :: Methods
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 * @private
+			 */
+			override protected function commitProperties():void
+			{
+				super.commitProperties();
+				
+				if (menuPopUpChanged)
+				{
+					commitMenuPopUp();
+					menuPopUpChanged = false;
+				}
+			}
+			
+			//------------------------------------------------------------------
+			//
+			//  Protected :: Methods
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 * Dispatches the menuPopUpChanged event.
+			 */
+			protected function commitMenuPopUp():void
+			{
+				dispatchEvent(new WorkSpaceEvent(
+					"menuPopUpChanged", 
+					false, false, IUIComponent(_menuPopUp)));
+			}
+			
+			//------------------------------------------------------------------
+			//
+			//  Private :: Handlers
+			//
+			//------------------------------------------------------------------
+			
+			/**
+			 * @private
+			 */
+			private function dockCompleteHandler(event:DockEvent):void
+			{
+				showTitleBar = false;
+			}
+			
+			/**
+			 * @private
+			 */
+			private function floatCompleteHandler(event:DockEvent):void
+			{
+				showTitleBar = true;
+			}			
+			
+		]]>
+	</mx:Script>
+	
+</containers:DockPaneFX>

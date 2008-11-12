@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="imageData.send()" backgroundColor="white" backgroundAlpha="1"
+  backgroundGradientColors="[#000000,#220000]" backgroundGradientAlphas="[1,1]">
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import fl.data.DataProvider;
+import mx.core.UIComponent;
+import com.afcomponents.flowlist3d.*;
+
+private var flow:FlowList3D = new FlowList3D();
+
+public function onImageData( event:ResultEvent ) : void {
+  var uic:UIComponent = new UIComponent();
+    
+  var dp:DataProvider = new DataProvider();
+  for each ( var image:XML in event.result..image ) {
+    var imgObj:Object = {};
+    imgObj.path = "http://localhost/pics/"+image.@name.toString();
+    imgObj.type = "image";
+    imgObj.data = "http://localhost/pics";
+    dp.addItem( imgObj );
+  }
+  flow.content = dp;
+  flow.flowListStyle = { displayedItemCount:5,
+    forceRotationY:false, forceRotationZ:false, itemAlpha:0, itemDistance:50,
+    itemRotationY:60, itemRotationZ:10, itemScale:1, selectedPaddingX:100,
+    selectedPaddingY:0, selectedPaddingZ:800, useFlatAngleV:false, useFlatAngleH:false};
+  
+  uic.addChild( flow );
+  addChild( uic );
+}  
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/tall.xml" id="imageData" resultFormat="e4x"
+  result="onImageData(event)" />
+</mx:Application>

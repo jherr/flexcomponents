@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+@LICENSE@
+-->
+<DockPaneFX 
+	xmlns="com.teotiGraphix.containers.*" 
+	xmlns:mx="http://www.adobe.com/2006/mxml" 
+	dockData="{ToolTypes.VERTICAL_TOOL}"
+	dragHandleStyleName="dragHandleStyles"
+	layout="vertical">
+	
+	<!--
+		@PROJECT_BLOCK@
+	-->
+	
+	<mx:Style>
+		
+.dragHandleStyles {
+	icon:Embed(source="/assets/drag-handle-blue.png");
+
+	upSkin:ClassReference(null);
+	overSkin:ClassReference(null);
+	downSkin:ClassReference(null);
+	disabledSkin:ClassReference(null);
+}		
+		
+	</mx:Style>
+	
+</DockPaneFX>

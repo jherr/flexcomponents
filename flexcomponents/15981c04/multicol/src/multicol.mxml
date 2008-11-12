@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  xmlns:mc="nz.co.codec.flex.multicolumnform.*" defaultButton="{submit}">
+
+<mx:Panel title="Your Information" width="600"
+  paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" layout="vertical"
+  horizontalAlign="center">
+<mc:MultiColumnForm numColumns="2">
+  <mc:MultiColumnFormItem label="First">
+    <mx:TextInput id="first" width="200" />
+  </mc:MultiColumnFormItem>
+  <mc:MultiColumnFormItem label="Last">
+    <mx:TextInput id="last" width="200" />
+  </mc:MultiColumnFormItem>
+  <mc:MultiColumnFormItem label="Address" colspan="2" width="100%">
+    <mx:TextInput id="address1" width="100%" />
+  </mc:MultiColumnFormItem>
+  <mc:MultiColumnFormItem label="" colspan="2" width="100%">
+    <mx:TextInput id="address2" width="100%" />
+  </mc:MultiColumnFormItem>
+  <mc:MultiColumnFormItem label="Email" colspan="2" width="100%">
+    <mx:TextInput id="email" width="100%" />
+  </mc:MultiColumnFormItem>
+</mc:MultiColumnForm>
+<mx:Button label="Submit" id="submit" />
+</mx:Panel>
+
+</mx:Application>

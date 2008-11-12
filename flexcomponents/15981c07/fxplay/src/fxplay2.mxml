@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  xmlns:controls="com.fxcomponents.controls.*" creationComplete="videos.send()"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Script>
+<![CDATA[
+public function onListClick() : void {
+  var newSource:String = 'http://localhost/videos/'+videoList.selectedItem.@src;
+  player.source = newSource;
+  player.load();
+}	
+]]>
+</mx:Script>
+<mx:HTTPService id="videos" url="http://localhost/videos/moto.xml" resultFormat="e4x" />
+<mx:Image source="@Embed('motorcycle.jpg')" width="1400" top="-100">
+  <mx:filters>
+    <mx:BlurFilter blurX="15" blurY="5" />
+  </mx:filters>
+</mx:Image>
+<mx:HBox id="vidPnl" paddingBottom="45" paddingLeft="15" paddingRight="15" paddingTop="15" top="20" left="20"
+  backgroundAlpha="0.4" backgroundColor="white" cornerRadius="10" borderStyle="solid"
+  borderColor="#666666" borderThickness="2">
+  <mx:filters>
+    <mx:DropShadowFilter />
+  </mx:filters>
+<controls:FXVideo width="480" height="360" id="player"
+  source="http://localhost/videos/moto1.flv"
+  autoPlay="false" bufferTime="10" />
+<mx:List height="100%" width="200" borderThickness="1" borderStyle="solid" borderColor="#cccccc"
+  dataProvider="{videos.lastResult..video}" labelField="@name" id="videoList"
+  click="onListClick()" alpha="0.4" fontWeight="bold" fontSize="16" />
+</mx:HBox>
+</mx:Application>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  width="100%" height="100%"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off"
+  creationComplete="picData.send()" xmlns:flexlib="flexlib.containers.*">
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+
+private function onPicResult( event:ResultEvent ) : void {
+  for each( var pic:XML in event.result..image ) {
+  	var img:ImageRenderer = new ImageRenderer();
+  	img.data = pic.@name.toString();
+  	img.setStyle( 'top', Math.random() * 1000 );
+  	img.setStyle( 'left', Math.random() * 1000 );
+  	cnvs.addChild( img );
+  }
+}
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/wide.xml" id="picData" resultFormat="e4x"
+  result="onPicResult( event )" />
+<flexlib:ButtonScrollingCanvas id="cnvs" width="100%" height="100%" />
+</mx:Application>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="baseballRO.getTeamList.send()" backgroundGradientColors="[#000000,#339933]">
+
+<mx:Script>
+<![CDATA[
+private function onYearsResult() : void {
+  chartList.dataProvider = baseballRO.getYearsByTeam.lastResult;
+}
+private function onTeamsList() : void {
+  teamSelector.dataProvider = baseballRO.getTeamList.lastResult;
+  teamSelector.selectedIndex = 0;
+  for each ( var team:Object in baseballRO.getTeamList.lastResult )
+    if ( team.teamid == 'FLO' )
+    {
+      teamSelector.selectedItem = team;
+      onTeamChange();
+    }
+}
+private function onTeamChange() : void {
+  if ( teamSelector.selectedItem != null && teamSelector.selectedItem.teamid != null )
+    baseballRO.getYearsByTeam.send( teamSelector.selectedItem.teamid );
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="baseballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="baseball.BaseballService" destination="baseball.BaseballService"
+  showBusyCursor="true">
+<mx:method name="getYearsByTeam" result="onYearsResult()">
+<mx:arguments>
+  <mx:Team />
+</mx:arguments>
+</mx:method>
+<mx:method name="getTeamList" result="onTeamsList()" />
+</mx:RemoteObject>
+
+<mx:VBox paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" verticalGap="5"
+  width="100%" height="100%" backgroundAlpha="0.6" borderColor="white" borderThickness="3"
+  borderStyle="solid" cornerRadius="15" backgroundColor="white">
+<mx:ComboBox id="teamSelector" labelField="name" change="onTeamChange()" />
+<mx:List id="chartList" itemRenderer="PieRenderer1" width="100%" height="100%" backgroundAlpha="0.1">
+</mx:List>
+</mx:VBox>
+
+</mx:Application>

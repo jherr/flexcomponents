@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ilog:NumericRectangularGauge xmlns:mx="http://www.adobe.com/2006/mxml" 
+                              xmlns:ilog="http://www.ilog.com/2007/ilog/flex"
+                              xmlns:local="*" showTrack="false"
+                              showMinorTicks="false" showLabels="false">                          
+  <ilog:scaleRenderer>
+    <ilog:RectangularScaleRenderer majorTickWidth="20">
+      <ilog:majorTickRenderer>
+        <mx:Component>
+          <local:LightRectangularTickRenderer/>
+        </mx:Component>
+      </ilog:majorTickRenderer>
+    </ilog:RectangularScaleRenderer>
+  </ilog:scaleRenderer>
+  <ilog:valueRenderer>
+    <local:LightRectangularValueRenderer/>
+  </ilog:valueRenderer>
+</ilog:NumericRectangularGauge>

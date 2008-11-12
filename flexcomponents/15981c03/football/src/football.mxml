@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal">
+
+<mx:Script>
+<![CDATA[
+private function onFindPlayer() : void {
+  foundList.dataProvider = footballRO.findPlayer.lastResult;
+}
+private function onKeyUp() : void {
+  footballRO.findPlayer.send( nameText.text );
+}
+private function myLabelFunc( item:Object ) : String {
+  return item.first + " " + item.last;
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="footballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="football.FootballService" destination="football.FootballService"
+  showBusyCursor="true">
+<mx:method name="findPlayer" result="onFindPlayer()">
+<mx:arguments>
+  <mx:name />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<mx:TextInput id="nameText" keyUp="onKeyUp()" width="20%" />
+<mx:List id="foundList" labelFunction="myLabelFunc" width="80%" />
+
+</mx:Application>

@@ -1,0 +1,511 @@
+@font-face {
+    fontFamily: franci;
+    src: url("ADDECRG_.TTF");
+    fontWeight: normal;
+    
+}         
+.Scrawl { font-family: bisque; color: #000000; }
+ 
+.closeBtn {
+    upSkin:        Embed(source="blue_plastic.swf", symbol="Panel_closeButtonUpSkin");
+    overSkin:      Embed(source="blue_plastic.swf", symbol="Panel_closeButtonUpSkin");
+    downSkin:      Embed(source="blue_plastic.swf", symbol="Panel_closeButtonUpSkin");
+    disabledSkin: Embed(source="blue_plastic.swf", symbol="Panel_closeButtonUpSkin");
+	
+ }
+
+.increaseBtn {
+	upSkin:        Embed(source="blue_plastic.swf", symbol="maximize");
+    overSkin:      Embed(source="blue_plastic.swf", symbol="maximize");
+    downSkin:      Embed(source="blue_plastic.swf", symbol="maximize");
+	disabledSkin: Embed(source="blue_plastic.swf", symbol="maximize");
+}
+.decreaseBtn {
+	upSkin:        Embed(source="blue_plastic.swf", symbol="minimize");
+    overSkin:      Embed(source="blue_plastic.swf", symbol="minimize");
+    downSkin:      Embed(source="blue_plastic.swf", symbol="minimize");
+	disabledSkin: Embed(source="blue_plastic.swf", symbol="minimize");
+}
+ 
+.resizeHndlr {
+	upSkin:        Embed(source="blue_plastic.swf", symbol="resize");
+    overSkin:      Embed(source="blue_plastic.swf", symbol="resize");
+    downSkin:      Embed(source="blue_plastic.swf", symbol="resize");
+	disabledSkin: Embed(source="blue_plastic.swf", symbol="resize");
+}
+  
+Canvas{
+	borderSkin: Embed(source="blue_plastic.swf", symbol="layout two");
+	focusSkin: Embed(source="blue_plastic.swf", symbol="focus");
+	
+}
+HBox {
+	borderSkin: Embed(source="blue_plastic.swf", symbol="layout two");
+}
+.nonEditText {
+		borderSkin: Embed(source="blue_plastic.swf", symbol="layout two");
+		focusSkin: Embed(source="blue_plastic.swf", symbol="focus");
+}
+
+TextArea {
+	focusSkin: Embed(source="blue_plastic.swf", symbol="focus");
+	borderSkin: Embed(source="blue_plastic.swf", symbol="layout one");
+	paddingLeft: 8;
+	paddingRight: 4; 
+	
+}
+TextInput {
+	focusSkin: Embed(source="blue_plastic.swf", symbol="focus");
+	borderSkin: Embed(source="blue_plastic.swf", symbol="layout one");
+	paddingLeft: 4;
+	paddingRight: 4; 
+
+}
+ 
+
+/*
+//------------------------------
+//  AccordionHeader     
+//------------------------------
+*/
+AccordionHeader
+{
+
+	disabledSkin: Embed(source="blue_plastic.swf", symbol="Button_disabledSkin");
+	downSkin: Embed(source="blue_plastic.swf", symbol="Button_downSkin");
+	overSkin: Embed(source="blue_plastic.swf", symbol="Button_overSkin");
+	selectedDisabledSkin: Embed(source="blue_plastic.swf", symbol="Button_disabledSkin");
+	selectedDownSkin: Embed(source="blue_plastic.swf", symbol="Button_downSkin");
+	selectedOverSkin: Embed(source="blue_plastic.swf", symbol="Button_overSkin");
+	selectedUpSkin: Embed(source="blue_plastic.swf", symbol="Button_upSkin");
+	upSkin: Embed(source="blue_plastic.swf", symbol="Button_upSkin");
+	focusSkin: Embed(source="blue_plastic.swf", symbol="focus");
+	
+	fontFamily: franci;
+	fontWeight: normal;
+	fontSize: 12;
+	fontAntiAliasType: advanced;
+    fontSharpness: -100;
+    fontgridFitType: subpixel;
+
+}
+
+/*
+//------------------------------
+//  Application
+//------------------------------
+*/
+Application
+{
+	backgroundImage: Embed(source="blue_plastic.swf",symbol="BackgroundImage");
+	
+}
+
+/*
+//------------------------------
+//  Button
+//------------------------------
+*/
+Button
+{
+	disabledSkin: Embed(source="blue_plastic.swf", symbol="Button_disabledSkin");
+	downSkin: Embed(source="blue_plastic.swf", symbol="Button_downSkin");
+	overSkin: Embed(source="blue_plastic.swf", symbol="Button_overSkin");
+	upSkin: Embed(source="blue_plastic.swf", symbol="Button_upSkin");
+	color: #000000;
+}
+
+/* 
+//------------------------------ 
+//  ButtonBar 
+//------------------------------ 
+*/ 
+
+ButtonBar 
+{ 
+        buttonStyleName: "buttonBarButton"; 
+        firstButtonStyleName: "firstButtonBarButton"; 
+        lastButtonStyleName: "lastButtonBarButton";
+        
+    
+}
+
+ToggleButtonBar 
+{ 
+        buttonStyleName: "buttonBarButton"; 
+        firstButtonStyleName: "firstButtonBarButton"; 
+        lastButtonStyleName: "lastButtonBarButton";
+}
+
+/* 
+//------------------------------ 
+//  ButtonBarButtons 
+//------------------------------ 
+*/ 
+
+.firstButtonBarButton 
+{ 
+        disabledSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_firstDisabledSkin"); 
+        downSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_firstDownSkin"); 
+        overSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_firstOverSkin"); 
+        selectedDisabledSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_firstSelectedDisabledSkin"); 
+        selectedDownSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_firstSelectedUpSkin"); 
+        selectedOverSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_firstSelectedUpSkin");
+        selectedUpSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_firstSelectedUpSkin");
+        upSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_firstUpSkin"); 
+}
+
+.buttonBarButton 
+{ 
+        disabledSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_buttonDisabledSkin"); 
+        downSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_buttonDownSkin"); 
+        overSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_buttonOverSkin"); 
+        selectedDisabledSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_buttonSelectedDisabledSkin"); 
+        selectedDownSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_buttonSelectedUpSkin"); 
+        selectedOverSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_buttonSelectedUpSkin");
+        selectedUpSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_buttonSelectedUpSkin");
+        upSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_buttonUpSkin"); 
+}
+
+.lastButtonBarButton 
+{ 
+        disabledSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_lastDisabledSkin"); 
+        downSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_lastDownSkin"); 
+        overSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_lastOverSkin"); 
+        selectedDisabledSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_lastSelectedDisabledSkin"); 
+        selectedDownSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_lastSelectedUpSkin"); 
+        selectedOverSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_lastSelectedUpSkin");
+        selectedUpSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_lastSelectedUpSkin");
+        upSkin: Embed(source="blue_plastic.swf", symbol="ButtonBar_lastUpSkin"); 
+}
+
+/*
+//------------------------------
+//  CheckBox
+//------------------------------
+*/
+CheckBox
+{
+	disabledIcon: Embed(source="blue_plastic.swf", symbol="CheckBox_disabledIcon");
+	downIcon: Embed(source="blue_plastic.swf", symbol="CheckBox_upIcon");
+	overIcon: Embed(source="blue_plastic.swf", symbol="CheckBox_upIcon");
+	selectedDisabledIcon: Embed(source="blue_plastic.swf", symbol="CheckBox_selectedDisabledIcon");
+	selectedDownIcon: Embed(source="blue_plastic.swf", symbol="CheckBox_selectedUpIcon");
+	selectedOverIcon: Embed(source="blue_plastic.swf", symbol="CheckBox_selectedUpIcon");
+	selectedUpIcon: Embed(source="blue_plastic.swf", symbol="CheckBox_selectedUpIcon");
+	upIcon: Embed(source="blue_plastic.swf", symbol="CheckBox_upIcon");
+}		
+
+
+/*
+//------------------------------
+//  ComboBox
+//------------------------------
+*/
+ComboBox
+{
+
+	disabledSkin: Embed(source="blue_plastic.swf", symbol="ComboBoxArrow_disabledSkin");
+	downSkin: Embed(source="blue_plastic.swf", symbol="ComboBoxArrow_upSkin");
+	editableDisabledSkin: Embed(source="blue_plastic.swf", symbol="ComboBoxArrow_editableDisabledSkin");
+	editableDownSkin: Embed(source="blue_plastic.swf", symbol="ComboBoxArrow_editableUpSkin");
+	editableOverSkin: Embed(source="blue_plastic.swf", symbol="ComboBoxArrow_editableUpSkin");
+	editableUpSkin: Embed(source="blue_plastic.swf", symbol="ComboBoxArrow_editableUpSkin");
+	overSkin: Embed(source="blue_plastic.swf", symbol="ComboBoxArrow_upSkin");
+	upSkin: Embed(source="blue_plastic.swf", symbol="PopUpButton_upSkin");
+	dropDownStyleName: "myComboBoxDropDowns"; 
+	textAlign: left;
+}
+
+.myComboBoxDropDowns {
+     borderSkin: Embed(source="blue_plastic.swf", symbol="dropDown");
+     selectionColor: #6699AA;
+     rollOverColor: #99AACC;
+}		
+
+ 
+/*
+//------------------------------
+//  CursorManager
+//------------------------------
+*/
+CursorManager
+{
+	busyCursor: Embed(source="blue_plastic.swf", symbol="BusyCursor");
+	busyCursorBackground: Embed(source="blue_plastic.swf",symbol="BusyCursor");
+}
+
+/*
+//------------------------------
+//  DataGrid
+//------------------------------
+*/
+DataGrid
+{
+ 
+	borderSkin: Embed(source="blue_plastic.swf", symbol="layout two");
+	backgroundAlpha: 0.15;
+   headerColors: #e1e6eb, #bec8d2;
+   selectionColor: #6699AA;
+    rollOverColor: #99AACC;
+     alternatingItemColors: #6699AA, #AACCDD;
+	  
+}
+
+
+/*
+//------------------------------
+//  DragManager
+//------------------------------
+*/
+DragManager
+{
+	copyCursor: Embed(source="blue_plastic.swf",symbol="DragManager_copyCursor");
+
+	defaultDragImageSkin: Embed(source="blue_plastic.swf", symbol="DragManager_defaultDragImageSkin");
+
+	linkCursor: Embed(source="blue_plastic.swf",symbol="DragManager_linkCursor");
+	moveCursor: Embed(source="blue_plastic.swf",symbol="DragManager_moveCursor");
+	rejectCursor: Embed(source="blue_plastic.swf",symbol="DragManager_rejectCursor");
+}
+
+
+
+
+/*
+//------------------------------
+//  LinkButton
+//------------------------------
+*/
+LinkButton
+{
+	disabledSkin: Embed(source="blue_plastic.swf", symbol="LinkButton_disabledSkin");
+	downSkin: Embed(source="blue_plastic.swf", symbol="LinkButton_downSkin");
+	overSkin: Embed(source="blue_plastic.swf", symbol="LinkButton_overSkin");
+	upSkin: Embed(source="blue_plastic.swf", symbol="LinkButton_upSkin");
+}		
+
+/*
+//------------------------------
+//  Loader
+//------------------------------
+*/
+Loader
+{
+	brokenImageSkin: Embed(source="blue_plastic.swf",symbol="Loader_brokenImageSkin");
+
+}
+
+
+
+/*
+//------------------------------
+//  MenuBar
+//------------------------------
+*/
+MenuBar
+{
+
+	backgroundSkin: Embed(source="blue_plastic.swf", symbol="MenuBar_backgroundSkin");
+	itemUpSkin: Embed(source="blue_plastic.swf", symbol="MenuBar_itemUpSkin");
+	itemOverSkin: Embed(source="blue_plastic.swf", symbol="MenuBar_itemOverSkin");
+	itemDownSkin: Embed(source="blue_plastic.swf", symbol="MenuBar_itemDownSkin");
+
+}
+
+
+
+/*
+//------------------------------
+//  Panel
+//------------------------------
+*/
+Panel 
+{
+	borderSkin: Embed(source="blue_plastic.swf", symbol="Panel_borderSkin");
+	titleBackgroundSkin: Embed(source="empty.swf", symbol="Panel_titleBackgroundSkin");
+	borderThicknessLeft: 12;
+	borderThicknessRight: 20;
+	borderThicknessTop: 12;
+	borderThicknessBottom: 20;
+	headerHeight: 28;
+	titleStyleName: "mypanelTitle";
+}
+
+.mypanelTitle {
+	verticalGap: 20;
+   fontFamily: franci;
+   fontSize: 14;
+   fontWeight: normal;
+    fontAntiAliasType: advanced;
+    fontSharpness: 100;
+    fontgridFitType: subpixel;
+   textAlign: center;
+}
+/*
+//------------------------------
+//  Panel ControlBar
+//------------------------------
+*/
+ControlBar
+{
+	borderSkin: Embed(source="blue_plastic.swf", symbol="Panel_controlBarBackgroundSkin");
+}
+
+/*
+//------------------------------
+//  PopUpButton
+//------------------------------
+*/
+PopUpButton
+{
+
+	disabledSkin: Embed(source="blue_plastic.swf", symbol="PopUpButton_disabledSkin");
+	downSkin: Embed(source="blue_plastic.swf", symbol="PopUpButton_upSkin");
+	overSkin: Embed(source="blue_plastic.swf", symbol="PopUpButton_upSkin");	
+	popUpDownSkin: Embed(source="blue_plastic.swf", symbol="PopUpButton_upSkin");
+	popUpOverSkin: Embed(source="blue_plastic.swf", symbol="PopUpButton_upSkin");
+	upSkin: Embed(source="blue_plastic.swf", symbol="PopUpButton_upSkin");
+}
+
+
+
+
+/*
+//------------------------------
+//  RadioButton
+//------------------------------
+*/
+RadioButton
+{
+
+	disabledIcon: Embed(source="blue_plastic.swf", symbol="RadioButton_disabledIcon");
+	downIcon: Embed(source="blue_plastic.swf", symbol="RadioButton_upIcon");
+	overIcon: Embed(source="blue_plastic.swf", symbol="RadioButton_upIcon");
+	selectedDisabledIcon: Embed(source="blue_plastic.swf", symbol="RadioButtonSelected_disabledIcon");
+	selectedDownIcon: Embed(source="blue_plastic.swf", symbol="RadioButtonSelected_upIcon");
+	selectedOverIcon: Embed(source="blue_plastic.swf", symbol="RadioButtonSelected_upIcon");
+	selectedUpIcon: Embed(source="blue_plastic.swf", symbol="RadioButtonSelected_upIcon");
+	upIcon: Embed(source="blue_plastic.swf", symbol="RadioButton_upIcon");
+
+}
+textInput {
+	borderSkin: Embed(source="blue_plastic.swf", symbol="layout one");
+	fontSize: 14;
+	focusAlpha: 0;
+	textIndent: 8;fontFamily: franci;
+	fontWeight: normal;
+	fontSize: 10;
+	 fontAntiAliasType: advanced;
+    fontSharpness: -100;
+    fontgridFitType: subpixel;
+
+
+}
+/*
+//------------------------------
+//  HorizontalScrollBar
+//------------------------------
+*/
+HScrollBar
+{
+	
+	downArrowDisabledSkin: Embed(source="blue_plastic.swf", symbol="HScrollArrowRight_disabledSkin");
+	downArrowDownSkin: Embed(source="blue_plastic.swf", symbol="HScrollArrowRight_upSkin");
+	downArrowOverSkin: Embed(source="blue_plastic.swf", symbol="HScrollArrowRight_upSkin");
+	downArrowUpSkin: Embed(source="blue_plastic.swf", symbol="HScrollArrowRight_upSkin");
+	thumbDownSkin: Embed(source="blue_plastic.swf", symbol="HScrollThumb_upSkin");
+	thumbIcon: Embed(source="blue_plastic.swf", symbol="HScrollBar_thumbIcon");
+	thumbOverSkin: Embed(source="blue_plastic.swf", symbol="HScrollThumb_upSkin");
+	thumbUpSkin: Embed(source="blue_plastic.swf", symbol="HScrollThumb_upSkin");
+	trackSkin: Embed(source="blue_plastic.swf", symbol="HScrollTrack_Skin");
+	upArrowDisabledSkin: Embed(source="blue_plastic.swf", symbol="HScrollArrowLeft_disabledSkin");
+	upArrowDownSkin: Embed(source="blue_plastic.swf", symbol="HScrollArrowLeft_upSkin");
+	upArrowOverSkin: Embed(source="blue_plastic.swf", symbol="HScrollArrowLeft_upSkin");
+	upArrowUpSkin: Embed(source="blue_plastic.swf", symbol="HScrollArrowLeft_upSkin");
+
+}
+
+/*
+//------------------------------
+//  VerticalScrollBar
+//------------------------------
+*/
+VScrollBar
+{
+
+	downArrowDisabledSkin: Embed(source="blue_plastic.swf", symbol="ScrollArrowDown_disabledSkin");
+	downArrowDownSkin: Embed(source="blue_plastic.swf", symbol="ScrollArrowDown_upSkin");
+	downArrowOverSkin: Embed(source="blue_plastic.swf", symbol="ScrollArrowDown_upSkin");
+	downArrowUpSkin: Embed(source="blue_plastic.swf", symbol="ScrollArrowDown_upSkin");
+	thumbDownSkin: Embed(source="blue_plastic.swf", symbol="ScrollThumb_upSkin");
+	thumbIcon: Embed(source="blue_plastic.swf", symbol="ScrollBar_thumbIcon");
+	thumbOverSkin: Embed(source="blue_plastic.swf", symbol="ScrollThumb_upSkin");
+	thumbUpSkin: Embed(source="blue_plastic.swf", symbol="ScrollThumb_upSkin");
+	trackSkin: Embed(source="blue_plastic.swf", symbol="ScrollTrack_Skin");
+	upArrowDisabledSkin: Embed(source="blue_plastic.swf", symbol="ScrollArrowUp_disabledSkin");
+	upArrowDownSkin: Embed(source="blue_plastic.swf", symbol="ScrollArrowUp_upSkin");
+	upArrowOverSkin: Embed(source="blue_plastic.swf", symbol="ScrollArrowUp_upSkin");
+	upArrowUpSkin: Embed(source="blue_plastic.swf", symbol="ScrollArrowUp_upSkin");
+
+}
+
+
+
+
+
+
+
+/*
+//------------------------------
+//  Tab
+//------------------------------
+*/
+TabNavigator
+{
+	firstButtonStyleName: "tabStyle";
+	tabStyleName: "tabStyle";
+	lastButtonStyleName: "tabStyle";
+	horizontalGap: 0;	
+	
+}
+
+.tabStyle {
+	disabledSkin: Embed(source="blue_plastic.swf", symbol="Tab_disabledSkin");
+	downSkin: Embed(source="blue_plastic.swf", symbol="Tab_downSkin");
+	overSkin: Embed(source="blue_plastic.swf", symbol="Tab_overSkin");
+	selectedDisabledSkin: Embed(source="blue_plastic.swf", symbol="TabSelected_disabledSkin");
+	selectedDownSkin: Embed(source="blue_plastic.swf", symbol="TabSelected_upSkin");
+	selectedOverSkin: Embed(source="blue_plastic.swf", symbol="TabSelected_upSkin");
+	selectedUpSkin: Embed(source="blue_plastic.swf", symbol="TabSelected_upSkin");
+	upSkin: Embed(source="blue_plastic.swf", symbol="Tab_upSkin");
+
+}
+
+/*
+//------------------------------
+//  ToolTip
+//------------------------------
+*/
+ToolTip
+{
+
+	borderSkin: Embed(source="blue_plastic.swf", symbol="ToolTip_borderSkin");
+
+}
+ /*
+//------------------------------
+//  Tree
+//------------------------------
+*/
+Tree
+{
+	defaultLeafIcon: Embed(source="blue_plastic.swf",symbol="Tree_defaultLeafIcon");
+	folderClosedIcon: Embed(source="blue_plastic.swf",symbol="folder_closed3");
+	folderOpenIcon: Embed(source="blue_plastic.swf",symbol="folder_open3");
+	focusSkin: Embed(source="blue_plastic.swf", symbol="focus");
+	 selectionColor: #6699AA;
+    rollOverColor: #99AACC;
+}
+
+

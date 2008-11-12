@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  xmlns:controls="com.fxcomponents.controls.*"
+  xmlns:ext="nl.wv.extenders.panel.*" backgroundGradientColors="[#000000,#000000]"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Image source="@Embed('coaster.jpg')" width="800" />
+<mx:Canvas backgroundColor="black" backgroundAlpha="0.6" x="0" y="263" width="800" height="310"
+  borderStyle="none">
+<controls:FXVideo width="480" height="270" top="10" left="10"
+  source="http://localhost/videos/Coaster1.flv" autoPlay="false" bufferTime="10" />
+</mx:Canvas>
+</mx:Application>

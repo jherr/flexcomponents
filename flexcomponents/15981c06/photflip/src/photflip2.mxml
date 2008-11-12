@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  creationComplete="picData.send()" 
+  horizontalScrollPolicy="off" verticalScrollPolicy="off">
+<mx:Style>
+Application { 
+  background-alpha: 1;
+  background-color: #000000;
+  background-gradient-colors: #000000,#004400;
+  padding-left: 0;
+  padding-top: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+}
+</mx:Style>
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import mx.core.UIComponent;
+import com.digicrafts.controls.PhotoFlip;
+
+private var pf:PhotoFlip = new PhotoFlip();
+
+public function onPicData( event:ResultEvent ) : void {
+  var uic:UIComponent = new UIComponent();
+  addChild( uic );
+
+  pf.setSize( width, height );
+
+  pf.vPerspective = 1;
+  pf.hPerspective = 1;
+  pf.itemScaleRatio = 0.9;
+  pf.mouseEnabled = true;
+  pf.popItemScale = 3.5;
+  pf.popupItemDistance = 250;
+  pf.maxDimension = 100;
+
+  for each ( var pic:XML in event.result..image ) {
+    var imgObj:Object = {};
+    imgObj.source = "http://localhost/pics/harold/"+pic.@name.toString();
+    imgObj.type = 'image';
+    pf.addItem( imgObj );
+  }
+
+  uic.addChild( pf );
+}  
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/harold/images.xml" id="picData" resultFormat="e4x"
+  result="onPicData(event)" />
+</mx:Application>

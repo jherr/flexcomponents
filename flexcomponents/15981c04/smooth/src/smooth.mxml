@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  xmlns:containerEx="containerEx.*" width="300" height="400"
+  horizontalScrollPolicy="off" verticalScrollPolicy="off"
+  creationComplete="picData.send()">
+<mx:Script>
+<![CDATA[
+import mx.rpc.events.ResultEvent;
+import mx.collections.ArrayCollection;
+
+[Bindable]
+private var images:ArrayCollection = new ArrayCollection();	
+
+private function onPicResult( event:ResultEvent ) : void {
+  for each( var pic:XML in event.result..image )
+  	images.addItem( pic.@name.toString() );
+  vsb.dataProvider = images;
+}
+]]>
+</mx:Script>
+<mx:HTTPService url="http://localhost/pics/wide.xml" id="picData" resultFormat="e4x"
+  result="onPicResult( event )" />
+<containerEx:VSmoothBox blurEnabled="true" width="300" height="400" backgroundColor="white" backgroundAlpha="1"
+  id="vsb" itemRenderer="ImageRenderer" itemHeight="200" itemWidth="280" verticalScrollPolicy="on" />
+</mx:Application>

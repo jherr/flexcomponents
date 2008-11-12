@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="160" xmlns:ilog="http://www.ilog.com/2007/ilog/flex"
+  xmlns="http://www.degrafa.com/2007"
+  dataChange="onDataChange()" creationComplete="onDataChange()" verticalScrollPolicy="off" horizontalScrollPolicy="off"
+  paddingBottom="0" paddingLeft="0" paddingRight="0" paddingTop="0">
+<mx:Script>
+<![CDATA[
+import mx.graphics.SolidColor;
+import mx.graphics.IFill;
+import mx.charts.ChartItem;
+import mx.collections.ArrayCollection;
+import mx.controls.List;
+import mx.charts.HitData;
+
+private function onDataChange() : void {
+  if ( pieChart == null || !initialized || data == null )
+    return;
+  pieChart.dataProvider = [
+    { name:'Hits', hits:data.h },
+    { name:'Doubles', hits:data['2b'] },
+    { name:'Triples', hits:data['3b'] },
+    { name:'Homers', hits:data.hr }
+  ];
+  var list:List = parent.parent as List;
+  yearChart.dataProvider = list.dataProvider as ArrayCollection;
+}
+private function winFill( item:ChartItem, index:Number ) : IFill {
+  return new SolidColor( 0x00FF00, ( item.item.yearid == data.yearid ) ? 1 : 0.2 );
+}
+private function lossFill( item:ChartItem, index:Number ) : IFill {
+  return new SolidColor( 0xFF0000, ( item.item.yearid == data.yearid ) ? 1 : 0.2 );
+}
+]]>
+</mx:Script>
+
+<Surface>
+<fills>
+<LinearGradientFill id="backColor" angle="0">
+  <GradientStop color="#62ABCD" alpha="0.6"/>
+  <GradientStop color="#62ABCD" alpha="1"/>
+</LinearGradientFill>
+</fills>
+<strokes>
+  <SolidStroke id="whiteStroke" color="#FFF" weight="1" alpha=".15"/>
+</strokes>
+<GeometryGroup>
+<RoundedRectangle cornerRadius="12" x="20" y="20" width="800" height="120" fill="{backColor}" stroke="{whiteStroke}" />
+</GeometryGroup>
+</Surface>
+
+<ilog:PieChart3D id="pieChart" height="160" width="200" zoom="1.2" left="30">
+<ilog:filters>
+  <mx:DropShadowFilter distance="10" alpha="0.5" />
+</ilog:filters>
+<ilog:series>
+  <ilog:PieSeries3D displayName="Hits" field="hits" nameField="name" explodeRadius="0.1" />
+</ilog:series>
+</ilog:PieChart3D>
+
+<mx:ColumnChart id="yearChart" height="120" width="580" type="100%" left="230" top="18" >
+<mx:horizontalAxis>
+  <mx:CategoryAxis categoryField="yearid"  />
+</mx:horizontalAxis>
+<mx:series>
+  <mx:ColumnSeries xField="yearid" yField="w" displayName="Wins" fillFunction="winFill" />
+  <mx:ColumnSeries xField="yearid" yField="l" displayName="Losses" fillFunction="lossFill" />
+</mx:series>
+</mx:ColumnChart>
+
+<mx:HBox paddingBottom="2" paddingTop="2" paddingLeft="5" paddingRight="5" backgroundColor="#62ABCD"
+  backgroundAlpha="0.6" borderColor="#62ABCD" borderStyle="solid" borderThickness="2" top="40" left="5">
+<mx:Label text="{data.yearid}" fontWeight="bold" fontSize="14" />
+</mx:HBox>
+
+</mx:Canvas>

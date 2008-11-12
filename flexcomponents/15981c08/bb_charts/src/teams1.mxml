@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical"
+  creationComplete="baseballRO.getTeamsByYear.send( 2006 )"
+  xmlns:degrafa="http://www.degrafa.com/2007">
+
+<mx:Style>
+Application {
+  background-gradient-colors: #9999FF, #eeeeff;
+  font-weight: bold;
+  font-size: 14;
+}
+</mx:Style>
+
+<mx:Script>
+<![CDATA[
+	import com.degrafa.paint.GradientStop;
+	import mx.graphics.RadialGradient;
+	import com.degrafa.paint.RadialGradientFill;
+import mx.charts.series.items.BubbleSeriesItem;
+import mx.graphics.SolidColor;
+import mx.charts.series.items.PlotSeriesItem;
+import mx.graphics.IFill;
+import mx.charts.ChartItem;
+import mx.charts.HitData;
+
+private function onTeamsByYear() : void {
+  var teams:Array = baseballRO.getTeamsByYear.lastResult;
+  for each( var team:Object in teams ) {
+  	team.hr = parseInt( team.hr );
+  	team.era = parseFloat( team.era );
+  	team.w = parseInt( team.w );
+  	team.attendance = parseInt( team.attendance );
+  }
+  chart.dataProvider = teams;
+}
+
+private function makeDataTip( hd:HitData ):String {
+  return "<b>"+hd.item.name+"</b><br/>Wins <b>"+hd.item.w+"</b> Losses <b>"+hd.item.l+"</b>";
+}
+
+public function myFillFunction(item:ChartItem, index:Number):IFill {
+  var curItem:BubbleSeriesItem = BubbleSeriesItem(item);
+  var rgf:RadialGradientFill = new RadialGradientFill();
+  var color:uint = (curItem.item.lgid == 'AL' ) ? 0xFF0000 : 0x0000FF;
+  rgf.gradientStops = [ new GradientStop( color, 1, 0.5 ), new GradientStop( color, 0.2, 1 ) ];
+  return rgf;
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="baseballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="baseball.BaseballService" destination="baseball.BaseballService"
+  showBusyCursor="true">
+<mx:method name="getTeamsByYear" result="onTeamsByYear()">
+<mx:arguments>
+	<mx:Year />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<mx:VBox paddingBottom="10" paddingLeft="10" paddingRight="10" paddingTop="10" backgroundColor="white"
+  backgroundAlpha="0.4" borderColor="#cccccc" cornerRadius="15" borderThickness="3" borderStyle="solid"
+  width="100%" height="100%">
+
+<mx:BubbleChart width="100%" height="100%" id="chart" showDataTips="true" maxRadius="30" dataTipFunction="makeDataTip">
+
+<mx:backgroundElements>
+<degrafa:Surface>
+  <degrafa:fills>
+  	<degrafa:SolidFill id="whiteFill" color="white" alpha="0.6" />
+  </degrafa:fills>
+  <degrafa:GeometryGroup>
+  	<degrafa:RegularRectangle x="0" y="0" width="{chart.width}" height="{chart.height}"
+       fill="{whiteFill}" />
+  </degrafa:GeometryGroup>
+</degrafa:Surface>
+<mx:GridLines direction="both">
+  <mx:horizontalStroke>
+  	<mx:Stroke color="#bbbbbb" />
+  </mx:horizontalStroke>
+  <mx:verticalStroke>
+  	<mx:Stroke color="#bbbbbb" />
+  </mx:verticalStroke>
+</mx:GridLines>
+</mx:backgroundElements>
+
+<mx:horizontalAxis>
+<mx:LinearAxis title="Home Runs" minimum="100" maximum="250" />
+</mx:horizontalAxis>
+<mx:verticalAxis>
+<mx:LinearAxis title="ERA" minimum="3" maximum="6" />
+</mx:verticalAxis>
+<mx:series>
+<mx:BubbleSeries xField="hr" yField="era" radiusField="attendance" fillFunction="myFillFunction">
+  <mx:stroke>
+  	<mx:Stroke alpha="0" />
+  </mx:stroke>
+</mx:BubbleSeries>
+</mx:series>
+</mx:BubbleChart>
+
+</mx:VBox>
+
+</mx:Application>

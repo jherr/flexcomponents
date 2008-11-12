@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" creationComplete="onStartup()">
+<mx:Script>
+<![CDATA[
+import bkde.as3.boards.GraphingBoard3D;
+import bkde.as3.parsers.MathParser;
+import bkde.as3.parsers.CompiledObject;
+import bkde.as3.utilities.MatrixUtils;
+import bkde.as3.utilities.StringUtils;
+import bkde.as3.parsers.RangeObject;
+import bkde.as3.parsers.RangeParser;
+
+private var board:GraphingBoard3D;
+
+private function onStartup() : void {
+  board = new GraphingBoard3D( Math.min( plotHost.width, plotHost.height ) );
+  plotHost.addChild( board );
+  runPlot();
+}
+
+private function isLegal(a:*):Boolean {
+  return ((typeof a)!="number" || isNaN(a) || !isFinite(a)) == false;
+}
+
+private function prepGraph() : Boolean {
+  board.resetBoard();
+  
+  if( funcText.text.length == 0 )
+    return false;
+
+  var procFun:MathParser = new MathParser(["x","y"]);
+  var compObj:CompiledObject = procFun.doCompile(funcText.text);
+  if ( compObj.errorStatus == 1 ) {
+    board.showError(compObj.errorMes);
+    return false;  
+  }
+  
+  var xmin:Number = -1;
+  var xmax:Number = 1;
+  var zmin:Number = -1;  
+  var zmax:Number = 1;
+  var fArray:Array = [];
+  var yArray:Array = [];
+  
+  for( var j:int = 0; j<=board.nMesh;j++ ) {
+    fArray[j] = [];
+    var curz:Number = zmin+j*(zmax-zmin)/board.nMesh;
+      for( var i:int = 0; i<=board.nMesh; i++){
+      var curx:Number = xmin+i*(xmax-xmin)/board.nMesh;
+      var cury:Number = procFun.doEval(compObj.PolishArray,[curz,curx]);
+      fArray[j][i] = [curx,cury,curz];
+      if(isLegal(cury)) yArray.push(cury);
+    }
+  }
+
+  var ymin:Number = -1;
+  var ymax:Number = 1;
+  if ( yArray.length != 0 ) { 
+     yArray.sort(Array.NUMERIC); 
+     ymin = yArray[0]; 
+     ymax = yArray[yArray.length-1];
+  }
+  if ( ymax == ymin ) { ymax+=0.5; ymin+=-0.5; }
+
+  var size:Number = board.getCubeSize();
+  var pArray:Array=[];
+
+  for(j=0; j<=board.nMesh;j++) {
+    pArray[j]=[];
+    for(i=0; i<=board.nMesh;i++) {
+      pArray[j][i]=[
+        toPixel(xmin,xmax,size,fArray[j][i][0]),
+        toPixel(ymin,ymax,size,fArray[j][i][1]),
+        toPixel(zmin,zmax,size,fArray[j][i][2])
+      ];
+      if(isLegal( fArray[j][i][1]) && fArray[j][i][1]<=ymax &&
+        fArray[j][i][1]>=ymin){
+          pArray[j][i][3]=0;
+      } else
+        pArray[j][i][3]=1;
+    }
+  }
+  
+  board.nOpacity = opacitySlider.value;
+  board.setPixArray(pArray);
+  return true;
+}
+
+private function toPixel(min:Number,max:Number,size:Number,fun:Number):Number {
+  return size-(max-fun)*(2*size/(max-min));
+}
+
+private function runPlot() : void
+{
+  board.width = Math.min( plotHost.width, plotHost.height );
+  board.height = Math.min( plotHost.width, plotHost.height );
+  board.setColorType("function");
+  board.enableAxesLabels();
+
+  var Ver:Array = MatrixUtils.MatrixByVector( MatrixUtils.rotMatrix(1,0,0,-15.2*Math.sqrt(2)),[0,1,0]);
+  var iniMatrix:Array = MatrixUtils.MatrixByMatrix( MatrixUtils.rotMatrix(Ver[0],Ver[1],Ver[2],15*Math.PI/2),
+    MatrixUtils.rotMatrix(1,0,0,-15.2*Math.sqrt(2)));
+  
+  if( !prepGraph() ) return;
+  board.drawSurface(iniMatrix);
+  board.drawAxes(iniMatrix);
+}
+
+private function onResize() : void { 
+  if ( initialized == false ) return;
+  runPlot();
+}
+]]>
+</mx:Script>
+<mx:Panel width="100%" height="100%" title="Math Plotter" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+<mx:HBox>
+  <mx:TextInput id="funcText" text="x^2+sin(y*5)" />
+  <mx:Button label="Plot" click="runPlot()" />
+  <mx:HSlider id="opacitySlider" minimum="0" maximum="1" value="0.7" change="runPlot()"  liveDragging="true" />
+</mx:HBox>
+  <mx:UIComponent id="plotHost" width="100%" height="100%" resize="onResize()" />
+</mx:Panel>
+</mx:Application>

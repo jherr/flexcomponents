@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml"
+    width="25" height="25" 
+    overSkin="haloButtonTrans"
+    downSkin="haloButtonTrans"
+    styleName="button"/>

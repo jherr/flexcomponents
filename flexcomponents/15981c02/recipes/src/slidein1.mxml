@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+  currentState="out" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+  creationComplete="onResize()" resize="onResize()">
+<mx:Style>
+HBox {
+  background-image: Embed('background.png');
+  border-thickness: 3;
+  border-style: solid;
+  corner-radius: 3;
+  vertical-align: middle;
+  horizontal-align: center;  
+  border-color: #034EA2;
+}
+Label { 
+  font-weight: bold;
+  font-size: 20;
+}
+</mx:Style>
+<mx:Script>
+<![CDATA[
+private function onResize() : void {
+  if ( !initialized ) return;
+  
+  inWidth.value = ( ( width - p2.width ) - 30 );
+  outWidth.value = width - 20;
+  inLeft.value = ( width - p2.width ) - 15;
+  outLeft.value = width;
+  
+  p1.width = ( currentState == 'out' ) ? outWidth.value : inWidth.value;
+  p2.setStyle( 'left', ( currentState == 'out' ) ? outLeft.value : inLeft.value );
+}
+]]>
+</mx:Script>
+<mx:ApplicationControlBar dock="true">
+  <mx:Button label="In" click="currentState='in';" />
+  <mx:Button label="Out" click="currentState='out';" />
+</mx:ApplicationControlBar>
+<mx:states>
+  <mx:State name="in">
+    <mx:SetProperty target="{p1}" name="width" id="inWidth" value="100" />
+    <mx:SetStyle target="{p2}" name="left" id="inLeft" value="100" />
+  </mx:State>
+  <mx:State name="out">
+    <mx:SetProperty target="{p1}" name="width" id="outWidth" value="100" />
+    <mx:SetStyle target="{p2}" name="left" id="outLeft" value="100" />
+  </mx:State>
+</mx:states>
+<mx:HBox id="p1" top="10" left="10" height="95%">
+  <mx:Label text="Main Content Area" />
+</mx:HBox>
+<mx:HBox id="p2" top="10" left="10" width="250" height="95%">
+  <mx:Label text="Side Content Area" />
+</mx:HBox>
+</mx:Application>

@@ -1,0 +1,21 @@
+Application
+{
+	color: #ffffff;
+	backgroundGradientAlphas: 0, 0;
+}
+
+SlideShow
+{
+	color: #e5e5e5;
+	panelColor: #000000;
+	arrowColor: #ffffff;
+	panelAlpha: .2;
+}
+
+TextArea 
+{
+	leading: 4;
+	backgroundAlpha: 0;
+	borderThickness: 0;
+	focusAlpha: 0;
+}

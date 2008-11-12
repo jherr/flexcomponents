@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml"
+  xmlns:qavis="org.un.cava.birdeye.qavis.treemap.controls.*"
+  width="100%" height="100%" initialize="onStartup();">
+
+<qavis:TreeMap id="treeMap" width="100%" height="100%" showRoot="false"
+  dataProvider="{testData}" labelField="@name" weightField="@x"
+  colorFunction="{itemToColor}" />
+
+<mx:RemoteObject id="usdataRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="usdata.USDataService" destination="usdata.USDataService"
+  showBusyCursor="true">
+<mx:method name="getAll" result="onGetAllResult()">
+<mx:arguments>
+  <mx:Table />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<mx:Script>
+<![CDATA[
+import mx.collections.ArrayCollection;
+
+import org.un.cava.birdeye.qavis.treemap.controls.treeMapClasses.*;
+
+[Bindable]
+private var testData:XML;
+
+private const MIN_COLOR:uint = 0x4f94cd;
+private const ZERO_COLOR:uint = 0;
+private const MAX_COLOR:uint = 0x00008b;
+
+private var _maxAbsoluteChange:Number;
+
+private var _reqTable:String = '';
+private var _usData:Object = {};
+
+private function onGetAllResult() : void {
+  _usData[ _reqTable ] = usdataRO.getAll.lastResult;
+  _reqTable = null;
+  if ( _usData[ 'it' ] == null ) _reqTable = 'it';
+  if ( _usData[ 'realestate' ] == null ) _reqTable = 'realestate';
+  if ( _usData[ 'construction' ] == null ) _reqTable = 'construction';
+  if ( _reqTable != null ) usdataRO.getAll.send( _reqTable );
+  else updateMap();
+}
+
+private function onStartup() : void {
+  _reqTable = 'it';
+  usdataRO.getAll.send( _reqTable );
+}
+
+private function updateMap() : void {
+  testData = <data />;
+
+  var par_it:XML = <parent name="Information Technology" />;
+  testData.appendChild( par_it );
+  for each( var obj1:Object in _usData['it'] ) {
+    if ( obj1.state == 'United States' ) continue;
+    par_it.appendChild( <child name={obj1.state} x={obj1.companies} /> ); 
+  }
+  var par_construction:XML = <parent name="Construction" />;
+  testData.appendChild( par_construction );
+  for each( var obj2:Object in _usData['construction'] ) {
+    if ( obj2.state == 'United States' ) continue;
+    par_construction.appendChild( <child name={obj2.state} x={obj2.companies} /> ); 
+  }
+  var par_real:XML = <parent name="Real Estate" />;
+  testData.appendChild( par_real );
+  for each( var obj3:Object in _usData['realestate'] ) {
+    if ( obj3.state == 'United States' ) continue;
+    par_real.appendChild( <child name={obj3.state} x={obj3.companies} /> ); 
+  }
+
+    var children:XMLList = testData..child;
+    this._maxAbsoluteChange = 0;
+    for each(var child:XML in children)
+    {
+            var change:Number = Number(child.@x);
+            this._maxAbsoluteChange = Math.max(this._maxAbsoluteChange, Math.abs(change));
+    }
+}
+
+private function itemToColor(item:Object):uint {
+  var change:Number = Number(item.@x);
+  if(change < 0) {
+    return this.blendColors(MIN_COLOR, ZERO_COLOR, Math.abs(change) / this._maxAbsoluteChange);
+  }
+  else if(change > 0) {
+    return this.blendColors(ZERO_COLOR, MAX_COLOR, 1 - (Math.abs(change) / this._maxAbsoluteChange));
+  }
+  return ZERO_COLOR;
+}
+
+private function blendColors(color1:uint, color2:uint, percent:Number = 0.5) : uint {
+  var remaining:Number = 1 - percent;
+  
+  var red1:uint = (color1 >> 16) & 0xff;
+  var green1:uint = (color1 >> 8) & 0xff;
+  var blue1:uint = color1 & 0xff;
+  
+  var red2:uint = (color2 >> 16) & 0xff;
+  var green2:uint = (color2 >> 8) & 0xff;
+  var blue2:uint = color2 & 0xff;
+   
+  color1 = ((red1 * percent) << 16) + ((green1 * percent) << 8) + blue1 * percent;
+  color2 = ((red2 * remaining) << 16) + ((green2 * remaining) << 8) + blue2 * remaining;
+
+  return color1 + color2;
+}
+]]>
+</mx:Script>
+</mx:Application>

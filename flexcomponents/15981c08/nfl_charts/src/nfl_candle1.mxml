@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="horizontal" creationComplete="searchPlayers()">
+
+<mx:Script>
+<![CDATA[
+import mx.charts.CandlestickChart;
+import mx.graphics.SolidColor;
+import mx.graphics.Stroke;
+import mx.core.UIComponent;
+import mx.managers.DragManager;
+import mx.events.DragEvent;
+import mx.charts.HitData;
+
+private var requestPlayer:Object = null;
+
+private function searchPlayers() : void {
+  footballRO.findPlayer.send( srchText.text );
+}
+
+private function onFindPlayer() : void {
+  var players:Array = footballRO.findPlayer.lastResult;
+  for each( var player:Object in players ) {
+    player.name = player.first + " " + player.last;
+  }
+  playerList.dataProvider = players;
+}
+
+private function onPlayerDblClick() : void {
+  requestPlayer = playerList.selectedItem;
+  footballRO.getGamesByPlayer.send( playerList.selectedItem.id );
+}
+
+private var dataSeriesList:Array = [];
+
+private function onGamesByPlayer() : void {
+  var yearLookup:Object = {};
+  for each( var game:Object in footballRO.getGamesByPlayer.lastResult ) {
+    if ( yearLookup[ game.year ] == null )
+      yearLookup[ game.year ] = { year: game.year, low: Number.MAX_VALUE, high: Number.MIN_VALUE, games: 0, total: 0, lastYards: 0, diff:0 };
+
+    var yards:int = parseInt( game.passyd ) + parseInt( game.rushyd );
+    yearLookup[ game.year ].games += 1;
+    yearLookup[ game.year ].total += yards;
+    if ( yards < yearLookup[ game.year ].low ) yearLookup[ game.year ].low = yards;
+    if ( yards > yearLookup[ game.year ].high ) yearLookup[ game.year ].high = yards;
+    if ( yearLookup[ game.year ].games != 1 ) {
+      yearLookup[ game.year ].diff = Math.abs( yearLookup[ game.year ].lastYards - yards );
+    }
+    yearLookup[ game.year ].lastYards = yards;
+  }
+  
+  var yearValues:Array = [];
+  for( var year:String in yearLookup ) {
+    yearLookup[ year ].avg = yearLookup[ year ].total / yearLookup[ year ].games;
+    yearLookup[ year ].diff = Math.sqrt( yearLookup[ year ].diff );
+    yearLookup[ year ].open = yearLookup[ year ].avg + ( yearLookup[ year ].diff / 2 );
+    yearLookup[ year ].close = yearLookup[ year ].avg - ( yearLookup[ year ].diff / 2 );
+    yearValues.push ( parseInt( year ) );
+  }
+  yearValues = yearValues.sort( function( a:int, b:int ) : int { return a - b; } );
+  
+  var years:Array = [];
+  for each ( var yearVal:int in yearValues ) {
+    years.push( yearLookup[ yearVal.toString() ] );
+  }
+  
+  candleChart.dataProvider = years;
+}
+
+private function makeDataTip( hd:HitData ) : String {
+  return "<b>"+hd.item.year+"</b> low "+hd.item.low+" high "+hd.item.high;
+}
+
+private function onDragDrop( event:DragEvent ) : void {
+  var items:Array = event.dragSource.dataForFormat("items") as Array;
+  for each( var player:Object in items ) {
+    requestPlayer = player;
+    footballRO.getGamesByPlayer.send( player.id );
+  }
+}
+
+private function onDragEnter( event:DragEvent ) : void {
+  var dragInitiator:UIComponent = UIComponent(event.currentTarget);
+  DragManager.acceptDragDrop( dragInitiator );
+}
+
+private function onDragOver( event:DragEvent ) : void {
+  DragManager.showFeedback( DragManager.COPY );
+}
+]]>
+</mx:Script>
+
+<mx:RemoteObject id="footballRO"
+  endpoint="http://localhost/amfphp/gateway.php"
+  source="football.FootballService" destination="football.FootballService"
+  showBusyCursor="true">
+<mx:method name="findPlayer" result="onFindPlayer()">
+<mx:arguments>
+  <mx:Name />
+</mx:arguments>
+</mx:method>
+<mx:method name="getGamesByPlayer" result="onGamesByPlayer()">
+<mx:arguments>
+  <mx:Player />
+</mx:arguments>
+</mx:method>
+</mx:RemoteObject>
+
+<mx:Panel title="Search" width="20%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+  <mx:VBox height="100%" width="100%">
+    <mx:HBox width="100%">
+    <mx:TextInput width="100%" id="srchText" text="Aikman" />
+    <mx:Button label="Search" click="searchPlayers()" />
+    </mx:HBox>
+    <mx:List id="playerList" width="100%" height="100%" labelField="name" dragEnabled="true" doubleClick="onPlayerDblClick()" doubleClickEnabled="true" />
+  </mx:VBox>
+</mx:Panel>
+
+<mx:Panel title="Statistics" width="80%" height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5"
+  dragDrop="onDragDrop(event)" dragOver="onDragOver(event)" dragEnter="onDragEnter(event)">
+  <mx:CandlestickChart width="100%" height="100%" id="candleChart" showDataTips="true" dataTipFunction="makeDataTip">
+  <mx:horizontalAxis>
+    <mx:CategoryAxis title="Year" categoryField="year" />
+  </mx:horizontalAxis>
+  <mx:series>
+    <mx:CandlestickSeries xField="year" lowField="low" highField="high" closeField="open" openField="close">
+    <mx:fill>
+      <mx:SolidColor color="#6666FF" alpha="0.5" />
+    </mx:fill>
+    <mx:boxStroke>
+      <mx:Stroke weight="2" color="#6666FF" />
+    </mx:boxStroke>
+    <mx:stroke>
+      <mx:Stroke weight="3" color="#00FF00" />
+    </mx:stroke>
+    </mx:CandlestickSeries>
+  </mx:series>
+  </mx:CandlestickChart>
+</mx:Panel>
+
+</mx:Application>

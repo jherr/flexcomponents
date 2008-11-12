@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" width="75" height="75" dataChange="onDataChange()"
+  creationComplete="onDataChange()" horizontalScrollPolicy="off" verticalScrollPolicy="off"
+  doubleClickEnabled="true" doubleClick="onDblClick()">
+<mx:Script>
+<![CDATA[
+import com.adobe.webapis.flickr.Photo;
+
+private function onDblClick() : void {
+  flickrspring.instance.openNode( data as FlickrItemData );
+}
+private function onDataChange() : void {
+  if ( data == null || !initialized ) return;
+  if ( data.photo != null ) {
+    var p:Photo = data.photo as Photo;
+    img.source = "http://static.flickr.com/"+p.server+"/"+p.id+"_"+p.secret+"_s.jpg";
+    textItem.visible = false;
+  }
+  if ( data.text != null ) {
+    img.visible = false;
+    var tl:TextLineMetrics = textItem.measureText( data.text );
+    textItem.text = data.text;
+    textItem.width = tl.width + 10;
+    textItem.height = tl.height + 10;
+    width = tl.width + 10;
+    height = tl.height + 10;
+  }
+}
+]]>
+</mx:Script>
+<mx:Image id="img" width="75" height="75" />
+<mx:Label id="textItem" fontSize="20" />
+</mx:Canvas>
