@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gallery imagesFolder="http://localhost/pics/thom/" thumbnailsFolder="http://localhost/pics/thom/thumbs/">
+	<img src="DSCN1091.jpg" width="640" height="480" />
+	<img src="DSCN4739.jpg" width="640" height="480" />
+	<img src="DSCN4742.jpg" width="640" height="480" />
+	<img src="DSCN4855.jpg" width="640" height="480" />
+	<img src="DSCN5249.jpg" width="480" height="640" />
+	<img src="DSCN6016.jpg" width="640" height="480" />
+	<img src="IMGP8171.jpg" width="639" height="427" />
+	<img src="IMG_0146.jpg" width="640" height="480" />
+	<img src="IMG_0417.jpg" width="640" height="480" />
+	<img src="IMG_0485_3.jpg" width="639" height="469" />
+	<img src="IMG_0631.jpg" width="640" height="480" />
+	<img src="IMG_1328.jpg" width="640" height="480" />
+	<img src="IMG_2318.jpg" width="640" height="480" />
+	<img src="IMG_2424.jpg" width="480" height="640" />
+	<img src="IMG_2433.jpg" width="640" height="480" />
+	<img src="IMG_2546.jpg" width="639" height="359" />
+	<img src="IMG_2556.jpg" width="640" height="480" />
+	<img src="IMG_2673_2.jpg" width="640" height="480" />
+	<img src="IMG_2793_2.jpg" width="639" height="397" />
+</gallery>
